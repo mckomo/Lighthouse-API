@@ -1,0 +1,168 @@
+<?php namespace Lighthouse\Tests\Services\Torrents\ValidatorsTests;
+
+use Lighthouse\Services\Torrents\Entities\Torrent;
+use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
+use Lighthouse\Tests\Services\Torrents\Support\EntitySampler;
+
+class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var TorrentValidator
+     */
+    private $validator;
+
+    public function setUp()
+    {
+        $this->validator = new TorrentValidator();
+    }
+
+    public function testSucceedsWithValidEntity()
+    {
+        $validEntity = $this->getValidTorrent();
+
+        $result = $this->validator->isValid($validEntity);
+
+        $this->assertTrue($result);
+    }
+
+    public function testFailsWithNull()
+    {
+        $result = $this->validator->isValid(null);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @dataProvider getNullAndEmptyString
+     */
+    public function testFailsWithEmptyName($invalidName)
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->name = $invalidName;
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @dataProvider getNullAndEmptyString
+     */
+    public function testFailsWithEmptyCategory($invalidCategory)
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->category = $invalidCategory;
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @dataProvider getNullAndNegativeNumber
+     */
+    public function testFailsWithNegativeSize($invalidSize)
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->size = $invalidSize;
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithInvalidUrl()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->url = 'htp:/example.com';
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithUploadTimeFormatOtherThanISO8601()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->uploadedAt = 'Sat, 27 Jun 2015 18:50:58 +00:00';
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithUploadTimeTimezoneOtherThanUTC()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->uploadedAt = '2015-06-27T18:50:58+02:00';
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithNegativeSeedCount()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->seedCount = -10;
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithNegativePeerCount()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->peerCount = -10;
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testReturnsValidationError()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->peerCount = -10;
+
+        $this->validator->isValid($brokenEntity, $errors);
+        $errorCount = count($errors);
+
+        $this->assertEquals(1, $errorCount);
+    }
+
+    public function testAppendsValidationErrors()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->uploadedAt = '2015-05-27 15:00:00';
+        $brokenEntity->seedCount = -21;
+        $brokenEntity->peerCount = -31;
+
+        $this->validator->isValid($brokenEntity, $errors);
+        $errorCount = count($errors);
+
+        $this->assertEquals(3, $errorCount);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNullAndEmptyString()
+    {
+        return [[null], ['']];
+    }
+
+    /**
+     * @return array
+     */
+    public function getNullAndNegativeNumber()
+    {
+        return [[null], [-10]];
+    }
+
+    private function getValidTorrent()
+    {
+        return EntitySampler::sampleTorrent();
+    }
+}

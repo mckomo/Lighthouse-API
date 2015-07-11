@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Lighthouse
+        psr4_prefix: Lighthouse
+        src_path: app
