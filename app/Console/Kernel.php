@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'Lighthouse\Console\Commands\UploadExportData',
+		'Lighthouse\Console\Commands\SetupElasticSearch',
 	];
 
 	/**
