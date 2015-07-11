@@ -1,4 +1,6 @@
-# Lighthouse Service
+# Lighthouse Service 
+
+[![Build Status](https://travis-ci.org/mckomo/Lighthouse-Service.svg)](https://travis-ci.org/mckomo/Lighthouse-Service)
 
 Lighthouse Service is the webservice that helps you find quickly right torrent. Main purpose of this project is to create backend for [Lighthouse](http://lighthouse.github.io) – torrent browser.
 
