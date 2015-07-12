@@ -82,6 +82,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ->with($query, null)
             ->andReturn(true);
 
+        $this->repositoryMock
+            ->shouldIgnoreMissing();
+
         $this->service->search($query);
     }
 

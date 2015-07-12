@@ -6,9 +6,9 @@ use Lighthouse\Services\Torrents\Entities\Torrent;
 interface Repository
 {
     /**
-     * @param string $phrase
-     * @param array $options
+     * @param Query $query
      * @return Torrent[]
+
      */
     public function search(Query $query);
 

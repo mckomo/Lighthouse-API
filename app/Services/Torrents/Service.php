@@ -7,6 +7,7 @@ use Lighthouse\Services\Torrents\Contracts\Service as ServiceInterface;
 use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Entities\Torrent;
+use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
 use Lighthouse\Services\Torrents\Validation\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Query as QueryValidator;
@@ -24,7 +25,9 @@ class Service implements ServiceInterface
      */
     private $torrentValidator;
 
-    public function __construct(Repository $repository, TorrentValidator $torrentValidator, QueryValidator $queryValidator)
+    public function __construct(Repository $repository,
+                                TorrentValidator $torrentValidator,
+                                QueryValidator $queryValidator)
     {
         $this->repository = $repository;
         $this->torrentValidator = $torrentValidator;
@@ -38,6 +41,8 @@ class Service implements ServiceInterface
      */
     public function search(Query $query)
     {
+        $torrents = [];
+
         $isValid = $this->queryValidator->isValid($query, $errors);
 
         if (!$isValid)
@@ -51,16 +56,13 @@ class Service implements ServiceInterface
         try
         {
             $torrents = $this->repository->search($query);
-
-            return $this->success($torrents);
         }
-        catch(\Exception $exception)
+        catch(RepositoryException $exception)
         {
-            $code = ResultCodes::ServiceError;
-            $error = Error::create($exception->getMessage());
-
-            return $this->fail($code, $error);
+            return $this->handleRepositoryException($exception);
         }
+
+        return $this->success($torrents);
     }
 
     /**
@@ -83,12 +85,9 @@ class Service implements ServiceInterface
         {
             $this->repository->store($torrent);
         }
-        catch(\Exception $exception)
+        catch(RepositoryException $exception)
         {
-            $code = ResultCodes::ServiceError;
-            $error = Error::create($exception->getMessage());
-
-            return $this->fail($code, $error);
+            return $this->handleRepositoryException($exception);
         }
 
         return $this->success();
@@ -100,6 +99,8 @@ class Service implements ServiceInterface
      */
     public function get($hash)
     {
+        $torrent = null;
+
         if (!ValidationHelper::isHash($hash))
         {
             $code = ResultCodes::InvalidInput;
@@ -108,7 +109,14 @@ class Service implements ServiceInterface
             return $this->fail($code, $error);
         }
 
-        $torrent = $this->repository->get($hash);
+        try
+        {
+            $torrent = $this->repository->get($hash);
+        }
+        catch(RepositoryException $exception)
+        {
+            return $this->handleRepositoryException($exception);
+        }
 
         if (is_null($torrent))
         {
@@ -118,8 +126,7 @@ class Service implements ServiceInterface
             return $this->fail($code, $error);
         }
 
-        return OperationResult::successful()
-            ->withData($torrent);
+        return $this->success($torrent);
     }
 
     /**
@@ -140,6 +147,15 @@ class Service implements ServiceInterface
      */
     private function success($data = [])
     {
-        return OperationResult::successful()->withData($data);
+        return OperationResult::successful()
+            ->withData($data);
+    }
+
+    private function handleRepositoryException(RepositoryException $exception)
+    {
+        $code = ResultCodes::InvalidInput;
+        $error = Error::create($exception->getMessage(), $exception->getPrevious());
+
+        return $this->fail($code, $error);
     }
 }

@@ -9,7 +9,7 @@ class Error extends Base
     public $message;
 
     /**
-     * @var array
+     * @var mixed
      */
     public $attachments;
 
@@ -19,7 +19,7 @@ class Error extends Base
      * @param array $attachments
      * @return Error
      */
-    static function create($message = '', array $attachments = null)
+    static function create($message = '', $attachments = null)
     {
         if (is_null($attachments))
             $attachments = [];

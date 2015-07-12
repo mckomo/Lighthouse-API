@@ -18,8 +18,8 @@ class ElasticSearch implements Repository
 {
     const DEFAULT_QUERY_SIZE = 20;
     const DEFAULT_QUERY_SORT = [
-        'seedCount' => ['order' => 'desc'],
-        'peerCount' => ['order' => 'desc'],
+        'seedCount' => ['order' => 'desc', 'missing' => 0],
+        'peerCount' => ['order' => 'desc', 'missing' => 0],
     ];
 
     /**
@@ -76,7 +76,7 @@ class ElasticSearch implements Repository
         }
         catch(ConnectionException $exception)
         {
-            throw new RepositoryException($exception->getMessage());
+            throw new RepositoryException($exception->getMessage(), 0, $exception);
         }
     }
 
@@ -95,7 +95,7 @@ class ElasticSearch implements Repository
         }
         catch(ConnectionException $exception)
         {
-            throw new RepositoryException($exception->getMessage());
+            throw new RepositoryException($exception->getMessage(), 0, $exception);
         }
     }
 

@@ -96,9 +96,9 @@ class SetupElasticSearch extends Command {
             'name' => [
                 'type' => 'string', 'index' => 'analyzed'],
             'peerCount' => [
-                'type' => 'long', 'index' => 'no'],
+                'type' => 'long', 'index' => 'not_analyzed'],
             'seedCount' => [
-                'type' => 'long', 'index' => 'no'],
+                'type' => 'long', 'index' => 'not_analyzed'],
             'size' => [
                 'type' => 'long', 'index' => 'no'],
             'uploadAt' => [
