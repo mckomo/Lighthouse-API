@@ -101,7 +101,7 @@ class SetupElasticSearch extends Command {
                 'type' => 'long', 'index' => 'not_analyzed'],
             'size' => [
                 'type' => 'long', 'index' => 'no'],
-            'uploadAt' => [
+            'uploadedAt' => [
                 'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'no'],
             'url' => [
                 'type' => 'string', 'index' => 'no'],
