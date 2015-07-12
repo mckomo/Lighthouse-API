@@ -29,6 +29,13 @@ class SetupElasticSearch extends Command {
 	 */
 	protected $description = 'Setup Elastic Search';
 
+    protected function getOptions()
+    {
+        return [
+            ['delete', 'd', InputOption::VALUE_NONE, 'Whether should delete index if already exists']
+        ];
+    }
+
 	/**
 	 * Create a new command instance.
 	 *
@@ -48,19 +55,31 @@ class SetupElasticSearch extends Command {
 	 */
 	public function fire()
 	{
-        $index = $this->createLighthouseIndex();
+        $shouldDelete = $this->option('delete');
+
+        $index = $this->createLighthouseIndex($shouldDelete);
         $type = $this->createTorrentType($index);
 
         $this->setTorrentMapping($type);
 	}
 
-    private function createLighthouseIndex()
+    /**
+     * @return Index
+     */
+    private function createLighthouseIndex($shouldDelete)
     {
-        return $this->client
-            ->getIndex('lighthouse')
-            ->create();
+        $index = $this->client
+            ->getIndex('lighthouse');
+
+        $index->create([], $shouldDelete);
+
+        return $index;
     }
 
+    /**
+     * @param Index $index
+     * @return Type
+     */
     private function createTorrentType(Index $index)
     {
         return $index->getType('torrent');

@@ -25,7 +25,7 @@ class SetupElasticSearchTest extends \PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-    public function testCreatesTorrentType()
+    public function testCreatesTorrentTypeWithMapping()
     {
         $this->clientMock
             ->shouldReceive('getIndex')
@@ -34,9 +34,6 @@ class SetupElasticSearchTest extends \PHPUnit_Framework_TestCase
             ->andReturn($this->indexMock);
 
         $this->indexMock
-            ->shouldReceive('create')
-            ->once()
-            ->andReturn($this->indexMock)
             ->shouldReceive('getType')
             ->with('torrent')
             ->once()
