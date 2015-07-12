@@ -90,7 +90,6 @@ class SetupElasticSearch extends Command {
         $mapping = new Mapping();
 
         $mapping->setType($type);
-        $mapping->setParam('_boost', ['name' => 'seedCount', 'null_value' => 0]);
         $mapping->setProperties([
             'hash' => [
                 'type' => 'string', 'index' => 'no'],
