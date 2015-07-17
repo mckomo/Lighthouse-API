@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/mckomo/Lighthouse-Service.svg)](https://travis-ci.org/mckomo/Lighthouse-Service)
 
-Lighthouse Service is the webservice that helps you find quickly right torrent. Main purpose of this project is to create backend for [Lighthouse](http://lighthouse.github.io) – torrent browser.
+Lighthouse Service is the webservice that helps you find quickly right torrent. Main purpose of this project is to create backend for [Lighthouse](http://mckomo.github.io/Lighthouse/) – torrent browser.
 
 ## Public endpoints
 
-Access to this endpoints is public, thus an authentication is not required. All endpoints repond in JSON format. 
+Access to this endpoints is public, thus an authentication is not required. All endpoints repond in JSON format. Current API adress is [http://52.28.185.96/api/v1](http://52.28.185.96/api/v1). 
 
 ### GET /api/v1/torrents
 
@@ -24,7 +24,7 @@ Search torrents with given query.
 
 
 ```
-GET my-domain.com/api/v1/torrents?q=ubuntu&category=applications
+GET your-domain.com/api/v1/torrents?q=ubuntu&category=applications
 
 [  
    {  
@@ -64,7 +64,7 @@ Get torrent info.
 ##### Example response
 
 ```
-GET my-domain.com/api/v1/torrents/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59
+GET your-domain/api/v1/torrents/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59
 
 {  
    "hash":"FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59",
