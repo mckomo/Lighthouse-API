@@ -45,6 +45,17 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    public function testFailsWithInvalidUtf8Name()
+    {
+        $hexName = '5364439383541433535444644304145373346';
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->name = $this->convertToString($hexName);
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
     /**
      * @dataProvider getNullAndEmptyString
      */
@@ -164,5 +175,17 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
     private function getValidTorrent()
     {
         return EntitySampler::sampleTorrent();
+    }
+
+    private function convertToString($hex)
+    {
+        $string='';
+
+        for ($i=0; $i < strlen($hex)-1; $i+=2)
+        {
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        }
+
+        return $string;
     }
 }

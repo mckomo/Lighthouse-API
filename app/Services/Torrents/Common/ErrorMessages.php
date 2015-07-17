@@ -20,4 +20,5 @@ final class ErrorMessages
     const ShortPhrase = 'Phrase must have at least 3 characters';
     const OutOfRangeLimit = 'Result limit must be in 1 .. 100 range';
     const UnsupportedCategory = 'Search query has unsupported torrent category';
+    const InvalidEncodedName = 'Name has invalid UTF-8 encoding';
 }

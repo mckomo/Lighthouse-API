@@ -22,6 +22,9 @@ class Torrent implements Validator
         if (!ValidationHelper::isLongerThan($entity->name, 0))
             $errors[] = ErrorMessages::EmptyName;
 
+        if (!ValidationHelper::isValidUtf8($entity->name))
+            $errors[] = ErrorMessages::InvalidEncodedName;
+
         if (!ValidationHelper::isLongerThan($entity->category, 0))
             $errors[] = ErrorMessages::EmptyCategory;
 

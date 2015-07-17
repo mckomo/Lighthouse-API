@@ -59,6 +59,15 @@ class ValidationHelper {
     }
 
     /**
+     * @param string $string
+     * @return bool
+     */
+    public static function isValidUtf8($string)
+    {
+        return mb_check_encoding($string, 'UTF-8');
+    }
+
+    /**
      * @param float $number
      * @param float $lb
      * @param float $rb
