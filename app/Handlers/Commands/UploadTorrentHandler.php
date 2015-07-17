@@ -1,10 +1,10 @@
 <?php namespace Lighthouse\Handlers\Commands;
 
-use Lighthouse\Commands\UploadTorrents as UploadCommand;
+use Lighthouse\Commands\UploadTorrent as UploadCommand;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Service;
 
-class UploadTorrentsHandler {
+class UploadTorrentHandler {
 
     protected $service;
 

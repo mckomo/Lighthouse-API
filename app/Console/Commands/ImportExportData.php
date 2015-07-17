@@ -2,14 +2,14 @@
 
 use Illuminate\Console\Command;
 use League\Flysystem\Exception;
-use Lighthouse\Commands\UploadTorrents;
+use Lighthouse\Commands\UploadTorrent;
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Contracts\Mapper as TorrentMapper;
 use Lighthouse\Services\Torrents\Entities\Error;
 use Symfony\Component\Console\Input\InputArgument;
 
-class UploadExportData extends Command {
+class ImportExportData extends Command {
 
     use DispatchesCommands;
 
@@ -30,7 +30,7 @@ class UploadExportData extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'torrents:upload';
+	protected $name = 'torrents:import';
 
 	/**
 	 * The console command description.
@@ -84,7 +84,7 @@ class UploadExportData extends Command {
             if(is_null($torrent))
                 continue;
 
-            $command = new UploadTorrents($torrent);
+            $command = new UploadTorrent($torrent);
             $result = $this->dispatch($command);
 
             $this->handleResult($result);

@@ -3,7 +3,7 @@
 use Lighthouse\Commands\Command;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 
-class UploadTorrents extends Command {
+class UploadTorrent extends Command {
 
     public $torrent;
 
