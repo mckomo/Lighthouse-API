@@ -5,6 +5,9 @@ use Lighthouse\Services\Torrents\Entities\Torrent;
 
 final class KickassExportData implements Mapper
 {
+
+    const RequiredFieldCount = 11;
+
     /**
      * @param string $line
      * @return Torrent
@@ -12,6 +15,9 @@ final class KickassExportData implements Mapper
     public function map($line)
     {
         $data = explode('|', $line);
+
+        if (count($data) < static::RequiredFieldCount)
+            return null;
 
         return new Torrent([
             'hash'          => $data[0],

@@ -74,4 +74,13 @@ class KickassExportDataMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(75, $torrent->peerCount);
     }
+
+    public function testReturnsNullWithInvalidDataFormat()
+    {
+        $invalidLine = '6a196e9f718a83721bc0c0faf6218e6f54573a10|Torrent with invalid data format';
+        $result = $this->mapper->map($invalidLine);
+
+        $this->assertNull($result);
+    }
+
 }
