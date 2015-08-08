@@ -1,4 +1,4 @@
-<?php namespace Lighthouse\Tests\App\CommandHandlers;
+<?php namespace Lighthouse\Tests\App\Commands;
 
 use Lighthouse\Commands\SetupElasticSearch;
 use Lighthouse\Handlers\Commands\SetupElasticSearchHandler;
