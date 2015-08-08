@@ -13,6 +13,9 @@
         <testsuite name="Torrents Service">
             <directory>./tests/Services/Torrents</directory>
         </testsuite>
+        <testsuite name="Application">
+            <directory>./tests/App</directory>
+        </testsuite>
     </testsuites>
     <php>
         <env name="APP_ENV" value="testing"/>
