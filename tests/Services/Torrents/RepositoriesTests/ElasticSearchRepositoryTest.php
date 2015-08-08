@@ -4,7 +4,7 @@ use Mockery;
 use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
 use Lighthouse\Services\Torrents\Repositories\ElasticSearch as Repository;
-use Lighthouse\Tests\Services\Torrents\Support\EntitySampler;
+use Lighthouse\Tests\Support\EntitySampler;
 
 class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase {
 

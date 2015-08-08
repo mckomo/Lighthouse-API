@@ -2,7 +2,7 @@
 
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
-use Lighthouse\Tests\Services\Torrents\Support\EntitySampler;
+use Lighthouse\Tests\Support\EntitySampler;
 
 class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
 {

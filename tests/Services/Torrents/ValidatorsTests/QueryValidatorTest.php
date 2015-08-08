@@ -1,8 +1,7 @@
 <?php namespace Lighthouse\Tests\Services\Torrents\ValidatorsTests;
 
-use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Validation\Validators\Query as Validator;
-use Lighthouse\Tests\Services\Torrents\Support\EntitySampler;
+use Lighthouse\Tests\Support\EntitySampler;
 
 class QueryValidatorTest extends \PHPUnit_Framework_TestCase
 {

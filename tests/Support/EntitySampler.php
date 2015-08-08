@@ -1,4 +1,4 @@
-<?php namespace Lighthouse\Tests\Services\Torrents\Support;
+<?php namespace Lighthouse\Tests\Support;
 
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Entities\Torrent;

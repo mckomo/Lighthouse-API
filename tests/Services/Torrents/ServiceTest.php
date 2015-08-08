@@ -1,9 +1,9 @@
 <?php namespace Lighthouse\Tests\Services\Torrents;
 
-use Lighthouse\Tests\Services\Torrents\Support\EntitySampler;
 use Mockery;
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Service;
+use Lighthouse\Tests\Support\EntitySampler;
 
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
