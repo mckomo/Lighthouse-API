@@ -1,4 +1,6 @@
-<?php namespace Lighthouse\Handlers\Commands;
+<?php
+
+namespace Lighthouse\Handlers\Commands;
 
 use Lighthouse\Commands\UploadTorrent as UploadCommand;
 use Lighthouse\Services\Torrents\Common\OperationResult;

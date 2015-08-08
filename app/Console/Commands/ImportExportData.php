@@ -79,7 +79,7 @@ class ImportExportData extends Command {
         foreach($file as $line)
         {
             $this->currentLine = $line;
-            $torrent = $this->mapLine($line);
+            $torrent = $this->mapTorrent($line);
 
             if(is_null($torrent))
                 continue;
@@ -96,7 +96,7 @@ class ImportExportData extends Command {
      * @param $i
      * @return array
      */
-    private function mapLine($line)
+    private function mapTorrent($line)
     {
         try
         {
