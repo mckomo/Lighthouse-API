@@ -145,8 +145,8 @@ return [
 		'Lighthouse\Providers\EventServiceProvider',
 		'Lighthouse\Providers\RouteServiceProvider',
 		'Lighthouse\Providers\TorrentServiceProvider',
-
-	],
+        'Barryvdh\Cors\ServiceProvider'
+    ],
 
 	/*
 	|--------------------------------------------------------------------------
