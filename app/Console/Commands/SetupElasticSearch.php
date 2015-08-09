@@ -26,6 +26,11 @@ class SetupElasticSearch extends Command
 	 */
 	protected $description = 'Setup Elastic Search';
 
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
     protected function getOptions()
     {
         return [

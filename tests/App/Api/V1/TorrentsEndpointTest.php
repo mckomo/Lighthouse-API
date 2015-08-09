@@ -19,6 +19,4 @@ class TorrentsEndpointTest extends TestCase
     {
         $this->assertContains('magnet:', $torrent->magnetLink);
     }
-
-
 }

@@ -1,12 +1,14 @@
 <?php namespace Lighthouse\Console\Commands;
 
 use Illuminate\Console\Command;
-use League\Flysystem\Exception;
 use Lighthouse\Commands\UploadTorrent;
 use Illuminate\Foundation\Bus\DispatchesCommands;
+use Lighthouse\Services\Torrents\Common\FailedResult;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Contracts\Mapper as TorrentMapper;
 use Lighthouse\Services\Torrents\Entities\Error;
+use Lighthouse\Services\Torrents\Entities\Torrent;
+use SplFileObject;
 use Symfony\Component\Console\Input\InputArgument;
 
 class ImportExportData extends Command {
@@ -16,7 +18,7 @@ class ImportExportData extends Command {
     /**
      * Export data file
      *
-     * @var \SplFileObject
+     * @var SplFileObject
      */
     protected $file;
 
@@ -43,6 +45,22 @@ class ImportExportData extends Command {
      * @var
      */
     protected $currentLine = '';
+
+    /**
+     * @var int
+     */
+    protected $totalUploadCount = 0;
+
+    /**
+     * @var int
+     */
+    protected $successfulUploadCount = 0;
+
+    /**
+     * @var int
+     */
+    protected $failedUploadCount = 0;
+
     /**
      * Get the console command arguments.
      *
@@ -74,33 +92,32 @@ class ImportExportData extends Command {
 	 */
 	public function fire()
 	{
-        $file = $this->openFile();
+        $this->setupUploadCounters();
 
-        foreach($file as $line)
+        foreach($this->openDataFile() as $this->currentLine)
         {
-            $this->currentLine = $line;
-            $torrent = $this->mapTorrent($line);
+            $torrent = $this->mapTorrent();
 
             if(is_null($torrent))
                 continue;
 
-            $command = new UploadTorrent($torrent);
-            $result = $this->dispatch($command);
-
+            $result = $this->uploadTorrent($torrent);
             $this->handleResult($result);
+
+            $this->updateUploadCounters($result);
         }
+
+        $this->printUploadCounters();
 	}
 
     /**
-     * @param $line
-     * @param $i
      * @return array
      */
-    private function mapTorrent($line)
+    private function mapTorrent()
     {
         try
         {
-            return $this->mapper->map($line);
+            return $this->mapper->map($this->currentLine);
         }
         catch (\Exception $exception)
         {
@@ -108,11 +125,16 @@ class ImportExportData extends Command {
         }
     }
 
-    private function openFile()
+    /**
+     * @return SplFileObject|void
+     */
+    private function openDataFile()
     {
+        $filePath = $this->argument('path');
+
         try
         {
-            return new \SplFileObject($this->argument('path'), 'r');
+            return new SplFileObject($filePath, 'r');
         }
         catch (\RuntimeException $exception)
         {
@@ -122,27 +144,96 @@ class ImportExportData extends Command {
 
     /**
      * @param $result
+     * @return void
      */
     private function handleResult(OperationResult $result)
     {
-        if ($result->isFailed())
+        if ($result->isFailed() and $this->isInVerboseMode())
         {
-            $error = $result->getError();
-            $message = $this->formatErrorMessage($error);
-
-            $this->error($message);
+            $this->printErrorMessage($result);
         }
     }
 
+    /**
+     * @param Error $error
+     * @return string
+     */
     private function formatErrorMessage(Error $error)
     {
         $lines = [
-            'ERROR: ' . $error->message,
+            'Error: ' . $error->message,
             'Details: ' . join('|', $error->attachments),
-            'Line: ' . $this->currentLine
+            'Line: ' . trim($this->currentLine)
         ];
 
         return join(PHP_EOL, $lines);
+    }
+
+    /**
+     * @param Torrent $torrent
+     * @return OperationResult
+     */
+    private function uploadTorrent(Torrent $torrent)
+    {
+        $command = new UploadTorrent($torrent);
+        return $this->dispatch($command);
+    }
+
+    /**
+     * @return void
+     */
+    private function setupUploadCounters()
+    {
+        $this->totalUploadCount = $this->successfulUploadCount = $this->failedUploadCount = 0;
+    }
+
+    /**
+     * @param OperationResult $result
+     * @return void
+     */
+    private function updateUploadCounters(OperationResult $result)
+    {
+        $this->totalUploadCount++;
+
+        if ($result->isSuccessful())
+            $this->successfulUploadCount++;
+        else
+            $this->failedUploadCount++;
+    }
+
+    /**
+     * @return void
+     */
+    private function printUploadCounters()
+    {
+        $stats = [
+            'Total uploads: ' . $this->totalUploadCount,
+            'successful uploads: ' . $this->successfulUploadCount,
+            'failed uploads: ' . $this->failedUploadCount
+        ];
+
+        $statsMessage = join(', ', $stats) . '.';
+
+        $this->info($statsMessage);
+    }
+
+    /**
+     * @param FailedResult $result
+     * @return void
+     */
+    private function printErrorMessage(FailedResult $result)
+    {
+        $error = $result->getError();
+        $message = $this->formatErrorMessage($error);
+        $this->error($message);
+    }
+
+    /**
+     * @return boolean
+     */
+    private function isInVerboseMode()
+    {
+        return boolval($this->option('verbose'));
     }
 
 }
