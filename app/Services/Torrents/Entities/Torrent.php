@@ -1,5 +1,7 @@
 <?php namespace Lighthouse\Services\Torrents\Entities;
 
+use Lighthouse\Services\Torrents\Common\Utils\MagnetLinkBuilder;
+
 class Torrent extends Base
 {
     /**
@@ -27,6 +29,12 @@ class Torrent extends Base
      */
     public $url;
 
+
+    /**
+     * @var string
+     */
+    public $magnetLink;
+
     /**
      * @var string
      */
@@ -41,4 +49,13 @@ class Torrent extends Base
      * @var int
      */
     public $peerCount;
+
+    public function __construct(array $params = [])
+    {
+        parent::__construct($params);
+
+        if (is_null($this->magnetLink))
+            $this->magnetLink = MagnetLinkBuilder::build($this->hash);
+    }
+
 }

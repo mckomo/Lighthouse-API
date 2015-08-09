@@ -75,8 +75,16 @@ class ValidationHelper {
      */
     public static function isInRange($number, $lb, $rb)
     {
-//        var_dump($number, $lb, $rb);
         return $number >= $lb && $number <= $rb;
+    }
+
+    /**
+     * @param $link
+     * @return int
+     */
+    public static function isMagnetLink($link)
+    {
+        return preg_match('/^magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i', $link);
     }
 
 }

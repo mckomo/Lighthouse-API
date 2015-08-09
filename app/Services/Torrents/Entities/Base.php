@@ -4,8 +4,7 @@ abstract class Base
 {
     public function __construct(array $params = [])
     {
-        if (count($params) > 0)
-            $this->setupWith($params);
+        $this->setupWith($params);
     }
 
     /**

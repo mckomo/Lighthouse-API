@@ -40,7 +40,7 @@ class SetupElasticSearch extends Command
 	 */
 	public function fire()
 	{
-        $shouldPurgeIndex = $this->option('delete');
+        $shouldPurgeIndex = $this->option('purge');
         $command = new \Lighthouse\Commands\SetupElasticSearch($shouldPurgeIndex);
 
         $this->dispatch($command);

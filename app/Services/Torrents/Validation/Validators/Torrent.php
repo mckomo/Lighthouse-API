@@ -34,6 +34,9 @@ class Torrent implements Validator
         if (!ValidationHelper::isUrl($entity->url))
             $errors[] = ErrorMessages::InvalidUrl;
 
+        if (!ValidationHelper::isMagnetLink($entity->magnetLink))
+            $errors[] = ErrorMessages::InvalidUrl;
+
         if (!ValidationHelper::isIso8601Utc($entity->uploadedAt))
             $errors[] = ErrorMessages::UploadTimeFormat;
 

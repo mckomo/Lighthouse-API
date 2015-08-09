@@ -92,6 +92,16 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    public function testFailsWithInvalidMagnetLink()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->magnetLink = 'magnet:?xt=urn:btih:badHash&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80';
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
     public function testFailsWithUploadTimeFormatOtherThanISO8601()
     {
         $brokenEntity = $this->getValidTorrent();

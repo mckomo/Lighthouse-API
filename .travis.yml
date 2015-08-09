@@ -6,10 +6,17 @@ php:
   - 5.6
   - hhvm
 
+services:
+  - elasticsearch
+
 # Commands to be run before your environment runs.
 before_script:
+  - sleep 10 # Wait for Eleastic Search
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - php artisan elasticsearch:setup --purge
+  - php artisan torrents:import tests/Support/fixtures/exportdata.txt
+  - sleep 5 # Wait for Eleastic Search to index torrents
 
 # Commands you want to run that will verify your build.
 script: phpunit
