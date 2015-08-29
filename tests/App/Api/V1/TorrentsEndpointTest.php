@@ -1,6 +1,6 @@
 <?php
 
-namespace Lighthouse\Tests\App\Api\V1;
+namespace Lighthouse\tests\App\Api\V1;
 
 use Lighthouse\Tests\Support\TestCase;
 

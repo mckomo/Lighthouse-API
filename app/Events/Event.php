@@ -1,7 +1,8 @@
-<?php namespace Lighthouse\Events;
+<?php
 
-abstract class Event {
+namespace Lighthouse\Events;
 
-	//
-
+abstract class Event
+{
+    //
 }

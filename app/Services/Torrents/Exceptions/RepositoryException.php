@@ -1,4 +1,7 @@
-<?php namespace Lighthouse\Services\Torrents\Exceptions;
+<?php
 
+namespace Lighthouse\Services\Torrents\Exceptions;
 
-class RepositoryException extends \RuntimeException {}
+class RepositoryException extends \RuntimeException
+{
+}

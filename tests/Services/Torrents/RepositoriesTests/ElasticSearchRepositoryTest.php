@@ -1,13 +1,15 @@
-<?php namespace Lighthouse\Tests\Services\Torrents\RepositoriesTests;
+<?php
 
-use Mockery;
+namespace Lighthouse\tests\Services\Torrents\RepositoriesTests;
+
 use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
 use Lighthouse\Services\Torrents\Repositories\ElasticSearch as Repository;
 use Lighthouse\Tests\Support\EntitySampler;
+use Mockery;
 
-class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase {
-
+class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase
+{
     private $mapperMock;
     private $endpointMock;
     private $resultSetMock;
@@ -29,7 +31,7 @@ class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase {
     public function testByDefaultLimitsQueryToTwenty()
     {
         $query = EntitySampler::sampleQuery();
-        $validateSize = function($query) { return $query->getParam('size') == 20; };
+        $validateSize = function ($query) { return $query->getParam('size') == 20; };
 
         $this->resultSetMock
             ->shouldReceive('getResults')

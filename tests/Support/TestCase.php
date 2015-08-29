@@ -1,6 +1,6 @@
 <?php
 
-namespace Lighthouse\Tests\Support;
+namespace Lighthouse\tests\Support;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase as IlluminateTestCase;

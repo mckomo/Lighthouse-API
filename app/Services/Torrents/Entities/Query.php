@@ -1,9 +1,9 @@
-<?php namespace Lighthouse\Services\Torrents\Entities;
+<?php
 
+namespace Lighthouse\Services\Torrents\Entities;
 
 class Query extends Base
 {
-
     /**
      * @var string
      */
@@ -18,5 +18,4 @@ class Query extends Base
      * @var string
      */
     public $category;
-
 }

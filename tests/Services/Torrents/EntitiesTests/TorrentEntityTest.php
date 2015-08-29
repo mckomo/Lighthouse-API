@@ -18,7 +18,7 @@ class TorrentEntityTest extends PHPUnit_Framework_TestCase
             'magnetLink'    => 'magnet:?xt=urn:btih:{hash}&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80',
             'uploadedAt'    => '2015-06-27T16:50:58Z',
             'seedCount'     => 75,
-            'peerCount'     => 173
+            'peerCount'     => 173,
         ];
 
         $this->torrent = new Torrent($this->params);
@@ -68,9 +68,8 @@ class TorrentEntityTest extends PHPUnit_Framework_TestCase
     {
         unset($this->params['magnetLink']);
 
-        $torrent =  new Torrent($this->params);
+        $torrent = new Torrent($this->params);
 
         $this->assertContains('magnet:', $torrent->magnetLink);
     }
-
 }

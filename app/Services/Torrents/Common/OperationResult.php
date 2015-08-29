@@ -2,8 +2,8 @@
 
 namespace Lighthouse\Services\Torrents\Common;
 
-abstract class OperationResult {
-
+abstract class OperationResult
+{
     /**
      * @var int
      */
@@ -17,12 +17,12 @@ abstract class OperationResult {
         $this->code = $code;
     }
 
-    static function successful($data = null)
+    public static function successful($data = null)
     {
         return new SuccessfulResult(ResultCodes::Successful);
     }
 
-    static function failed()
+    public static function failed()
     {
         return new FailedResult(ResultCodes::Failed);
     }
@@ -30,6 +30,7 @@ abstract class OperationResult {
     public function withCode($code)
     {
         $this->code = $code;
+
         return $this;
     }
 
@@ -50,5 +51,4 @@ abstract class OperationResult {
     {
         return !$this->isSuccessful();
     }
-
 }
