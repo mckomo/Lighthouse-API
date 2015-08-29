@@ -1,3 +1,7 @@
-<?php namespace Lighthouse\Commands;
+<?php
 
-abstract class Command {}
+namespace Lighthouse\Commands;
+
+abstract class Command
+{
+}

@@ -1,4 +1,6 @@
-<?php namespace Lighthouse\Tests\Services\Torrents\MappersTests;
+<?php
+
+namespace Lighthouse\tests\Services\Torrents\MappersTests;
 
 use Lighthouse\Services\Torrents\Mappers\KickassExportData as Mapper;
 
@@ -82,5 +84,4 @@ class KickassExportDataMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($result);
     }
-
 }

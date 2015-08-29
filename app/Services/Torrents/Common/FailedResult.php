@@ -1,9 +1,11 @@
-<?php namespace Lighthouse\Services\Torrents\Common;
+<?php
+
+namespace Lighthouse\Services\Torrents\Common;
 
 use Lighthouse\Services\Torrents\Entities\Error;
 
-class FailedResult extends OperationResult {
-
+class FailedResult extends OperationResult
+{
     private $error;
 
     /**
@@ -20,6 +22,7 @@ class FailedResult extends OperationResult {
     public function withError(Error $error)
     {
         $this->error = $error;
+
         return $this;
     }
 

@@ -1,5 +1,6 @@
-<?php namespace Lighthouse\Services\Torrents\Common;
+<?php
 
+namespace Lighthouse\Services\Torrents\Common;
 
 final class ResultCodes
 {

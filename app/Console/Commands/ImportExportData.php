@@ -1,8 +1,10 @@
-<?php namespace Lighthouse\Console\Commands;
+<?php
+
+namespace Lighthouse\Console\Commands;
 
 use Illuminate\Console\Command;
-use Lighthouse\Commands\UploadTorrent;
 use Illuminate\Foundation\Bus\DispatchesCommands;
+use Lighthouse\Commands\UploadTorrent;
 use Lighthouse\Services\Torrents\Common\FailedResult;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Contracts\Mapper as TorrentMapper;
@@ -11,12 +13,12 @@ use Lighthouse\Services\Torrents\Entities\Torrent;
 use SplFileObject;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ImportExportData extends Command {
-
+class ImportExportData extends Command
+{
     use DispatchesCommands;
 
     /**
-     * Export data file
+     * Export data file.
      *
      * @var SplFileObject
      */
@@ -27,19 +29,19 @@ class ImportExportData extends Command {
      */
     protected $mapper;
 
-	/**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = 'torrents:import';
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'torrents:import';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = 'Upload export data from KickassTorrents.';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Upload export data from KickassTorrents.';
 
     /**
      * @var
@@ -73,33 +75,33 @@ class ImportExportData extends Command {
         ];
     }
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct(TorrentMapper $mapper)
-	{
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct(TorrentMapper $mapper)
+    {
         $this->mapper = $mapper;
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function fire()
+    {
         $this->setupUploadCounters();
 
-        foreach($this->openDataFile() as $this->currentLine)
-        {
+        foreach ($this->openDataFile() as $this->currentLine) {
             $torrent = $this->mapTorrent();
 
-            if(is_null($torrent))
+            if (is_null($torrent)) {
                 continue;
+            }
 
             $result = $this->uploadTorrent($torrent);
             $this->handleResult($result);
@@ -108,20 +110,17 @@ class ImportExportData extends Command {
         }
 
         $this->printUploadCounters();
-	}
+    }
 
     /**
      * @return array
      */
     private function mapTorrent()
     {
-        try
-        {
+        try {
             return $this->mapper->map($this->currentLine);
-        }
-        catch (\Exception $exception)
-        {
-            $this->error('Mapper error on line: "' . $line . '". Error message: ' . $exception->getMessage() . '.');
+        } catch (\Exception $exception) {
+            $this->error('Mapper error on line: "'.$line.'". Error message: '.$exception->getMessage().'.');
         }
     }
 
@@ -132,50 +131,50 @@ class ImportExportData extends Command {
     {
         $filePath = $this->argument('path');
 
-        try
-        {
+        try {
             return new SplFileObject($filePath, 'r');
-        }
-        catch (\RuntimeException $exception)
-        {
+        } catch (\RuntimeException $exception) {
             return $this->error($exception->getMessage());
         }
     }
 
     /**
      * @param $result
+     *
      * @return void
      */
     private function handleResult(OperationResult $result)
     {
-        if ($result->isFailed() and $this->isInVerboseMode())
-        {
+        if ($result->isFailed() and $this->isInVerboseMode()) {
             $this->printErrorMessage($result);
         }
     }
 
     /**
      * @param Error $error
+     *
      * @return string
      */
     private function formatErrorMessage(Error $error)
     {
         $lines = [
-            'Error: ' . $error->message,
-            'Details: ' . join('|', $error->attachments),
-            'Line: ' . trim($this->currentLine)
+            'Error: '.$error->message,
+            'Details: '.implode('|', $error->attachments),
+            'Line: '.trim($this->currentLine),
         ];
 
-        return join(PHP_EOL, $lines);
+        return implode(PHP_EOL, $lines);
     }
 
     /**
      * @param Torrent $torrent
+     *
      * @return OperationResult
      */
     private function uploadTorrent(Torrent $torrent)
     {
         $command = new UploadTorrent($torrent);
+
         return $this->dispatch($command);
     }
 
@@ -189,16 +188,18 @@ class ImportExportData extends Command {
 
     /**
      * @param OperationResult $result
+     *
      * @return void
      */
     private function updateUploadCounters(OperationResult $result)
     {
         $this->totalUploadCount++;
 
-        if ($result->isSuccessful())
+        if ($result->isSuccessful()) {
             $this->successfulUploadCount++;
-        else
+        } else {
             $this->failedUploadCount++;
+        }
     }
 
     /**
@@ -207,18 +208,19 @@ class ImportExportData extends Command {
     private function printUploadCounters()
     {
         $stats = [
-            'Total uploads: ' . $this->totalUploadCount,
-            'successful uploads: ' . $this->successfulUploadCount,
-            'failed uploads: ' . $this->failedUploadCount
+            'Total uploads: '.$this->totalUploadCount,
+            'successful uploads: '.$this->successfulUploadCount,
+            'failed uploads: '.$this->failedUploadCount,
         ];
 
-        $statsMessage = join(', ', $stats) . '.';
+        $statsMessage = implode(', ', $stats).'.';
 
         $this->info($statsMessage);
     }
 
     /**
      * @param FailedResult $result
+     *
      * @return void
      */
     private function printErrorMessage(FailedResult $result)
@@ -229,11 +231,10 @@ class ImportExportData extends Command {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function isInVerboseMode()
     {
         return boolval($this->option('verbose'));
     }
-
 }

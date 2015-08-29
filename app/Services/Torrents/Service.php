@@ -1,17 +1,19 @@
-<?php namespace Lighthouse\Services\Torrents;
+<?php
+
+namespace Lighthouse\Services\Torrents;
 
 use Lighthouse\Services\Torrents\Common\ErrorMessages;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Common\ResultCodes;
+use Lighthouse\Services\Torrents\Contracts\Repository;
 use Lighthouse\Services\Torrents\Contracts\Service as ServiceInterface;
 use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
 use Lighthouse\Services\Torrents\Validation\Utils\ValidationHelper;
-use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Query as QueryValidator;
-use Lighthouse\Services\Torrents\Contracts\Repository;
+use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 
 class Service implements ServiceInterface
 {
@@ -37,6 +39,7 @@ class Service implements ServiceInterface
     /**
      * @param $phrase
      * @param array $options
+     *
      * @return OperationResult
      */
     public function search(Query $query)
@@ -45,20 +48,16 @@ class Service implements ServiceInterface
 
         $isValid = $this->queryValidator->isValid($query, $errors);
 
-        if (!$isValid)
-        {
+        if (!$isValid) {
             $code = ResultCodes::InvalidInput;
             $error = Error::create(ErrorMessages::ValidationError, $errors);
 
             return $this->fail($code, $error);
         }
 
-        try
-        {
+        try {
             $torrents = $this->repository->search($query);
-        }
-        catch(RepositoryException $exception)
-        {
+        } catch (RepositoryException $exception) {
             return $this->handleRepositoryException($exception);
         }
 
@@ -67,26 +66,23 @@ class Service implements ServiceInterface
 
     /**
      * @param Torrent $torrent
+     *
      * @return OperationResult
      */
     public function upload(Torrent $torrent)
     {
         $isValid = $this->torrentValidator->isValid($torrent, $errors);
 
-        if (!$isValid)
-        {
+        if (!$isValid) {
             $code = ResultCodes::InvalidInput;
             $error = Error::create(ErrorMessages::ValidationError, $errors);
 
             return $this->fail($code, $error);
         }
 
-        try
-        {
+        try {
             $this->repository->store($torrent);
-        }
-        catch(RepositoryException $exception)
-        {
+        } catch (RepositoryException $exception) {
             return $this->handleRepositoryException($exception);
         }
 
@@ -95,31 +91,27 @@ class Service implements ServiceInterface
 
     /**
      * @param string $hash
+     *
      * @return OperationResult
      */
     public function get($hash)
     {
         $torrent = null;
 
-        if (!ValidationHelper::isHash($hash))
-        {
+        if (!ValidationHelper::isHash($hash)) {
             $code = ResultCodes::InvalidInput;
             $error = Error::create(ErrorMessages::InvalidHash);
 
             return $this->fail($code, $error);
         }
 
-        try
-        {
+        try {
             $torrent = $this->repository->get($hash);
-        }
-        catch(RepositoryException $exception)
-        {
+        } catch (RepositoryException $exception) {
             return $this->handleRepositoryException($exception);
         }
 
-        if (is_null($torrent))
-        {
+        if (is_null($torrent)) {
             $error = Error::create(ErrorMessages::TorrentNotFound);
             $code = ResultCodes::ResourceNotFound;
 
@@ -130,8 +122,9 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param int $code
+     * @param int   $code
      * @param Error $error
+     *
      * @return OperationResult
      */
     private function fail($code, $error)
@@ -143,6 +136,7 @@ class Service implements ServiceInterface
 
     /**
      * @param mixed|array $data
+     *
      * @return OperationResult
      */
     private function success($data = [])

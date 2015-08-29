@@ -1,4 +1,6 @@
-<?php namespace Lighthouse\Tests\Services\Torrents\ValidatorsTests;
+<?php
+
+namespace Lighthouse\tests\Services\Torrents\ValidatorsTests;
 
 use Lighthouse\Services\Torrents\Validation\Validators\Query as Validator;
 use Lighthouse\Tests\Support\EntitySampler;
@@ -14,7 +16,7 @@ class QueryValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->validator = new Validator;
+        $this->validator = new Validator();
     }
 
     public function testSucceedsWithValidQuery()
@@ -93,7 +95,7 @@ class QueryValidatorTest extends \PHPUnit_Framework_TestCase
     public function testReturnsValidatorError()
     {
         $brokenQuery = $this->getValidQuery();
-        $brokenQuery->phrase = "";
+        $brokenQuery->phrase = '';
 
         $this->validator->isValid($brokenQuery, $errors);
         $errorCount = count($errors);

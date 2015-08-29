@@ -1,8 +1,9 @@
-<?php namespace Lighthouse\Services\Torrents\Common;
+<?php
 
+namespace Lighthouse\Services\Torrents\Common;
 
-class SuccessfulResult extends OperationResult {
-
+class SuccessfulResult extends OperationResult
+{
     /**
      * @var mixed
      */
@@ -30,6 +31,7 @@ class SuccessfulResult extends OperationResult {
     public function withData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 

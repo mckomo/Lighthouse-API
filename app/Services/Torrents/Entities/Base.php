@@ -1,4 +1,6 @@
-<?php namespace Lighthouse\Services\Torrents\Entities;
+<?php
+
+namespace Lighthouse\Services\Torrents\Entities;
 
 abstract class Base
 {
@@ -9,14 +11,13 @@ abstract class Base
 
     /**
      * @param $data
+     *
      * @return Base
      */
     private function setupWith($params)
     {
-        foreach($params as $key => $value)
-        {
-            if (property_exists($this, $key))
-            {
+        foreach ($params as $key => $value) {
+            if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace Lighthouse\Commands;
 
-
 class SetupElasticSearch extends Command
 {
     private $shouldPurge;
