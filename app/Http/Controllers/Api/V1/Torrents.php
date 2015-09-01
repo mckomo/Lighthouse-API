@@ -1,5 +1,9 @@
-<?php namespace Lighthouse\Http\Controllers\Api\V1;
+<?php
 
+namespace Lighthouse\Http\Controllers\Api\V1;
+
+use GuzzleHttp\Exception\ClientException;
+use Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Lighthouse\Http\Controllers\Controller;
@@ -15,7 +19,7 @@ class Torrents extends Controller {
 
     protected $service;
 
-    function __construct(Service $service, HttpClient $http)
+    public function __construct(Service $service, HttpClient $http)
     {
         $this->service = $service;
         $this->http = $http;
@@ -53,17 +57,17 @@ class Torrents extends Controller {
         $operationResult = $this->service->get($hash);
 
         if ($operationResult->isFailed())
-            $this->prepareResponse($operationResult);
+            return $this->prepareResponse($operationResult);
 
         $torrent = $operationResult->getData();
 
         $filename = Str::slug($torrent->name) . '.torrent';
-        $contents = $this->download($torrent);
+        $torrentContents = $this->download($torrent);
 
-        if (is_null($contents))
-            return response('', 404);
+        if (is_null($torrentContents))
+            return response('Torrent file is gone. Use the magnet link instead', 410);
 
-        return response($contents)
+        return response($torrentContents)
             ->header('Content-Type', 'application/x-bittorrent')
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
@@ -151,11 +155,10 @@ class Torrents extends Controller {
     private function buildQuery($input)
     {
         $params = [
-            'phrase' => array_key_exists('q', $input) ? $input['q'] : ''
-        ];
+            'phrase' => array_key_exists('q', $input) ? $input['q'] : ''];
 
         if (array_key_exists('size', $input))
-            $params['size'] = $input['size'];
+            $params['size'] = intval($input['size']);
 
         if (array_key_exists('category', $input))
             $params['category'] = strtolower($input['category']);
@@ -169,15 +172,27 @@ class Torrents extends Controller {
      */
     private function download(Torrent $torrent)
     {
-        $response = $this->http->get($torrent->url, [
-            'headers' => ['Accept-Encoding' => 'gzip'],
-            'decode_content' => true
-        ]);
+        try
+        {
+            return $this->downloadTorrent($torrent->url);
+        }
+        catch(ClientException $exception)
+        {
+            Log::error($exception->getMessage());
+        }
 
-        return $response->getStatusCode() == 200
-            ? $response->getBody()
-            : null;
+        return null;
+    }
 
+    /**
+     * @param $torrentUrl
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    private function downloadTorrent($torrentUrl)
+    {
+        return $this->http
+            ->get($torrentUrl, ['headers' => ['Accept-Encoding' => 'gzip'], 'decode_content' => true])
+            ->getBody();
     }
 
 }
