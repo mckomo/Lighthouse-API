@@ -1,6 +1,7 @@
-<?php namespace Lighthouse\Tests\Services\Torrents\ValidatorsTests;
+<?php
 
-use Lighthouse\Services\Torrents\Entities\Torrent;
+namespace Lighthouse\tests\Services\Torrents\ValidatorsTests;
+
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 use Lighthouse\Tests\Support\EntitySampler;
 
@@ -189,11 +190,10 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
 
     private function convertToString($hex)
     {
-        $string='';
+        $string = '';
 
-        for ($i=0; $i < strlen($hex)-1; $i+=2)
-        {
-            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
+            $string .= chr(hexdec($hex[$i].$hex[$i + 1]));
         }
 
         return $string;

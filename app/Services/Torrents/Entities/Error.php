@@ -1,5 +1,6 @@
-<?php namespace Lighthouse\Services\Torrents\Entities;
+<?php
 
+namespace Lighthouse\Services\Torrents\Entities;
 
 class Error extends Base
 {
@@ -14,22 +15,23 @@ class Error extends Base
     public $attachments;
 
     /**
-     * @param int $code
+     * @param int    $code
      * @param string $message
-     * @param array $attachments
+     * @param array  $attachments
+     *
      * @return Error
      */
-    static function create($message = '', $attachments = null)
+    public static function create($message = '', $attachments = null)
     {
-        if (is_null($attachments))
+        if (is_null($attachments)) {
             $attachments = [];
+        }
 
         $params = [
-            'message' => $message,
-            'attachments' => $attachments
+            'message'     => $message,
+            'attachments' => $attachments,
         ];
 
         return new static($params);
     }
-
 }

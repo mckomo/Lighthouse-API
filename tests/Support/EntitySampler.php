@@ -1,4 +1,6 @@
-<?php namespace Lighthouse\Tests\Support;
+<?php
+
+namespace Lighthouse\tests\Support;
 
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Entities\Torrent;
@@ -18,7 +20,7 @@ class EntitySampler
             'url'           => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
             'uploadedAt'    => '2015-06-27T16:50:58Z',
             'seedCount'     => 75,
-            'peerCount'     => 175
+            'peerCount'     => 175,
         ]);
     }
 
@@ -30,7 +32,7 @@ class EntitySampler
         return new Query([
             'phrase'        => 'Solarix-RELOADED',
             'size'          => 20,
-            'category'      => 'games'
+            'category'      => 'games',
         ]);
     }
 }

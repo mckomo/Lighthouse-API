@@ -1,28 +1,29 @@
-<?php namespace Lighthouse\Providers;
+<?php
+
+namespace Lighthouse\Providers;
 
 use Elastica\Client;
 use Illuminate\Support\ServiceProvider;
 
 class TorrentServiceProvider extends ServiceProvider
 {
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // TODO Ustawienie indeksu
+    }
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		// TODO Ustawienie indeksu
-	}
-
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $elastica = new Client();
 
         $this->app->singleton(
@@ -33,11 +34,10 @@ class TorrentServiceProvider extends ServiceProvider
             'Lighthouse\Services\Torrents\Contracts\Mapper', 'Lighthouse\Services\Torrents\Mappers\KickassExportData');
         $this->app->when('Lighthouse\Services\Torrents\Repositories\ElasticSearch')
             ->needs('Elastica\Type')
-            ->give(function() use($elastica) {
+            ->give(function () use ($elastica) {
                 return $elastica
                     ->getIndex('lighthouse')
                     ->getType('torrent');
             });
-	}
-
+    }
 }

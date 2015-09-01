@@ -1,11 +1,13 @@
-<?php namespace Lighthouse\Tests\App\Commands;
+<?php
+
+namespace Lighthouse\tests\App\Commands;
 
 use Lighthouse\Commands\SetupElasticSearch;
 use Lighthouse\Handlers\Commands\SetupElasticSearchHandler;
 use Mockery;
 use Mockery\MockInterface;
 
-class SetupElasticSearchHandlerTest extends \PHPUnit_Framework_TestCase
+class SetupElasticSearchHandlerHandlerTest extends \PHPUnit_Framework_TestCase
 {
     public function tearDown()
     {
@@ -92,12 +94,14 @@ class SetupElasticSearchHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param MockInterface $typeMock
+     *
      * @return MockInterface
      */
     private function setupSimpleIndexMock(MockInterface $typeMock = null)
     {
-        if (is_null($typeMock))
+        if (is_null($typeMock)) {
             $typeMock = $this->setupSimpleTypeMock();
+        }
 
         return $this->setupIgnoringMissingMethodsMockInterface('\Elastica\Index')
             ->shouldReceive('getType')
@@ -107,12 +111,14 @@ class SetupElasticSearchHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param MockInterface $indexMockInterface
+     *
      * @return MockInterface
      */
     private function setupClientMock(MockInterface $indexMock = null)
     {
-        if (is_null($indexMock))
+        if (is_null($indexMock)) {
             $indexMock = $this->setupSimpleIndexMock();
+        }
 
         return $this->setupIgnoringMissingMethodsMockInterface('\Elastica\Client')
             ->shouldReceive('getIndex')
@@ -122,14 +128,13 @@ class SetupElasticSearchHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $className
+     *
      * @return MockInterface
      */
     private function setupIgnoringMissingMethodsMockInterface($className)
     {
         return Mockery::mock($className)->shouldIgnoreMissing();
     }
-
-
 
 //    public function testCreatesTorrentTypeWithMapping()
 //    {
@@ -155,6 +160,4 @@ class SetupElasticSearchHandlerTest extends \PHPUnit_Framework_TestCase
 //
 //        $handler->handle($setupCommand);
 //    }
-
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lighthouse\Tests\App\Api\V1;
+namespace Lighthouse\tests\App\Api\V1;
 
 use Lighthouse\Tests\Support\TestCase;
 use Mockery;
@@ -35,10 +35,8 @@ class TorrentsEndpointTest extends TestCase
 
         $response = $this->call('GET', 'api/v1/torrents/9C5FB1D3079502196E4990771C9760BF6857D756/file');
 
-
         $this->assertEquals(410, $response->getStatusCode());
     }
-
 
     private function assertHasMagnetLink($torrent)
     {

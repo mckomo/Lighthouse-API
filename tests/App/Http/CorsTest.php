@@ -1,13 +1,12 @@
 <?php
 
-namespace Lighthouse\Tests\App\Http;
+namespace Lighthouse\tests\App\Http;
 
 use Illuminate\Http\Request;
 use Lighthouse\Tests\Support\TestCase;
 
 class CorsTest extends TestCase
 {
-
     public function testAjaxRequestsAreEnabled()
     {
         $request = Request::create('GET', 'api/v1/torrents');
@@ -18,5 +17,4 @@ class CorsTest extends TestCase
 
         $this->assertEquals('my-domain.com', $allowedOriginsHeader);
     }
-
 }

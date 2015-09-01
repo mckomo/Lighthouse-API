@@ -2,7 +2,6 @@
 
 namespace Lighthouse\Handlers\Commands;
 
-
 use Elastica\Client;
 use Elastica\Index;
 use Elastica\Type;
@@ -26,7 +25,6 @@ class SetupElasticSearchHandler
      */
     private $client;
 
-
     /**
      * @param Client $client
      */
@@ -45,7 +43,6 @@ class SetupElasticSearchHandler
         $this->setTorrentMapping($type);
     }
 
-
     /**
      * @return Index
      */
@@ -59,6 +56,7 @@ class SetupElasticSearchHandler
 
     /**
      * @param Index $index
+     *
      * @return Type
      */
     private function createTorrentType(Index $index)
@@ -76,19 +74,19 @@ class SetupElasticSearchHandler
         $mapping->setType($type);
         $mapping->setProperties([
             'hash' => [
-                'type' => 'string', 'index' => 'no'],
+                'type' => 'string', 'index' => 'no', ],
             'name' => [
-                'type' => 'string', 'index' => 'analyzed'],
+                'type' => 'string', 'index' => 'analyzed', ],
             'peerCount' => [
-                'type' => 'long', 'index' => 'not_analyzed'],
+                'type' => 'long', 'index' => 'not_analyzed', ],
             'seedCount' => [
-                'type' => 'long', 'index' => 'not_analyzed'],
+                'type' => 'long', 'index' => 'not_analyzed', ],
             'size' => [
-                'type' => 'long', 'index' => 'no'],
+                'type' => 'long', 'index' => 'no', ],
             'uploadedAt' => [
-                'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'no'],
+                'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'no', ],
             'url' => [
-                'type' => 'string', 'index' => 'no'],
+                'type' => 'string', 'index' => 'no', ],
         ]);
 
         $type->setMapping($mapping);

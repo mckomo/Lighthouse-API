@@ -1,9 +1,11 @@
-<?php namespace Lighthouse\Tests\Services\Torrents;
+<?php
 
-use Mockery;
+namespace Lighthouse\tests\Services\Torrents;
+
 use Lighthouse\Services\Torrents\Entities\Query;
 use Lighthouse\Services\Torrents\Service;
 use Lighthouse\Tests\Support\EntitySampler;
+use Mockery;
 
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -145,13 +147,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->get($torrentHash);
     }
 
-
     private function getSampleQuery()
     {
         return new Query([
             'phrase' => 'Torrent name',
-            'size' => 3
+            'size'   => 3,
         ]);
     }
-
 }
