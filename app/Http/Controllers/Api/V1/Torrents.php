@@ -2,8 +2,6 @@
 
 namespace Lighthouse\Http\Controllers\Api\V1;
 
-use Log;
-use Lighthouse\Services\Torrents\Entities\Error;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
@@ -11,8 +9,10 @@ use Lighthouse\Http\Controllers\Controller;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Common\ResultCodes;
 use Lighthouse\Services\Torrents\Contracts\Service;
+use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
+use Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class Torrents extends Controller
@@ -134,6 +134,7 @@ class Torrents extends Controller
             case ResultCodes::Successful:
                 return 200;
             case ResultCodes::ResourceCreated;
+
                 return 201;
             case ResultCodes::InvalidInput:
                 return 400;
@@ -196,6 +197,7 @@ class Torrents extends Controller
 
     /**
      * @param $error
+     *
      * @return array
      */
     private function prepareErrorMessage(Error $error)
