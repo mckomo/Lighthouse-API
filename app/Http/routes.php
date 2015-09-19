@@ -14,7 +14,6 @@
 Route::group(['namespace'     => 'Api', 'prefix' => 'api'], function () {
     Route::group(['namespace' => 'V1', 'prefix' => 'v1'], function () {
         Route::get('torrents', ['as' => 'torrent/search', 'uses' => 'Torrents@search']);
-        Route::get('torrents/{hash}', ['as' => 'torrent/get', 'uses' => 'Torrents@getEntity']);
-        Route::get('torrents/{hash}/file', ['as' => 'torrent/file', 'uses' => 'Torrents@getFile']);
+        Route::get('torrents/{hash}', ['as' => 'torrent/get', 'uses' => 'Torrents@get']);
     });
 });

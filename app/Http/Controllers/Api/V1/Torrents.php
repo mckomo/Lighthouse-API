@@ -4,8 +4,6 @@ namespace Lighthouse\Http\Controllers\Api\V1;
 
 use Log;
 use Lighthouse\Services\Torrents\Entities\Error;
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Lighthouse\Http\Controllers\Controller;
 use Lighthouse\Services\Torrents\Common\OperationResult;
@@ -19,10 +17,9 @@ class Torrents extends Controller
 {
     protected $service;
 
-    public function __construct(Service $service, HttpClient $http)
+    public function __construct(Service $service)
     {
         $this->service = $service;
-        $this->http = $http;
     }
 
     /**
@@ -39,40 +36,15 @@ class Torrents extends Controller
     }
 
     /**
-     * @param string $hash
+     * @param string $torrentHash
      *
      * @return Response
      */
-    public function getEntity($hash)
+    public function get($torrentHash)
     {
-        $operationResult = $this->service->get($hash);
+        $operationResult = $this->service->get($torrentHash);
 
         return $this->prepareResponse($operationResult);
-    }
-
-    /**
-     * @param string $hash
-     *
-     * @return Response
-     */
-    public function getFile($hash)
-    {
-        $operationResult = $this->service->get($hash);
-
-        if ($operationResult->isFailed()) {
-            return $this->prepareResponse($operationResult);
-        }
-
-        $torrent = $operationResult->getData();
-        $torrentContents = $this->download($torrent);
-
-        if (is_null($torrentContents)) {
-            return response('Torrent file is gone. Use the magnet link instead', 410);
-        }
-
-        return response($torrentContents)
-            ->header('Content-Type', 'application/x-bittorrent')
-            ->header('Content-Disposition', 'attachment; filename="'.$torrent->filename.'"');
     }
 
     private function prepareResponse(OperationResult $result)
@@ -106,21 +78,7 @@ class Torrents extends Controller
      */
     private function prepareTorrent($torrent)
     {
-        return $this
-            ->replaceUrl($torrent)
-            ->toArray();
-    }
-
-    /**
-     * @param Torrent $torrent
-     *
-     * @return Torrent
-     */
-    private function replaceUrl(Torrent $torrent)
-    {
-        $torrent->url = route('torrent/file', ['hash' => $torrent->hash]);
-
-        return $torrent;
+        return $torrent->toArray();
     }
 
     /**
@@ -166,32 +124,6 @@ class Torrents extends Controller
         }
 
         return new ServiceQuery($params);
-    }
-
-    /**
-     * @param Torrent $torrent
-     *
-     * @return string
-     */
-    private function download(Torrent $torrent)
-    {
-        try {
-            return $this->downloadContents($torrent->url);
-        } catch (ClientException $exception) {
-            Log::error($exception->getMessage());
-        }
-    }
-
-    /**
-     * @param $torrentUrl
-     *
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    private function downloadContents($url)
-    {
-        return $this->http
-            ->get($url, ['headers' => ['Accept-Encoding' => 'gzip'], 'decode_content' => true])
-            ->getBody();
     }
 
     /**
