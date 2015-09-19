@@ -79,6 +79,7 @@ class ValidationHelper
      * @param float $number
      * @param float $lb
      * @param float $rb
+     *
      * @return bool
      */
     public static function isInRange($number, $lb, $rb)

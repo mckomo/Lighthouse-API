@@ -5,13 +5,13 @@ namespace Lighthouse\Services\Torrents;
 use Lighthouse\Services\Torrents\Common\ErrorMessages;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Common\ResultCodes;
+use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Contracts\Repository;
 use Lighthouse\Services\Torrents\Contracts\Service as ServiceInterface;
 use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
-use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Validation\Validators\Query as QueryValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 
