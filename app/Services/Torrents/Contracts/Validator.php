@@ -8,9 +8,9 @@ interface Validator
 {
     /**
      * @param Entity $entity
-     * @param array  $errors
+     * @param array  $errorMessages
      *
      * @return bool
      */
-    public function isValid(Entity $entity, array &$errors);
+    public function isValid(Entity $entity, array &$errorMessages);
 }

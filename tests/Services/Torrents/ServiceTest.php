@@ -2,7 +2,7 @@
 
 namespace Lighthouse\tests\Services\Torrents;
 
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Service;
 use Lighthouse\Tests\Support\EntitySampler;
 use Mockery;
@@ -149,7 +149,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     private function getSampleQuery()
     {
-        return new Query([
+        return new ServiceQuery([
             'phrase' => 'Torrent name',
             'size'   => 3,
         ]);

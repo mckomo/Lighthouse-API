@@ -2,7 +2,7 @@
 
 namespace Lighthouse\Services\Torrents\Entities;
 
-class Query extends Base
+class ServiceQuery extends Base
 {
     /**
      * @var string
@@ -18,4 +18,15 @@ class Query extends Base
      * @var string
      */
     public $category;
+
+    /**
+     * @var int
+     */
+    public $sort;
+
+    /**
+     * @var string
+     */
+    public $orderBy;
+
 }

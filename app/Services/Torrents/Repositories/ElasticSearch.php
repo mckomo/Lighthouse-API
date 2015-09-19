@@ -9,7 +9,7 @@ use Elastica\Query as ElasticaQuery;
 use Elastica\Result;
 use Elastica\Type as TorrentType;
 use Lighthouse\Services\Torrents\Contracts\Repository;
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
 use Lighthouse\Services\Torrents\Mappers\ElasticSearchResult as Mapper;
@@ -44,34 +44,33 @@ class ElasticSearch implements Repository
     {
         try {
             $result = $this->endpoint->getDocument($hash);
-            $torrent = $this->torrentMapper->map($result);
-
-            return $torrent;
         } catch (ConnectionException $exception) {
             throw new RepositoryException($exception->getMessage());
         } catch (NotFoundException $exception) {
-            return;
+            return null;
         }
+
+        return $this->torrentMapper->map($result);
     }
 
     /**
-     * @param Query $query
+     * @param ServiceQuery $serviceQuery
      *
      * @return Torrent[]
      */
-    public function search(Query $query)
+    public function search(ServiceQuery $serviceQuery)
     {
-        $endpointQuery = $this->buildEndpointQuery($query);
+        $endpointQuery = $this->buildEndpointQuery($serviceQuery);
 
         try {
             $results = $this->endpoint
                 ->search($endpointQuery)
                 ->getResults();
-
-            return $this->mapTorrents($results);
         } catch (ConnectionException $exception) {
             throw new RepositoryException($exception->getMessage(), 0, $exception);
         }
+
+        return $this->mapTorrents($results);
     }
 
     /**
@@ -81,51 +80,51 @@ class ElasticSearch implements Repository
      */
     public function store(Torrent $torrent)
     {
-        try {
-            $document = new Document($torrent->hash, $torrent->toArray());
-            $response = $this->endpoint->addDocument($document);
+        $document = new Document($torrent->hash, $torrent->toArray());
 
-            return in_array($response->getStatus(), [200, 201]);
+        try {
+            $response = $this->endpoint->addDocument($document);
         } catch (ConnectionException $exception) {
             throw new RepositoryException($exception->getMessage(), 0, $exception);
         }
+
+        return in_array($response->getStatus(), [200, 201]);
     }
 
     /**
-     * @param Query $query
+     * @param ServiceQuery $serviceQuery
      *
      * @return ElasticaQuery
      */
-    private function buildEndpointQuery(Query $query)
+    private function buildEndpointQuery(ServiceQuery $serviceQuery)
     {
+        $queryCore = is_null($serviceQuery->category)
+            ? $this->buildNameQuery($serviceQuery)
+            : $this->buildCategoryFilteredQuery($serviceQuery);
+        $querySize = is_null($serviceQuery->category)
+            ? static::DEFAULT_QUERY_SIZE
+            : $serviceQuery->size;
+        $querySort = static::DEFAULT_QUERY_SORT;
+
         $enpointQuery = new ElasticaQuery();
 
-        $querySize = is_null($query->category)
-            ? static::DEFAULT_QUERY_SIZE
-            : $query->size;
-        $phraseQuery = is_null($query->category)
-            ? $this->getPhraseQuery($query->phrase)
-            : $this->getCategoryFilteredQuery($query->phrase, $query->category);
-
-        $enpointQuery
-            ->setParam('query', $phraseQuery)
+        return $enpointQuery
+            ->setParam('query', $queryCore)
             ->setSize($querySize)
-            ->setSort(static::DEFAULT_QUERY_SORT);
-
-        return $enpointQuery;
+            ->setSort($querySort);
     }
 
     /**
-     * @param string $phrase
+     * @param ServiceQuery $serviceQuery
      *
      * @return array
      */
-    private function getPhraseQuery($phrase)
+    private function buildNameQuery($serviceQuery)
     {
         return [
             'match' => [
                 'name' => [
-                    'query'    => $phrase,
+                    'query'    => $serviceQuery->phrase,
                     'operator' => 'and',
                 ],
             ],
@@ -133,20 +132,19 @@ class ElasticSearch implements Repository
     }
 
     /**
-     * @param string $phrase
-     * @param string $category
+     * @param ServiceQuery $serviceQuery
      *
      * @return array
      */
-    private function getCategoryFilteredQuery($phrase, $category)
+    private function buildCategoryFilteredQuery($serviceQuery)
     {
         return [
             'filtered' => [
-                'query'  => $this->getPhraseQuery($phrase),
+                'query'  => $this->buildNameQuery($serviceQuery),
                 'filter' => [
                     'bool' => [
                         'should' => [
-                            'term' => ['category' => $category],
+                            'term' => ['category' => $serviceQuery->category],
                         ],
                     ],
                 ],
@@ -164,5 +162,15 @@ class ElasticSearch implements Repository
         return array_map(function (Result $result) {
             return $this->torrentMapper->map($result);
         }, $results);
+    }
+
+    /**
+     * @param callable $action
+     *
+     * @return mixed
+     */
+    private function requestEndpoint(callable $action)
+    {
+
     }
 }

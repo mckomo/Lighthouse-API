@@ -2,17 +2,17 @@
 
 namespace Lighthouse\Http\Controllers\Api\V1;
 
+use Log;
+use Lighthouse\Services\Torrents\Entities\Error;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Lighthouse\Http\Controllers\Controller;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Common\ResultCodes;
 use Lighthouse\Services\Torrents\Contracts\Service;
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
-use Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class Torrents extends Controller
@@ -64,8 +64,6 @@ class Torrents extends Controller
         }
 
         $torrent = $operationResult->getData();
-
-        $filename = Str::slug($torrent->name).'.torrent';
         $torrentContents = $this->download($torrent);
 
         if (is_null($torrentContents)) {
@@ -74,36 +72,31 @@ class Torrents extends Controller
 
         return response($torrentContents)
             ->header('Content-Type', 'application/x-bittorrent')
-            ->header('Content-Disposition', 'attachment; filename="'.$filename.'"');
+            ->header('Content-Disposition', 'attachment; filename="'.$torrent->filename.'"');
     }
 
     private function prepareResponse(OperationResult $result)
     {
         $code = $this->mapToHttpCode($result->getCode());
-        $body = [];
-
-        if ($result->isSuccessful()) {
-            $data = $result->getData();
-            $body = $this->mapTorrents($data);
-        } else {
-            $body['error'] = $result->getError();
-        }
+        $body = $result->isSuccessful()
+            ? $this->prepareTorrents($result->getData())
+            : $this->prepareErrorMessage($result->getError());
 
         return response($body, $code);
     }
 
     /**
-     * @param array|Torrent $torrents
+     * @param array|Torrent $data
      *
      * @return array|Torrent
      */
-    private function mapTorrents($torrents)
+    private function prepareTorrents($data)
     {
-        if (is_array($torrents)) {
-            return array_map([$this, 'prepareTorrent'], $torrents);
+        if (is_array($data)) {
+            return array_map([$this, 'prepareTorrent'], $data);
         }
 
-        return $this->prepareTorrent($torrents);
+        return $this->prepareTorrent($data);
     }
 
     /**
@@ -125,8 +118,7 @@ class Torrents extends Controller
      */
     private function replaceUrl(Torrent $torrent)
     {
-        $fileUrl = route('torrent/file', ['hash' => $torrent->hash]);
-        $torrent->url = $fileUrl;
+        $torrent->url = route('torrent/file', ['hash' => $torrent->hash]);
 
         return $torrent;
     }
@@ -142,7 +134,6 @@ class Torrents extends Controller
             case ResultCodes::Successful:
                 return 200;
             case ResultCodes::ResourceCreated;
-
                 return 201;
             case ResultCodes::InvalidInput:
                 return 400;
@@ -158,12 +149,13 @@ class Torrents extends Controller
     /**
      * @param array $input
      *
-     * @return Query
+     * @return ServiceQuery
      */
     private function buildQuery($input)
     {
         $params = [
-            'phrase' => array_key_exists('q', $input) ? $input['q'] : '', ];
+            'phrase' => array_key_exists('q', $input) ? $input['q'] : '',
+        ];
 
         if (array_key_exists('size', $input)) {
             $params['size'] = intval($input['size']);
@@ -173,7 +165,7 @@ class Torrents extends Controller
             $params['category'] = strtolower($input['category']);
         }
 
-        return new Query($params);
+        return new ServiceQuery($params);
     }
 
     /**
@@ -184,12 +176,10 @@ class Torrents extends Controller
     private function download(Torrent $torrent)
     {
         try {
-            return $this->downloadTorrent($torrent->url);
+            return $this->downloadContents($torrent->url);
         } catch (ClientException $exception) {
             Log::error($exception->getMessage());
         }
-
-        return;
     }
 
     /**
@@ -197,10 +187,19 @@ class Torrents extends Controller
      *
      * @return \Psr\Http\Message\StreamInterface
      */
-    private function downloadTorrent($torrentUrl)
+    private function downloadContents($url)
     {
         return $this->http
-            ->get($torrentUrl, ['headers' => ['Accept-Encoding' => 'gzip'], 'decode_content' => true])
+            ->get($url, ['headers' => ['Accept-Encoding' => 'gzip'], 'decode_content' => true])
             ->getBody();
+    }
+
+    /**
+     * @param $error
+     * @return array
+     */
+    private function prepareErrorMessage(Error $error)
+    {
+        return ['error' => $error->toArray()];
     }
 }

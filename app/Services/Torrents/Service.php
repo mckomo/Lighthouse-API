@@ -8,10 +8,10 @@ use Lighthouse\Services\Torrents\Common\ResultCodes;
 use Lighthouse\Services\Torrents\Contracts\Repository;
 use Lighthouse\Services\Torrents\Contracts\Service as ServiceInterface;
 use Lighthouse\Services\Torrents\Entities\Error;
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
-use Lighthouse\Services\Torrents\Validation\Utils\ValidationHelper;
+use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Validation\Validators\Query as QueryValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 
@@ -42,10 +42,8 @@ class Service implements ServiceInterface
      *
      * @return OperationResult
      */
-    public function search(Query $query)
+    public function search(ServiceQuery $query)
     {
-        $torrents = [];
-
         $isValid = $this->queryValidator->isValid($query, $errors);
 
         if (!$isValid) {
@@ -71,11 +69,11 @@ class Service implements ServiceInterface
      */
     public function upload(Torrent $torrent)
     {
-        $isValid = $this->torrentValidator->isValid($torrent, $errors);
+        $isValid = $this->torrentValidator->isValid($torrent, $validationMessages);
 
         if (!$isValid) {
             $code = ResultCodes::InvalidInput;
-            $error = Error::create(ErrorMessages::ValidationError, $errors);
+            $error = Error::create(ErrorMessages::ValidationError, $validationMessages);
 
             return $this->fail($code, $error);
         }

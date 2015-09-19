@@ -3,7 +3,7 @@
 namespace Lighthouse\Services\Torrents\Contracts;
 
 use Lighthouse\Services\Torrents\Common\OperationResult;
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 
 interface Service
@@ -14,7 +14,7 @@ interface Service
      *
      * @return OperationResult
      */
-    public function search(Query $query);
+    public function search(ServiceQuery $query);
 
     /**
      * @param Torrent $torrent

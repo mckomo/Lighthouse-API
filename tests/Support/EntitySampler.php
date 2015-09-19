@@ -2,7 +2,7 @@
 
 namespace Lighthouse\tests\Support;
 
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 
 class EntitySampler
@@ -15,6 +15,7 @@ class EntitySampler
         return new Torrent([
             'hash'          => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
             'name'          => 'Solarix-RELOADED',
+            'filename'      => 'solarix-reloaded.torrent',
             'category'      => 'Games',
             'size'          => 1430397537,
             'url'           => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
@@ -25,11 +26,11 @@ class EntitySampler
     }
 
     /**
-     * @return Query
+     * @return ServiceQuery
      */
     public static function sampleQuery()
     {
-        return new Query([
+        return new ServiceQuery([
             'phrase'        => 'Solarix-RELOADED',
             'size'          => 20,
             'category'      => 'games',

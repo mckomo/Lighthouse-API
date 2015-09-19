@@ -2,17 +2,17 @@
 
 namespace Lighthouse\Services\Torrents\Contracts;
 
-use Lighthouse\Services\Torrents\Entities\Query;
+use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 
 interface Repository
 {
     /**
-     * @param Query $query
+     * @param ServiceQuery $query
      *
      * @return Torrent[]
      */
-    public function search(Query $query);
+    public function search(ServiceQuery $query);
 
     /**
      * @param Torrent $torrent

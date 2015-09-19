@@ -11,7 +11,8 @@ class TorrentEntityTest extends PHPUnit_Framework_TestCase
     {
         $this->params = [
             'hash'          => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
-            'name'          => 'Solarix-RELOADED',
+            'name'          => 'Solarix RELOADED',
+            'filename'      => 'solarix-reloaded.torrent',
             'category'      => 'Games',
             'size'          => 1430397537,
             'url'           => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
@@ -24,19 +25,29 @@ class TorrentEntityTest extends PHPUnit_Framework_TestCase
         $this->torrent = new Torrent($this->params);
     }
 
-    public function testHasName()
+    public function testHasHash()
     {
         $this->assertEquals('96B38CAEED19A26EC338AE3B85AC43335750BFCA', $this->torrent->hash);
     }
 
+    public function testHasName()
+    {
+        $this->assertEquals('Solarix RELOADED', $this->torrent->name);
+    }
+
+    public function testHasFilename()
+    {
+        $this->assertEquals('solarix-reloaded.torrent', $this->torrent->filename);
+    }
+
     public function testHasCategory()
     {
-        $this->assertEquals('Solarix-RELOADED', $this->torrent->name);
+        $this->assertEquals('Games', $this->torrent->category);
     }
 
     public function testHasSize()
     {
-        $this->assertEquals('Games', $this->torrent->category);
+        $this->assertEquals(1430397537, $this->torrent->size);
     }
 
     public function testHasUrl()
@@ -71,5 +82,14 @@ class TorrentEntityTest extends PHPUnit_Framework_TestCase
         $torrent = new Torrent($this->params);
 
         $this->assertContains('magnet:', $torrent->magnetLink);
+    }
+
+    public function testSetsFilenameIfNotGiven()
+    {
+        unset($this->params['filename']);
+
+        $torrent = new Torrent($this->params);
+
+        $this->assertEquals('solarix-reloaded.torrent', $torrent->filename);
     }
 }

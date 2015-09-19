@@ -96,7 +96,17 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
     public function testFailsWithInvalidMagnetLink()
     {
         $brokenEntity = $this->getValidTorrent();
-        $brokenEntity->magnetLink = 'magnet:?xt=urn:btih:badHash&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80';
+        $brokenEntity->filename = 'magnet:?xt=urn:btih:BAD_HASH&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80';
+
+        $result = $this->validator->isValid($brokenEntity);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithInvalidFilename()
+    {
+        $brokenEntity = $this->getValidTorrent();
+        $brokenEntity->filename = 'Filename with space.torrent';
 
         $result = $this->validator->isValid($brokenEntity);
 

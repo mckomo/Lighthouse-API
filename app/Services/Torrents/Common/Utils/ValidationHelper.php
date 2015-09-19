@@ -1,6 +1,6 @@
 <?php
 
-namespace Lighthouse\Services\Torrents\Validation\Utils;
+namespace Lighthouse\Services\Torrents\Common\Utils;
 
 class ValidationHelper
 {
@@ -79,7 +79,6 @@ class ValidationHelper
      * @param float $number
      * @param float $lb
      * @param float $rb
-     *
      * @return bool
      */
     public static function isInRange($number, $lb, $rb)
@@ -95,5 +94,15 @@ class ValidationHelper
     public static function isMagnetLink($link)
     {
         return preg_match('/^magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i', $link);
+    }
+
+    /**
+     * @param $filename
+     *
+     * @return bool
+     */
+    public static function isValidFilename($filename)
+    {
+        return preg_match('/^[\w\-]+(\.[\w]+)?$/', $filename);
     }
 }

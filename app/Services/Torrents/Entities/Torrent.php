@@ -2,7 +2,7 @@
 
 namespace Lighthouse\Services\Torrents\Entities;
 
-use Lighthouse\Services\Torrents\Common\Utils\MagnetLinkBuilder;
+use Lighthouse\Services\Torrents\Common\Utils\UnitHelper;
 
 class Torrent extends Base
 {
@@ -15,6 +15,11 @@ class Torrent extends Base
      * @var string
      */
     public $name;
+
+    /**
+     * @var string
+     */
+    public $filename;
 
     /**
      * @var string
@@ -51,12 +56,19 @@ class Torrent extends Base
      */
     public $peerCount;
 
+    /**
+     * @param array $params
+     */
     public function __construct(array $params = [])
     {
         parent::__construct($params);
 
         if (is_null($this->magnetLink)) {
-            $this->magnetLink = MagnetLinkBuilder::build($this->hash);
+            $this->magnetLink = UnitHelper::buildMagnetLink($this->hash);
+        }
+
+        if (is_null($this->filename)) {
+            $this->filename = UnitHelper::formatFilename($this->name, 'torrent');
         }
     }
 }

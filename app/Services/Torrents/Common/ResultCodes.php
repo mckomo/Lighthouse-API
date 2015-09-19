@@ -4,6 +4,7 @@ namespace Lighthouse\Services\Torrents\Common;
 
 final class ResultCodes
 {
+    const Unknown = -1;
     const Successful = 0;
     const ResourceCreated = 1;
     const Failed = 2;

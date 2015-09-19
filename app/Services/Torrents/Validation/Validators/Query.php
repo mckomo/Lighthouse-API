@@ -5,7 +5,7 @@ namespace Lighthouse\Services\Torrents\Validation\Validators;
 use Lighthouse\Services\Torrents\Common\ErrorMessages;
 use Lighthouse\Services\Torrents\Contracts\Validator;
 use Lighthouse\Services\Torrents\Entities\Base as Entity;
-use Lighthouse\Services\Torrents\Validation\Utils\ValidationHelper;
+use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 
 class Query implements Validator
 {
@@ -26,26 +26,26 @@ class Query implements Validator
      *
      * @return bool
      */
-    public function isValid(Entity $query = null, array &$errors = null)
+    public function isValid(Entity $query = null, array &$errorMessages = null)
     {
         if (is_null($query)) {
-            $errors[] = ErrorMessages::EmptyResource;
+            $errorMessages[] = ErrorMessages::EmptyResource;
 
             return false;
         }
 
         if (!ValidationHelper::isLongerThan($query->phrase, 2)) {
-            $errors[] = ErrorMessages::ShortPhrase;
+            $errorMessages[] = ErrorMessages::ShortPhrase;
         }
 
         if (!is_null($query->size) && !ValidationHelper::isInRange($query->size, 1, 100)) {
-            $errors[] = ErrorMessages::OutOfRangeLimit;
+            $errorMessages[] = ErrorMessages::OutOfRangeLimit;
         }
 
         if (!is_null($query->category) && !in_array($query->category, $this->supportedCategories)) {
-            $errors[] = ErrorMessages::UnsupportedCategory;
+            $errorMessages[] = ErrorMessages::UnsupportedCategory;
         }
 
-        return count($errors) == 0;
+        return count($errorMessages) == 0;
     }
 }
