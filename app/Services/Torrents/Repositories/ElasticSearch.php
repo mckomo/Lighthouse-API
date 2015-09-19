@@ -47,7 +47,7 @@ class ElasticSearch implements Repository
         } catch (ConnectionException $exception) {
             throw new RepositoryException($exception->getMessage());
         } catch (NotFoundException $exception) {
-            return null;
+            return;
         }
 
         return $this->torrentMapper->map($result);
@@ -171,6 +171,5 @@ class ElasticSearch implements Repository
      */
     private function requestEndpoint(callable $action)
     {
-
     }
 }

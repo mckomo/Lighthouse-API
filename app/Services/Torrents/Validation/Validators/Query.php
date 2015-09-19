@@ -3,9 +3,9 @@
 namespace Lighthouse\Services\Torrents\Validation\Validators;
 
 use Lighthouse\Services\Torrents\Common\ErrorMessages;
+use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Contracts\Validator;
 use Lighthouse\Services\Torrents\Entities\Base as Entity;
-use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 
 class Query implements Validator
 {
