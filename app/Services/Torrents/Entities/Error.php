@@ -2,8 +2,6 @@
 
 namespace Lighthouse\Services\Torrents\Entities;
 
-use Lighthouse\Services\Torrents\Common\ResultCodes;
-
 class Error extends Base
 {
     /**
@@ -22,10 +20,10 @@ class Error extends Base
      *
      * @return Error
      */
-    public static function create($message = '',  $attachments = [])
+    public static function create($message = '', $attachments = [])
     {
         $params = [
-            'message' => $message,
+            'message'     => $message,
             'attachments' => $attachments,
         ];
 

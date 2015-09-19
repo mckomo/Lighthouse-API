@@ -28,5 +28,4 @@ class ServiceQuery extends Base
      * @var string
      */
     public $orderBy;
-
 }
