@@ -19,7 +19,6 @@ final class ErrorMessages
     const NegativeSeedCount = 'Seed count must be a nonnegative number';
     const InvalidFilename = 'Filename has invalid format';
 
-
     const ShortPhrase = 'Phrase must have at least 3 characters';
     const OutOfRangeLimit = 'Result limit must be in 1 .. 100 range';
     const UnsupportedCategory = 'Search query has unsupported torrent category';
