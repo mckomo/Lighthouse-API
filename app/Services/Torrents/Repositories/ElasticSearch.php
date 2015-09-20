@@ -173,7 +173,7 @@ class ElasticSearch implements Repository
         }
 
         return [
-            $serviceQuery->sortBy => ['order' =>  $serviceQuery->sortOrder]
+            $serviceQuery->sortBy => ['order' => $serviceQuery->sortOrder],
         ];
     }
 }
