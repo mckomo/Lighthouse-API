@@ -123,6 +123,14 @@ class Torrents extends Controller
             $params['category'] = strtolower($input['category']);
         }
 
+        if (array_key_exists('sort_by', $input)) {
+            $params['sortBy'] = $input['sort_by'];
+        }
+
+        if (array_key_exists('sort_order', $input)) {
+            $params['sortOrder'] = $input['sort_order'];
+        }
+
         return new ServiceQuery($params);
     }
 

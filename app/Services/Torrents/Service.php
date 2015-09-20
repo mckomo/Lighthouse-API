@@ -12,7 +12,7 @@ use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
-use Lighthouse\Services\Torrents\Validation\Validators\Query as QueryValidator;
+use Lighthouse\Services\Torrents\Validation\Validators\ServiceQuery as QueryValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
 
 class Service implements ServiceInterface

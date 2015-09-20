@@ -177,17 +177,11 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $errorCount);
     }
 
-    /**
-     * @return array
-     */
     public function getNullAndEmptyString()
     {
         return [[null], ['']];
     }
 
-    /**
-     * @return array
-     */
     public function getNullAndNegativeNumber()
     {
         return [[null], [-10]];

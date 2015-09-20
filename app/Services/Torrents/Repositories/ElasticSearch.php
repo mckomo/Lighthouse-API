@@ -104,7 +104,9 @@ class ElasticSearch implements Repository
         $querySize = is_null($serviceQuery->category)
             ? static::DEFAULT_QUERY_SIZE
             : $serviceQuery->size;
-        $querySort = static::DEFAULT_QUERY_SORT;
+        $querySort = is_null($serviceQuery->sortBy)
+            ? static::DEFAULT_QUERY_SORT
+            : $this->buildSortParameter($serviceQuery);
 
         $enpointQuery = new ElasticaQuery();
 
@@ -164,12 +166,14 @@ class ElasticSearch implements Repository
         }, $results);
     }
 
-    /**
-     * @param callable $action
-     *
-     * @return mixed
-     */
-    private function requestEndpoint(callable $action)
+    private function buildSortParameter(ServiceQuery $serviceQuery)
     {
+        if ($serviceQuery->sortOrder != 'asc') {
+            $serviceQuery->sortOrder = 'desc';
+        }
+
+        return [
+            $serviceQuery->sortBy => ['order' =>  $serviceQuery->sortOrder]
+        ];
     }
 }

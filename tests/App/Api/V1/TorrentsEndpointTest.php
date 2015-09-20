@@ -15,6 +15,19 @@ class TorrentsEndpointTest extends TestCase
         array_walk($torrents, [$this, 'assertHasMagnetLink']);
     }
 
+    public function testSortsByUploadTime()
+    {
+        $response = $this->call('GET', 'api/v1/torrents', ['q' => 'windows', 'sort_by' => 'uploadedAt' ]);
+        $returnedTorrents = json_decode($response->getContent());
+        $sortedTorrents = json_decode($response->getContent());
+
+        usort($sortedTorrents, function($lhs, $rhs) {
+            return strcmp($rhs->uploadedAt, $lhs->uploadedAt); // Desc order
+        });
+
+        $this->assertEquals($sortedTorrents, $returnedTorrents);
+    }
+
     private function assertHasMagnetLink($torrent)
     {
         $this->assertContains('magnet:', $torrent->magnetLink);

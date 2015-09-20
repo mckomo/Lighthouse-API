@@ -22,10 +22,10 @@ class ServiceQuery extends Base
     /**
      * @var int
      */
-    public $sort;
+    public $sortBy;
 
     /**
      * @var string
      */
-    public $orderBy;
+    public $sortOrder;
 }

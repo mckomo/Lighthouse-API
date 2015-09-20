@@ -2,10 +2,10 @@
 
 namespace Lighthouse\tests\Services\Torrents\ValidatorsTests;
 
-use Lighthouse\Services\Torrents\Validation\Validators\Query as Validator;
+use Lighthouse\Services\Torrents\Validation\Validators\ServiceQuery as Validator;
 use Lighthouse\Tests\Support\EntitySampler;
 
-class QueryValidatorTest extends \PHPUnit_Framework_TestCase
+class ServiceQueryValidatorTest extends \PHPUnit_Framework_TestCase
 {
     const ABOVE_LIMIT = 101;
 
@@ -73,6 +73,28 @@ class QueryValidatorTest extends \PHPUnit_Framework_TestCase
         $unsuportedCategory = 'Unsupported category';
         $brokenQuery = $this->getValidQuery();
         $brokenQuery->category = $unsuportedCategory;
+
+        $result = $this->validator->isValid($brokenQuery);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithInvalidSortField()
+    {
+        $invalidSortField = 'NonsortableField';
+        $brokenQuery = $this->getValidQuery();
+        $brokenQuery->sortBy = $invalidSortField;
+
+        $result = $this->validator->isValid($brokenQuery);
+
+        $this->assertFalse($result);
+    }
+
+    public function testFailsWithInvalidSortOrder()
+    {
+        $invalidSortOrder = 'random';
+        $brokenQuery = $this->getValidQuery();
+        $brokenQuery->sortOrder = $invalidSortOrder;
 
         $result = $this->validator->isValid($brokenQuery);
 

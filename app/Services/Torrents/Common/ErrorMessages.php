@@ -22,5 +22,7 @@ final class ErrorMessages
     const ShortPhrase = 'Phrase must have at least 3 characters';
     const OutOfRangeLimit = 'Result limit must be in 1 .. 100 range';
     const UnsupportedCategory = 'Search query has unsupported torrent category';
+    const UnsupportedSortOrder = 'Unsupported sort order. Only \'desc\' or \'asc\' order are allowed';
     const InvalidEncodedName = 'Name has invalid UTF-8 encoding';
+    const InvalidSortField = 'Invalid sort field';
 }

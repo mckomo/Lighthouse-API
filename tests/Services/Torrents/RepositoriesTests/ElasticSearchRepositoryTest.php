@@ -57,6 +57,26 @@ class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
+    public function testSortsByGivenField()
+    {
+        $query = EntitySampler::sampleQuery();
+        $query->sortBy = 'uploadedAt';
+
+        $validateSort = function ($query) { return array_key_exists('uploadedAt', $query->getParam('sort')); };
+
+        $this->resultSetMock
+            ->shouldReceive('getResults')
+            ->once()
+            ->andReturn([]);
+        $this->endpointMock
+            ->shouldReceive('search')
+            ->with(Mockery::on($validateSort))
+            ->once()
+            ->andReturn($this->resultSetMock);
+
+        $this->repository->search($query);
+    }
+
     /**
      * @expectedException \Lighthouse\Services\Torrents\Exceptions\RepositoryException
      */

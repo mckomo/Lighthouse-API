@@ -7,9 +7,39 @@ use Lighthouse\Services\Torrents\Common\Utils\ValidationHelper;
 use Lighthouse\Services\Torrents\Contracts\Validator;
 use Lighthouse\Services\Torrents\Entities\Base as Entity;
 
-class Query implements Validator
+class ServiceQuery implements Validator
 {
-    protected $supportedCategories = [
+    /**
+     * @const string
+     */
+    const DescOrder = 'desc';
+
+    /**
+     * @const string
+     */
+    const AscOrder = 'asc';
+
+    /**
+     * @var array
+     */
+    protected static $sortableFields = [
+        'name',
+        'category',
+        'peerCount',
+        'seedCount',
+        'size',
+        'uploadedAt',
+    ];
+
+    protected static $supportedSortOrders = [
+        self::DescOrder,
+        self::AscOrder,
+    ];
+
+    /**
+     * @var array
+     */
+    protected static $supportedCategories = [
         'anime',
         'applications',
         'books',
@@ -42,8 +72,16 @@ class Query implements Validator
             $errorMessages[] = ErrorMessages::OutOfRangeLimit;
         }
 
-        if (!is_null($query->category) && !in_array($query->category, $this->supportedCategories)) {
+        if (!is_null($query->category) && !in_array($query->category, static::$supportedCategories)) {
             $errorMessages[] = ErrorMessages::UnsupportedCategory;
+        }
+
+        if (!is_null($query->sortBy) && !in_array($query->sortBy, static::$sortableFields)) {
+            $errorMessages[] = ErrorMessages::InvalidSortField;
+        }
+
+        if (!is_null($query->sortOrder) && !in_array($query->sortOrder, static::$supportedSortOrders)) {
+            $errorMessages[] = ErrorMessages::UnsupportedSortOrder;
         }
 
         return count($errorMessages) == 0;
