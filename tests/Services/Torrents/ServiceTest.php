@@ -21,7 +21,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->repositoryMock = Mockery::mock('Lighthouse\Services\Torrents\Contracts\Repository');
         $this->torrentValidatorMock = Mockery::mock('Lighthouse\Services\Torrents\Validation\Validators\Torrent');
-        $this->queryValidatorMock = Mockery::mock('Lighthouse\Services\Torrents\Validation\Validators\Query');
+        $this->queryValidatorMock = Mockery::mock('Lighthouse\Services\Torrents\Validation\Validators\ServiceQuery');
 
         $this->service = new Service($this->repositoryMock, $this->torrentValidatorMock, $this->queryValidatorMock);
     }

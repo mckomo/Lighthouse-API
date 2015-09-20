@@ -34,6 +34,8 @@ class EntitySampler
             'phrase'        => 'Solarix-RELOADED',
             'size'          => 20,
             'category'      => 'games',
+            'sortBy'        => 'uploadedAt',
+            'sortOrder'     => 'asc'
         ]);
     }
 }

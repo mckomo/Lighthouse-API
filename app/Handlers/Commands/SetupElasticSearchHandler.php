@@ -74,19 +74,32 @@ class SetupElasticSearchHandler
         $mapping->setType($type);
         $mapping->setProperties([
             'hash' => [
-                'type' => 'string', 'index' => 'no', ],
+                'type' => 'string', 'index' => 'no',
+            ],
             'name' => [
-                'type' => 'string', 'index' => 'analyzed', ],
+                'type' => 'string', 'index' => 'analyzed',
+            ],
+            'filename' => [
+                'type' => 'string', 'index' => 'no',
+            ],
+            'category' => [
+                'type' => 'string'
+            ],
             'peerCount' => [
-                'type' => 'long', 'index' => 'not_analyzed', ],
+                'type' => 'long', 'index' => 'not_analyzed',
+            ],
             'seedCount' => [
-                'type' => 'long', 'index' => 'not_analyzed', ],
+                'type' => 'long', 'index' => 'not_analyzed',
+            ],
             'size' => [
-                'type' => 'long', 'index' => 'no', ],
+                'type' => 'long', 'index' => 'not_analyzed',
+            ],
             'uploadedAt' => [
-                'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'no', ],
+                'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'not_analyzed',
+            ],
             'url' => [
-                'type' => 'string', 'index' => 'no', ],
+                'type' => 'string', 'index' => 'no',
+            ],
         ]);
 
         $type->setMapping($mapping);
