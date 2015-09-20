@@ -83,7 +83,7 @@ class SetupElasticSearchHandler
                 'type' => 'string', 'index' => 'no',
             ],
             'category' => [
-                'type' => 'string'
+                'type' => 'string',
             ],
             'peerCount' => [
                 'type' => 'long', 'index' => 'not_analyzed',

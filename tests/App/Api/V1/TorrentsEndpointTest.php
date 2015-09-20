@@ -17,11 +17,11 @@ class TorrentsEndpointTest extends TestCase
 
     public function testSortsByUploadTime()
     {
-        $response = $this->call('GET', 'api/v1/torrents', ['q' => 'windows', 'sort_by' => 'uploadedAt' ]);
+        $response = $this->call('GET', 'api/v1/torrents', ['q' => 'windows', 'sort_by' => 'uploadedAt']);
         $returnedTorrents = json_decode($response->getContent());
         $sortedTorrents = json_decode($response->getContent());
 
-        usort($sortedTorrents, function($lhs, $rhs) {
+        usort($sortedTorrents, function ($lhs, $rhs) {
             return strcmp($rhs->uploadedAt, $lhs->uploadedAt); // Desc order
         });
 
