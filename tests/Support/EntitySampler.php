@@ -35,7 +35,7 @@ class EntitySampler
             'size'          => 20,
             'category'      => 'games',
             'sortBy'        => 'uploadedAt',
-            'sortOrder'     => 'asc'
+            'sortOrder'     => 'asc',
         ]);
     }
 }
