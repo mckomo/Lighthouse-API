@@ -79,7 +79,7 @@ class Service implements ServiceInterface
         }
 
         try {
-            $this->repository->store($torrent);
+            $this->repository->save($torrent);
         } catch (RepositoryException $exception) {
             return $this->handleRepositoryException($exception);
         }

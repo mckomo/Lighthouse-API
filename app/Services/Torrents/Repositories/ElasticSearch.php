@@ -78,7 +78,7 @@ class ElasticSearch implements Repository
      *
      * @return bool
      */
-    public function store(Torrent $torrent)
+    public function save(Torrent $torrent)
     {
         $document = new Document($torrent->hash, $torrent->toArray());
 

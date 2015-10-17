@@ -19,7 +19,7 @@ interface Repository
      *
      * @return bool
      */
-    public function store(Torrent $torrent);
+    public function save(Torrent $torrent);
 
     /**
      * @param string $hash
