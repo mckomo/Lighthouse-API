@@ -146,8 +146,8 @@ class ElasticSearch implements Repository
                 'filter' => [
                     'bool' => [
                         'must' => [
-                            'term' => ['category' => $serviceQuery->category]
-                        ]
+                            'term' => ['category' => $serviceQuery->category],
+                        ],
                     ],
                 ],
             ],

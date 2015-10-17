@@ -5,7 +5,7 @@ function execute($command)
     exec($command, $outputMessages, $resultCode);
 
     if ($resultCode != 0) {
-        exit(join("\n", $outputMessages));
+        exit(implode("\n", $outputMessages));
     }
 }
 
@@ -19,5 +19,5 @@ function measureExecution($command)
 
 function isExecutedDirectly($scriptPath)
 {
-    return basename($_SERVER["SCRIPT_FILENAME"]) == basename($scriptPath);
+    return basename($_SERVER['SCRIPT_FILENAME']) == basename($scriptPath);
 }

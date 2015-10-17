@@ -53,22 +53,22 @@ class SetupElasticSearchHandler
             'analysis' => [
                 'filter' => [
                    'articles_stop' => [
-                       'type' => 'stop',
-                       'stopwords' => ['a', 'an', 'the']
-                   ]
+                       'type'      => 'stop',
+                       'stopwords' => ['a', 'an', 'the'],
+                   ],
                 ],
                 'analyzer' => [
                     'generic_title' => [
                         'tokenizer' => 'standard',
-                        'filter' => [
+                        'filter'    => [
                             'lowercase',
                             'asciifolding',
                             'word_delimiter',
-                            'articles_stop'
-                        ]
-                    ]
-                ]
-            ]
+                            'articles_stop',
+                        ],
+                    ],
+                ],
+            ],
         ], $shouldPurgeIndex);
 
         return $index;
@@ -103,7 +103,7 @@ class SetupElasticSearchHandler
                 'type' => 'string', 'index' => 'no',
             ],
             'category' => [
-                'type' => 'string', 'index' => 'not_analyzed'
+                'type' => 'string', 'index' => 'not_analyzed',
             ],
             'peerCount' => [
                 'type' => 'integer', 'index' => 'not_analyzed',
