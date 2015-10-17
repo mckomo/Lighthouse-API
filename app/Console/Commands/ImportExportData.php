@@ -97,7 +97,6 @@ class ImportExportData extends Command
         $this->setupTaskCounters();
 
         foreach ($this->openDataFile() as $this->currentLine) {
-
             $torrent = $this->mapTorrent();
 
             if (is_null($torrent)) {
