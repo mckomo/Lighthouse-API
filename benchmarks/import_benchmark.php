@@ -1,9 +1,12 @@
 <?php
 
-$start = microtime(true);
+require_once 'helper.php';
 
-exec('php artisan elasticsearch:setup --purge');
-exec('php artisan torrent:import benchmarks/assets/trimdump.txt');
+function benchmarkImport()
+{
+    return measureExecution('php artisan torrent:import benchmarks/assets/torrents_dump.csv');
+}
 
-$end = (microtime(true) - $start);
-echo "$end";
+if (isExecutedDirectly(__FILE__)) {
+    echo benchmarkImport();
+}

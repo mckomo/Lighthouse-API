@@ -25,6 +25,7 @@ class TorrentsEndpointTest extends TestCase
             return strcmp($rhs->uploadedAt, $lhs->uploadedAt); // Desc order
         });
 
+        $this->assertGreaterThan(1, count($returnedTorrents), 'This test requires at least two torrents in the repository');
         $this->assertEquals($sortedTorrents, $returnedTorrents);
     }
 

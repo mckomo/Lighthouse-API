@@ -49,7 +49,27 @@ class SetupElasticSearchHandler
     private function createLighthouseIndex($shouldPurgeIndex)
     {
         $index = $this->client->getIndex('lighthouse');
-        $index->create([], $shouldPurgeIndex);
+        $index->create([
+            'analysis' => [
+                'filter' => [
+                   'articles_stop' => [
+                       'type' => 'stop',
+                       'stopwords' => ['a', 'an', 'the']
+                   ]
+                ],
+                'analyzer' => [
+                    'generic_title' => [
+                        'tokenizer' => 'standard',
+                        'filter' => [
+                            'lowercase',
+                            'asciifolding',
+                            'word_delimiter',
+                            'articles_stop'
+                        ]
+                    ]
+                ]
+            ]
+        ], $shouldPurgeIndex);
 
         return $index;
     }
@@ -77,25 +97,25 @@ class SetupElasticSearchHandler
                 'type' => 'string', 'index' => 'no',
             ],
             'name' => [
-                'type' => 'string', 'index' => 'analyzed',
+                'type' => 'string', 'index' => 'analyzed', 'analyzer' => 'generic_title',
             ],
             'filename' => [
                 'type' => 'string', 'index' => 'no',
             ],
             'category' => [
-                'type' => 'string',
+                'type' => 'string', 'index' => 'not_analyzed'
             ],
             'peerCount' => [
-                'type' => 'long', 'index' => 'not_analyzed',
+                'type' => 'integer', 'index' => 'not_analyzed',
             ],
             'seedCount' => [
-                'type' => 'long', 'index' => 'not_analyzed',
+                'type' => 'integer', 'index' => 'not_analyzed',
             ],
             'size' => [
                 'type' => 'long', 'index' => 'not_analyzed',
             ],
             'uploadedAt' => [
-                'type' => 'date', 'format' => 'dateOptionalTime', 'index' => 'not_analyzed',
+                'type' => 'date', 'index' => 'not_analyzed',
             ],
             'url' => [
                 'type' => 'string', 'index' => 'no',

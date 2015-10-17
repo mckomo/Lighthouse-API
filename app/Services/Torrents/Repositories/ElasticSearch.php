@@ -145,9 +145,9 @@ class ElasticSearch implements Repository
                 'query'  => $this->buildNameQuery($serviceQuery),
                 'filter' => [
                     'bool' => [
-                        'should' => [
-                            'term' => ['category' => $serviceQuery->category],
-                        ],
+                        'must' => [
+                            'term' => ['category' => $serviceQuery->category]
+                        ]
                     ],
                 ],
             ],
