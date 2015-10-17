@@ -67,7 +67,7 @@ class Service implements ServiceInterface
      *
      * @return OperationResult
      */
-    public function upload(Torrent $torrent)
+    public function save(Torrent $torrent)
     {
         $isValid = $this->torrentValidator->isValid($torrent, $validationMessages);
 

@@ -6,7 +6,7 @@ use Lighthouse\Commands\UploadTorrent as UploadCommand;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Service;
 
-class UploadTorrentHandler
+class SaveTorrentHandler
 {
     protected $service;
 
@@ -29,6 +29,6 @@ class UploadTorrentHandler
      */
     public function handle(UploadCommand $command)
     {
-        return $this->service->upload($command->torrent);
+        return $this->service->save($command->torrent);
     }
 }

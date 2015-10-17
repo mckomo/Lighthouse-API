@@ -21,7 +21,7 @@ interface Service
      *
      * @return OperationResult
      */
-    public function upload(Torrent $torrent);
+    public function save(Torrent $torrent);
 
     /**
      * @param $hash

@@ -4,7 +4,7 @@ namespace Lighthouse\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesCommands;
-use Lighthouse\Commands\UploadTorrent;
+use Lighthouse\Commands\SaveTorrent;
 use Lighthouse\Services\Torrents\Common\FailedResult;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Contracts\Mapper as TorrentMapper;
@@ -51,17 +51,17 @@ class ImportExportData extends Command
     /**
      * @var int
      */
-    protected $totalUploadCount = 0;
+    protected $totalSaveCount = 0;
 
     /**
      * @var int
      */
-    protected $successfulUploadCount = 0;
+    protected $successfulSaveCount = 0;
 
     /**
      * @var int
      */
-    protected $failedUploadCount = 0;
+    protected $failedSaveCount = 0;
 
     /**
      * Get the console command arguments.
@@ -94,22 +94,23 @@ class ImportExportData extends Command
      */
     public function fire()
     {
-        $this->setupUploadCounters();
+        $this->setupTaskCounters();
 
         foreach ($this->openDataFile() as $this->currentLine) {
+
             $torrent = $this->mapTorrent();
 
             if (is_null($torrent)) {
                 continue;
             }
 
-            $result = $this->uploadTorrent($torrent);
+            $result = $this->saveTorrent($torrent);
             $this->handleResult($result);
 
-            $this->updateUploadCounters($result);
+            $this->updateTaskCounters($result);
         }
 
-        $this->printUploadCounters();
+        $this->printTaskCounters();
     }
 
     /**
@@ -171,9 +172,9 @@ class ImportExportData extends Command
      *
      * @return OperationResult
      */
-    private function uploadTorrent(Torrent $torrent)
+    private function saveTorrent(Torrent $torrent)
     {
-        $command = new UploadTorrent($torrent);
+        $command = new SaveTorrent($torrent);
 
         return $this->dispatch($command);
     }
@@ -181,9 +182,9 @@ class ImportExportData extends Command
     /**
      * @return void
      */
-    private function setupUploadCounters()
+    private function setupTaskCounters()
     {
-        $this->totalUploadCount = $this->successfulUploadCount = $this->failedUploadCount = 0;
+        $this->totalSaveCount = $this->successfulSaveCount = $this->failedSaveCount = 0;
     }
 
     /**
@@ -191,26 +192,26 @@ class ImportExportData extends Command
      *
      * @return void
      */
-    private function updateUploadCounters(OperationResult $result)
+    private function updateTaskCounters(OperationResult $result)
     {
-        $this->totalUploadCount++;
+        $this->totalSaveCount++;
 
         if ($result->isSuccessful()) {
-            $this->successfulUploadCount++;
+            $this->successfulSaveCount++;
         } else {
-            $this->failedUploadCount++;
+            $this->failedSaveCount++;
         }
     }
 
     /**
      * @return void
      */
-    private function printUploadCounters()
+    private function printTaskCounters()
     {
         $stats = [
-            'Total uploads: '.$this->totalUploadCount,
-            'successful uploads: '.$this->successfulUploadCount,
-            'failed uploads: '.$this->failedUploadCount,
+            'Total uploads: '.$this->totalSaveCount,
+            'successful uploads: '.$this->successfulSaveCount,
+            'failed uploads: '.$this->failedSaveCount,
         ];
 
         $statsMessage = implode(', ', $stats).'.';

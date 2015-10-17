@@ -4,7 +4,7 @@ namespace Lighthouse\Commands;
 
 use Lighthouse\Services\Torrents\Entities\Torrent;
 
-class UploadTorrent extends Command
+class SaveTorrent extends Command
 {
     public $torrent;
 

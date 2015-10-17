@@ -91,7 +91,6 @@ class Torrents extends Controller
             case ResultCodes::Successful:
                 return 200;
             case ResultCodes::ResourceCreated;
-
                 return 201;
             case ResultCodes::InvalidInput:
                 return 400;
