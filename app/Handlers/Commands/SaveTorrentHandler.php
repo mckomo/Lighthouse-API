@@ -2,7 +2,7 @@
 
 namespace Lighthouse\Handlers\Commands;
 
-use Lighthouse\Commands\UploadTorrent as UploadCommand;
+use Lighthouse\Commands\SaveTorrent;
 use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Service;
 
@@ -23,11 +23,11 @@ class SaveTorrentHandler
     /**
      * Handle the command.
      *
-     * @param UploadTorrentsCommand $command
+     * @param SaveTorrent $command
      *
      * @return OperationResult
      */
-    public function handle(UploadCommand $command)
+    public function handle(SaveTorrent $command)
     {
         return $this->service->save($command->torrent);
     }
