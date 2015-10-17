@@ -43,10 +43,10 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->repositoryMock
             ->shouldIgnoreMissing();
 
-        $this->service->upload($torrent);
+        $this->service->save($torrent);
     }
 
-    public function testStoresTorrentsInRepository()
+    public function testSavesTorrentsInRepository()
     {
         $torrent = EntitySampler::sampleTorrent();
 
@@ -54,11 +54,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('isValid')
             ->andReturn(true);
         $this->repositoryMock
-            ->shouldReceive('store')
+            ->shouldReceive('save')
             ->once()
             ->with($torrent);
 
-        $this->service->upload($torrent);
+        $this->service->save($torrent);
     }
 
     public function testUploadsOnlyValidTorrent()
@@ -70,9 +70,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ->with($torrent, null)
             ->andReturn(false);
         $this->repositoryMock
-            ->shouldNotReceive('store');
+            ->shouldNotReceive('save');
 
-        $this->service->upload($torrent);
+        $this->service->save($torrent);
     }
 
     public function testValidatesQueryBeforeSearch()

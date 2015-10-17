@@ -99,7 +99,7 @@ class ElasticSearchRepositoryTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('addDocument')
             ->andThrow($this->createConnectionException());
 
-        $this->repository->store($torrent);
+        $this->repository->save($torrent);
     }
 
     /**
