@@ -10,10 +10,11 @@ use Lighthouse\Services\Torrents\Common\OperationResult;
 use Lighthouse\Services\Torrents\Contracts\Mapper as TorrentMapper;
 use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\Torrent;
+use Redis;
 use SplFileObject;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ImportExportData extends Command
+class ImportRepository extends Command
 {
     use DispatchesCommands;
 
@@ -99,21 +100,19 @@ class ImportExportData extends Command
         foreach ($this->openDataFile() as $this->currentLine) {
             $torrent = $this->mapTorrent();
 
-            if (is_null($torrent)) {
+            if (!$this->shouldSaveTorrent($torrent)) {
                 continue;
             }
 
             $result = $this->saveTorrent($torrent);
-            $this->handleResult($result);
-
-            $this->updateTaskCounters($result);
+            $this->handleResult($result, $torrent);
         }
 
         $this->printTaskCounters();
     }
 
     /**
-     * @return array
+     * @return Torrent
      */
     private function mapTorrent()
     {
@@ -143,11 +142,16 @@ class ImportExportData extends Command
      *
      * @return void
      */
-    private function handleResult(OperationResult $result)
+    private function handleResult(OperationResult $result, Torrent $torrent)
     {
         if ($result->isFailed() and $this->isInVerboseMode()) {
-            $this->printErrorMessage($result);
+             $this->printErrorMessage($result);
+            return;
         }
+
+        $this->storeEntityHash($torrent);
+        $this->updateTaskCounters($result);
+        $this->printTaskCounters();
     }
 
     /**
@@ -236,5 +240,47 @@ class ImportExportData extends Command
     private function isInVerboseMode()
     {
         return boolval($this->option('verbose'));
+    }
+
+    private function hasTorrentChanged(Torrent $torrent)
+    {
+        $currentHash = $this->calculateEntityHash($torrent);
+        $storedHash = $this->getEntityHash($torrent);
+
+        return $currentHash != $storedHash;
+    }
+
+    /**
+     * @param $torrent
+     * @return bool
+     */
+    private function shouldSaveTorrent($torrent)
+    {
+        return !is_null($torrent) and $this->hasTorrentChanged($torrent);
+    }
+
+    private function storeEntityHash(Torrent $torrent)
+    {
+        $entityKey = $this->buildEntityKey($torrent);
+        $entityHash = $this->calculateEntityHash($torrent);
+
+        return Redis::set($entityKey, $entityHash);
+    }
+
+    private function calculateEntityHash(Torrent $torrent)
+    {
+        return md5(json_encode($torrent->toArray()));
+    }
+
+    private function getEntityHash($torrent)
+    {
+        $entityKey = $this->buildEntityKey($torrent);
+
+        return Redis::get($entityKey);
+    }
+
+    private function buildEntityKey(Torrent $torrent)
+    {
+        return 'torrent:'.$torrent->hash;
     }
 }
