@@ -151,7 +151,6 @@ class ImportRepository extends Command
 
         $this->storeEntityHash($torrent);
         $this->updateTaskCounters($result);
-        $this->printTaskCounters();
     }
 
     /**
