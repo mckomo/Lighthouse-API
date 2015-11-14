@@ -14,7 +14,7 @@ use Redis;
 use SplFileObject;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ImportRepository extends Command
+class ImportTorrents extends Command
 {
     use DispatchesCommands;
 

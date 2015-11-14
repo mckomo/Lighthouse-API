@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'Lighthouse\Console\Commands\ImportRepository',
+        'Lighthouse\Console\Commands\ImportTorrents',
         'Lighthouse\Console\Commands\SetupElasticSearch',
     ];
 
