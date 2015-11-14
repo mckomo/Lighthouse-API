@@ -6,7 +6,6 @@
  * Date: 09.08.15
  * Time: 12:50.
  */
-
 namespace Lighthouse\tests\Support;
 
 use Symfony\Component\Process\Exception\ProcessFailedException;

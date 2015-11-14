@@ -145,7 +145,8 @@ class ImportTorrents extends Command
     private function handleResult(OperationResult $result, Torrent $torrent)
     {
         if ($result->isFailed() and $this->isInVerboseMode()) {
-             $this->printErrorMessage($result);
+            $this->printErrorMessage($result);
+
             return;
         }
 
@@ -251,6 +252,7 @@ class ImportTorrents extends Command
 
     /**
      * @param $torrent
+     *
      * @return bool
      */
     private function shouldSaveTorrent($torrent)
