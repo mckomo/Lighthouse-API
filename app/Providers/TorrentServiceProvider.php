@@ -12,7 +12,9 @@ class TorrentServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot() {}
+    public function boot()
+    {
+    }
 
     /**
      * Register the application services.
@@ -21,12 +23,12 @@ class TorrentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $elastica = new Client(array(
-            'host' => 'elasticsearch')
+        $elastica = new Client([
+            'host' => 'elasticsearch', ]
         );
 
         $this->app->bind(
-            'Elastica\Client', function() use ($elastica) { return $elastica; });
+            'Elastica\Client', function () use ($elastica) { return $elastica; });
         $this->app->singleton(
             'Lighthouse\Services\Torrents\Contracts\Service', 'Lighthouse\Services\Torrents\Service');
         $this->app->singleton(
