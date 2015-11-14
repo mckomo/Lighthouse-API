@@ -12,6 +12,7 @@ services:
 
 env:
   DOCKER_COMPOSE_VERSION: 1.5.0
+  COMPOSE_PROJECT_NAME: lighthouse
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -26,7 +27,7 @@ before_script:
   - docker-compose up -d
   - sleep 5 # Wait for docker-compose
   - docker ps
-  - docker exec -t d9975b83f306 redis-cli flushall
+  - docker exec -t lighthouse_lighthouse_1 redis-cli flushall
   - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan elasticsearch:setup --purge
   - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan torrents:import /var/www/lighthouse/tests/Support/fixtures/exportdata.txt
   - sleep 3 # Wait for Eleastic Search to index torrents
