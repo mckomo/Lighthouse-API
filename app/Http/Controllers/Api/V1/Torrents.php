@@ -90,8 +90,7 @@ class Torrents extends Controller
         switch ($resultCode) {
             case ResultCodes::Successful:
                 return 200;
-            case ResultCodes::ResourceCreated;
-
+            case ResultCodes::ResourceCreated:
                 return 201;
             case ResultCodes::InvalidInput:
                 return 400;
