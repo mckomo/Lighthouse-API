@@ -44,7 +44,7 @@ class TorrentsEndpointTest extends TestCase
             ->getContent();
         $returnedTorrents = json_decode($responseContent);
 
-        $extractedFields = array_map(function($torrent) use($field) {
+        $extractedFields = array_map(function ($torrent) use ($field) {
             return $torrent->$field;
         }, $returnedTorrents);
         $sortedFields = $this->sortCopy($extractedFields);
@@ -68,7 +68,7 @@ class TorrentsEndpointTest extends TestCase
             ->getContent();
 
         $returnedTorrents = json_decode($responseContent);
-        $filteredTorrents = $this->selectMatching(json_decode($responseContent), function($torrent) use ($category) {
+        $filteredTorrents = $this->selectMatching(json_decode($responseContent), function ($torrent) use ($category) {
             return $torrent->category == $category;
         });
 
