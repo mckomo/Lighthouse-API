@@ -100,10 +100,10 @@ class SetupElasticSearchHandler
                 'type' => 'string', 'index' => 'analyzed', 'analyzer' => 'generic_title',
             ],
             'filename' => [
-                'type' => 'string', 'index' => 'no',
+                'type' => 'string', 'index' => 'not_analyzed',
             ],
             'category' => [
-                'type' => 'string', 'index' => 'not_analyzed',
+                'type' => 'string', 'index' => 'analyzed', 'analyzer' => 'simple',
             ],
             'peerCount' => [
                 'type' => 'integer', 'index' => 'not_analyzed',
