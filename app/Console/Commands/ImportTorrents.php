@@ -144,10 +144,8 @@ class ImportTorrents extends Command
      */
     private function handleResult(OperationResult $result, Torrent $torrent)
     {
-        if ($result->isFailed() and $this->isInVerboseMode()) {
-            $this->printErrorMessage($result);
-
-            return;
+        if ($result->isFailed()) {
+            return $this->handleFailure($result);
         }
 
         $this->storeEntityHash($torrent);
@@ -223,18 +221,6 @@ class ImportTorrents extends Command
     }
 
     /**
-     * @param FailedResult $result
-     *
-     * @return void
-     */
-    private function printErrorMessage(FailedResult $result)
-    {
-        $error = $result->getError();
-        $message = $this->formatErrorMessage($error);
-        $this->error($message);
-    }
-
-    /**
      * @return bool
      */
     private function isInVerboseMode()
@@ -283,5 +269,25 @@ class ImportTorrents extends Command
     private function buildEntityKey(Torrent $torrent)
     {
         return 'torrent:'.$torrent->hash;
+    }
+
+    private function handleFailure($result)
+    {
+        if ($this->isInVerboseMode()) {
+            $this->printErrorMessage($result);
+        }
+    }
+
+    /**
+     * @param FailedResult $result
+     *
+     * @return void
+     */
+    private function printErrorMessage(FailedResult $result)
+    {
+        $error = $result->getError();
+        $message = $this->formatErrorMessage($error);
+
+        $this->error($message);
     }
 }
