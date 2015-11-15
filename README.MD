@@ -6,7 +6,7 @@ Lighthouse Service is the webservice that helps you find quickly right torrent. 
 
 ## Public endpoints
 
-Access to this endpoints is public, thus an authentication is not required. All endpoints repond in JSON format. Current API adress is [http://52.28.185.96/api/v1](http://52.28.185.96/api/v1). 
+Access to this endpoints is public, thus an authentication is not required. All endpoints respond in JSON format. Current API address is [http://light-tower.cloudapp.net/api/v1](http://light-tower.cloudapp.net/api/v1).
 
 ### GET /api/v1/torrents
 
@@ -17,14 +17,15 @@ Search torrents with given query.
 |Key      | Description                 | Default | Allowed values      | Required |
 |---------|-----------------------------|---------|---------------------|----------|
 |q        | Query phrase                | *none*  | String              | true     |
-|size     | Number of returned torrents | 20      | Integer from 1..100 | false    |
+|limit    | Number of returned torrents | 20      | Integer from 1..100 | false    |
 |category | Category restriction        | all     | anime, applications, books, games, movies, music, other, tv, xxx | false |
+|sort_by  | Sort by given field         | seedCount | seedCount, peerCount, uploadedAt, name, size, category (value is case sensitive)| false|
 
 ##### Example response
 
 
 ```
-GET your-domain.com/api/v1/torrents?q=ubuntu&category=applications
+GET light-tower.cloudapp.net/api/v1/torrents?q=ubuntu&category=applications
 
 [  
    {  
@@ -32,7 +33,7 @@ GET your-domain.com/api/v1/torrents?q=ubuntu&category=applications
       "name":"Ubuntu 15.04 Vivid Vervet Desktop amd64 ISO FINAL",
       "category":"Applications",
       "size":1150844928,
-      "url":"http:\/\/my-domain.com\/api\/v1\/torrents\/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59\/file",
+      "url":"http://torcache.net/torrent/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59.torrent",
       "uploadedAt":"2015-04-23T15:01:23Z",
       "seedCount":883,
       "peerCount":58
@@ -40,10 +41,10 @@ GET your-domain.com/api/v1/torrents?q=ubuntu&category=applications
    ...
    {  
       "hash":"C04161A538159899814F2A1AE9BDA6A3A7574E26",
-      "name":"ubuntu gnome 14 04 2 desktop amd64 iso",
+      "name":"ubuntu gnome 14 04 2 desktop amd64 iso",ž
       "category":"Applications",
       "size":993001472,
-      "url":"http:\/\/my-domain.com\/api\/v1\/torrents\/C04161A538159899814F2A1AE9BDA6A3A7574E26\/file",
+      "url":"http://torcache.net/torrent/C04161A538159899814F2A1AE9BDA6A3A7574E26.torrent",
       "uploadedAt":"2015-05-05T22:13:08Z",
       "seedCount":63,
       "peerCount":1
@@ -64,30 +65,19 @@ Get torrent info.
 ##### Example response
 
 ```
-GET your-domain/api/v1/torrents/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59
+GET light-tower.cloudapp.net/api/v1/torrents/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59
 
 {  
    "hash":"FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59",
    "name":"Ubuntu 15.04 Vivid Vervet Desktop amd64 ISO FINAL",
    "category":"Applications",
    "size":1150844928,
-   "url":"http:\/\/my-domain.com\/api\/v1\/torrents\/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59\/file",
+   "url":"http://torcache.net/torrent/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59.torrent",
    "uploadedAt":"2015-04-23T15:01:23Z",
    "seedCount":883,
    "peerCount":58
 }
 ```
-
-
-### GET /api/v1/torrents/:hash/file
-
-Download torrent file.
-
-##### Parameters
-
-|Key      | Description                 | Default | Required |
-|---------|-----------------------------|---------|----------|
-|hash     | Torrent hash                | *none*  | true     |
 
 ### Errors
 
