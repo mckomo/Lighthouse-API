@@ -23,8 +23,6 @@ class ServiceQuery implements Validator
      * @var array
      */
     protected static $sortableFields = [
-        'name',
-        'category',
         'peerCount',
         'seedCount',
         'size',
