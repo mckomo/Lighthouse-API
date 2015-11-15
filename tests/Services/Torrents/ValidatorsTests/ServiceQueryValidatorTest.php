@@ -41,7 +41,7 @@ class ServiceQueryValidatorTest extends \PHPUnit_Framework_TestCase
     public function testSucceedsWithoutLimit()
     {
         $validQuery = $this->getValidQuery();
-        $validQuery->size = null;
+        $validQuery->limit = null;
 
         $result = $this->validator->isValid($validQuery);
 
@@ -107,7 +107,7 @@ class ServiceQueryValidatorTest extends \PHPUnit_Framework_TestCase
     public function testFailsWithOutOfRangeLimit($invalidLimit)
     {
         $brokenQuery = $this->getValidQuery();
-        $brokenQuery->size = $invalidLimit;
+        $brokenQuery->limit = $invalidLimit;
 
         $result = $this->validator->isValid($brokenQuery);
 
@@ -132,7 +132,7 @@ class ServiceQueryValidatorTest extends \PHPUnit_Framework_TestCase
 
         $brokenQuery = $this->getValidQuery();
         $brokenQuery->phrase = $emptyPharse;
-        $brokenQuery->size = $aboveLimit;
+        $brokenQuery->limit = $aboveLimit;
 
         $this->validator->isValid($brokenQuery, $errors);
         $errorCount = count($errors);

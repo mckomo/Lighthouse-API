@@ -16,7 +16,7 @@ use Lighthouse\Services\Torrents\Mappers\ElasticSearchResult as Mapper;
 
 class ElasticSearch implements Repository
 {
-    const DEFAULT_QUERY_SIZE = 20;
+    const DEFAULT_QUERY_LIMIT = 20;
     const DEFAULT_QUERY_SORT = [
         'seedCount' => ['order' => 'desc', 'missing' => 0],
         'peerCount' => ['order' => 'desc', 'missing' => 0],
@@ -101,9 +101,9 @@ class ElasticSearch implements Repository
         $queryCore = is_null($serviceQuery->category)
             ? $this->buildNameQuery($serviceQuery)
             : $this->buildCategoryFilteredQuery($serviceQuery);
-        $querySize = is_null($serviceQuery->category)
-            ? static::DEFAULT_QUERY_SIZE
-            : $serviceQuery->size;
+        $queryLimit = is_null($serviceQuery->limit)
+            ? static::DEFAULT_QUERY_LIMIT
+            : $serviceQuery->limit;
         $querySort = is_null($serviceQuery->sortBy)
             ? static::DEFAULT_QUERY_SORT
             : $this->buildSortParameter($serviceQuery);
@@ -112,7 +112,7 @@ class ElasticSearch implements Repository
 
         return $enpointQuery
             ->setParam('query', $queryCore)
-            ->setSize($querySize)
+            ->setSize($queryLimit)
             ->setSort($querySort);
     }
 

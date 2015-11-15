@@ -114,8 +114,8 @@ class Torrents extends Controller
             'phrase' => array_key_exists('q', $input) ? $input['q'] : '',
         ];
 
-        if (array_key_exists('size', $input)) {
-            $params['size'] = intval($input['size']);
+        if (array_key_exists('limit', $input)) {
+            $params['limit'] = intval($input['limit']);
         }
 
         if (array_key_exists('category', $input)) {

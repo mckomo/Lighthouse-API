@@ -12,7 +12,7 @@ class ServiceQuery extends Base
     /**
      * @var int
      */
-    public $size;
+    public $limit;
 
     /**
      * @var string

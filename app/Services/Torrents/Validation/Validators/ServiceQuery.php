@@ -68,7 +68,7 @@ class ServiceQuery implements Validator
             $errorMessages[] = ErrorMessages::ShortPhrase;
         }
 
-        if (!is_null($query->size) && !ValidationHelper::isInRange($query->size, 1, 100)) {
+        if (!is_null($query->limit) && !ValidationHelper::isInRange($query->limit, 1, 100)) {
             $errorMessages[] = ErrorMessages::OutOfRangeLimit;
         }
 
