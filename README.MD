@@ -27,28 +27,32 @@ Search torrents with given query.
 ```
 GET light-tower.cloudapp.net/api/v1/torrents?q=ubuntu&category=applications
 
-[  
-   {  
-      "hash":"FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59",
-      "name":"Ubuntu 15.04 Vivid Vervet Desktop amd64 ISO FINAL",
+[
+   {
+      "hash":"3F19B149F53A50E14FC0B79926A391896EABAB6F",
+      "name":"Ubuntu 15.10 Desktop (64-bit)",
+      "filename":"ubuntu-1510-desktop-64-bit.torrent",
       "category":"Applications",
-      "size":1150844928,
-      "url":"http://torcache.net/torrent/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59.torrent",
-      "uploadedAt":"2015-04-23T15:01:23Z",
-      "seedCount":883,
-      "peerCount":58
+      "size":1178386432,
+      "url":"http:\/\/torcache.net\/torrent\/3F19B149F53A50E14FC0B79926A391896EABAB6F.torrent",
+      "magnetLink":"magnet:?xt=urn:btih:3F19B149F53A50E14FC0B79926A391896EABAB6F&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A80",
+      "uploadedAt":"2015-10-22T12:01:16Z",
+      "seedCount":49,
+      "peerCount":11
+   },
+   {
+      "hash":"B415C913643E5FF49FE37D304BBB5E6E11AD5101",
+      "name":"Ubuntu 14.10 Desktop 64bit ISO",
+      "filename":"ubuntu-1410-desktop-64bit-iso.torrent",
+      "category":"Applications",
+      "size":1162936320,
+      "url":"http:\/\/torcache.net\/torrent\/B415C913643E5FF49FE37D304BBB5E6E11AD5101.torrent",
+      "magnetLink":"magnet:?xt=urn:btih:B415C913643E5FF49FE37D304BBB5E6E11AD5101&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A80",
+      "uploadedAt":"2014-10-23T17:33:00Z",
+      "seedCount":47,
+      "peerCount":4
    },
    ...
-   {  
-      "hash":"C04161A538159899814F2A1AE9BDA6A3A7574E26",
-      "name":"ubuntu gnome 14 04 2 desktop amd64 iso",ž
-      "category":"Applications",
-      "size":993001472,
-      "url":"http://torcache.net/torrent/C04161A538159899814F2A1AE9BDA6A3A7574E26.torrent",
-      "uploadedAt":"2015-05-05T22:13:08Z",
-      "seedCount":63,
-      "peerCount":1
-   }
 ]
 ```
 
@@ -65,17 +69,19 @@ Get torrent info.
 ##### Example response
 
 ```
-GET light-tower.cloudapp.net/api/v1/torrents/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59
+GET light-tower.cloudapp.net/api/v1/torrents/B415C913643E5FF49FE37D304BBB5E6E11AD5101
 
-{  
-   "hash":"FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59",
-   "name":"Ubuntu 15.04 Vivid Vervet Desktop amd64 ISO FINAL",
-   "category":"Applications",
-   "size":1150844928,
-   "url":"http://torcache.net/torrent/FC8A15A2FAF2734DBB1DC5F7AFDC5C9BEAEB1F59.torrent",
-   "uploadedAt":"2015-04-23T15:01:23Z",
-   "seedCount":883,
-   "peerCount":58
+{
+  "hash":"B415C913643E5FF49FE37D304BBB5E6E11AD5101",
+  "name":"Ubuntu 14.10 Desktop 64bit ISO",
+  "filename":"ubuntu-1410-desktop-64bit-iso.torrent",
+  "category":"Applications",
+  "size":1162936320,
+  "url":"http:\/\/torcache.net\/torrent\/B415C913643E5FF49FE37D304BBB5E6E11AD5101.torrent",
+  "magnetLink":"magnet:?xt=urn:btih:B415C913643E5FF49FE37D304BBB5E6E11AD5101&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A80",
+  "uploadedAt":"2014-10-23T17:33:00Z",
+  "seedCount":47,
+  "peerCount":4
 }
 ```
 
@@ -93,3 +99,8 @@ For all statuses 4xx and 5xx you should expect error message with folowing struc
    }
 }
 ```
+
+## Usage examples
+
+- [https://github.com/mckomo/Lighthouse](Lighthouse)
+- [https://github.com/mckomo/Lighthouse-Workflow](Lighthouse-Workflow)
