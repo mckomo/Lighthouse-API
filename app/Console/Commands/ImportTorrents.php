@@ -42,7 +42,7 @@ class ImportTorrents extends Command
      *
      * @var string
      */
-    protected $description = 'Upload export data from KickassTorrents.';
+    protected $description = 'Upload export data from KickassTorrents';
 
     /**
      * @var

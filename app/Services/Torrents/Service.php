@@ -12,24 +12,29 @@ use Lighthouse\Services\Torrents\Entities\Error;
 use Lighthouse\Services\Torrents\Entities\ServiceQuery;
 use Lighthouse\Services\Torrents\Entities\Torrent;
 use Lighthouse\Services\Torrents\Exceptions\RepositoryException;
-use Lighthouse\Services\Torrents\Validation\Validators\ServiceQuery as QueryValidator;
 use Lighthouse\Services\Torrents\Validation\Validators\Torrent as TorrentValidator;
+use Lighthouse\Services\Torrents\Validation\Validators\ServiceQuery as ServiceQueryValidator;
 
 class Service implements ServiceInterface
 {
     /**
-     * @var Repository
+     * @var Validator
      */
     private $repository;
 
     /**
-     * @var TorrentValidator
+     * @var Validator
      */
     private $torrentValidator;
 
+    /**
+     * @var Validator
+     */
+    private $queryValidator;
+
     public function __construct(Repository $repository,
                                 TorrentValidator $torrentValidator,
-                                QueryValidator $queryValidator)
+                                ServiceQueryValidator $queryValidator)
     {
         $this->repository = $repository;
         $this->torrentValidator = $torrentValidator;
