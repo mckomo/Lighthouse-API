@@ -54,4 +54,4 @@ EXPOSE 80 443 9000
 # Entrypoint
 ################################################################################
 
-ENTRYPOINT ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord"]
