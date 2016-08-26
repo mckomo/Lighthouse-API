@@ -97,7 +97,7 @@ class ImportTorrentsCommand extends Command
 
             $torrent = $this->mapTorrent($line);
 
-            if ($this->isCached($torrent)) {
+            if (is_null($torrent) || $this->isCached($torrent)) {
                 continue;
             }
 

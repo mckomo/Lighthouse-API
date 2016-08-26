@@ -2,7 +2,7 @@
 
 namespace Lighthouse\Core;
 
-use Lighthouse\Entities\Torrent;
+use Lighthouse\Torrent;
 
 interface TorrentMapperInterface
 {

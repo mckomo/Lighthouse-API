@@ -5,11 +5,11 @@ namespace App\Console\Commands;
 use Illuminate\Support\Facades\Cache;
 use SplFileObject;
 use Illuminate\Console\Command;
-use Lighthouse\Common\Result;
+use Lighthouse\Result;
 use Lighthouse\Core\TorrentMapperInterface as TorrentMapper;
 use Lighthouse\Core\ServiceInterface as TorrentService;
-use Lighthouse\Entities\Error;
-use Lighthouse\Entities\Torrent;
+use Lighthouse\Error;
+use Lighthouse\Torrent;
 
 
 class ImportTorrentsCommand extends Command
@@ -97,7 +97,7 @@ class ImportTorrentsCommand extends Command
 
             $torrent = $this->mapTorrent($line);
 
-            if ($this->isCached($torrent)) {
+            if (is_null($torrent) || $this->isCached($torrent)) {
                 continue;
             }
 
@@ -195,9 +195,9 @@ class ImportTorrentsCommand extends Command
      *
      * @return bool
      */
-    private function isCached($torrent)
+    private function isCached(Torrent $torrent)
     {
-        return is_null($torrent) or !$this->hasTorrentChanged($torrent);
+        return !$this->hasTorrentChanged($torrent);
     }
 
     private function cache(Torrent $torrent)

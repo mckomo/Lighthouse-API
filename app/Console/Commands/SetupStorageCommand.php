@@ -6,6 +6,7 @@ use Elastica\Index;
 use Elastica\Type;
 use Elastica\Type\Mapping;
 use Elastica\Client as ElasticClient;
+use Lighthouse\Commands\SetupElasticsearchCommand;
 use Predis\Client as RedisClient;
 use Illuminate\Console\Command;
 
@@ -30,8 +31,10 @@ class SetupStorageCommand extends Command
      * @param ElasticClient $elastic
      * @param RedisClient $redis
      */
-    public function __construct()
+    public function __construct(SetupElasticsearchCommand $command)
     {
+        $this->command = $command;
+
         parent::__construct();
     }
 
@@ -44,8 +47,10 @@ class SetupStorageCommand extends Command
     {
         $shouldPurgeIndex = $this->option('purge');
 
+        $this->command->handle();
+
         if ($shouldPurgeIndex) {
-            $this->clearCache();
+//            $this->clearCache();
         }
     }
 }
