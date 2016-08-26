@@ -1,6 +1,6 @@
 server {
-  server_name lighthouse;
-  root        /var/www/lighthouse/public;
+  server_name App;
+  root        /var/www/App/public;
   index       index.php;
 
   client_max_body_size 100M;

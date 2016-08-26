@@ -8,7 +8,7 @@ lighthouse:
     - redis:redis
     - elasticsearch:elasticsearch
   volumes:
-    - ./:/var/www/lighthouse
+    - ./:/var/www/App
     - ./docker/sites:/etc/nginx/conf.d
     - ./docker/log:/var/log
 redis:

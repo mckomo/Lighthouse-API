@@ -151,10 +151,10 @@ return [
         /*
          * Application Service Providers...
          */
-        Lighthouse\Providers\AppServiceProvider::class,
-        Lighthouse\Providers\EventServiceProvider::class,
-        Lighthouse\Providers\RouteServiceProvider::class,
-        Lighthouse\Providers\TorrentServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        App\Providers\LighthouseServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
 
     ],

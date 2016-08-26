@@ -2,7 +2,10 @@
 
 return [
 
-    'elasticsearch' => [],
+    'elasticsearch' => [
+        'index' => 'lighthouse',
+        'type' => 'torrent'
+    ],
 
     /*
     |--------------------------------------------------------------------------

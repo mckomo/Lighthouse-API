@@ -22,12 +22,13 @@
 			"database"
 		],
 		"psr-4": {
-			"Lighthouse\\": "app/"
+			"App\\": "app/",
+			"Lighthouse\\": "src/Lighthouse"
 		}
 	},
 	"autoload-dev": {
 	  	"psr-4": {
-		  "Lighthouse\\Tests\\": "tests/"
+		  "Tests\\": "tests/"
 		}
 	},
 	"scripts": {

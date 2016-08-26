@@ -3,15 +3,13 @@ language: php
 
 # Versions of PHP you want your project run with.
 php:
-  - 5.6
   - 7.0
-  - hhvm
 
 services:
   - docker
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.5.0
+  DOCKER_COMPOSE_VERSION: 1.8.0
   COMPOSE_PROJECT_NAME: lighthouse
 
 before_install:
@@ -26,12 +24,12 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
   - docker-compose up -d
   - docker exec -t lighthouse_redis_1 redis-cli flushall
-  - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan elasticsearch:setup --purge
-  - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan torrents:import /var/www/lighthouse/tests/Support/fixtures/exportdata.txt
+  - docker exec -t lighthouse_lighthouse_1 php /var/www/App/artisan storage:setup --purge
+  - docker exec -t lighthouse_lighthouse_1 php /var/www/App/artisan torrents:import /var/www/App/tests/Support/fixtures/exportdata.txt
   - sleep 10 # Wait for Eleastic Search to index torrents
 
 # Commands you want to run that will verify your build.
-script: docker exec -t lighthouse_lighthouse_1 /var/www/lighthouse/vendor/bin/phpunit -c /var/www/lighthouse/phpunit.xml
+script: docker exec -t App_App_1 /var/www/App/vendor/bin/phpunit -c /var/www/App/phpunit.xml
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
