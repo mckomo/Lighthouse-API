@@ -17,13 +17,13 @@ before_install:
 # Commands to be run before your environment runs.
 before_script:
   - docker-compose up -d
-  - docker exec -t lighthouseservice_app_1 composer install --prefer-source --no-interaction --dev
-  - docker exec -t lighthouseservice_app_1 php artisan storage:setup --purge
-  - docker exec -t lighthouseservice_app_1 php artisan torrents:import tests/Support/fixtures/exportdata.txt
+  - docker-compose exec -T app composer install --prefer-source --no-interaction --dev
+  - docker-compose exec -T app php artisan storage:setup --purge
+  - docker-compose exec -T app php artisan torrents:import tests/Support/fixtures/exportdata.txt
   - sleep 10 # Wait for Eleastic Search to index torrents
 
 # Commands you want to run that will verify your build.
-script: docker exec -t lighthouseservice_app_1 vendor/bin/phpunit -c phpunit.xml
+script: docker-compose exec -T app vendor/bin/phpunit -c phpunit.xml
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
