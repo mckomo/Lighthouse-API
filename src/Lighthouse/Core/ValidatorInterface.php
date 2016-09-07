@@ -2,8 +2,6 @@
 
 namespace Lighthouse\Core;
 
-use Lighthouse\Core\Entity;
-
 interface ValidatorInterface
 {
     /**

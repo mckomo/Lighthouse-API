@@ -4,7 +4,7 @@ return [
 
     'elasticsearch' => [
         'index' => 'lighthouse',
-        'type' => 'torrent'
+        'type'  => 'torrent',
     ],
 
     /*

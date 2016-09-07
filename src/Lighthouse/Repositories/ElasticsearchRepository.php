@@ -9,9 +9,9 @@ use Elastica\Query as ElasticaQuery;
 use Elastica\Result;
 use Elastica\Type as TorrentType;
 use Lighthouse\Core\RepositoryInterface;
+use Lighthouse\Exceptions\RepositoryException;
 use Lighthouse\Query;
 use Lighthouse\Torrent;
-use Lighthouse\Exceptions\RepositoryException;
 
 class ElasticsearchRepository implements RepositoryInterface
 {
@@ -52,7 +52,7 @@ class ElasticsearchRepository implements RepositoryInterface
         } catch (ConnectionException $exception) {
             throw new RepositoryException($exception->getMessage());
         } catch (NotFoundException $exception) {
-            return null;
+            return;
         }
 
         $torrent = $this->mapTorrent($result);
@@ -102,9 +102,9 @@ class ElasticsearchRepository implements RepositoryInterface
         return in_array($response->getStatus(), [200, 201]);
     }
 
-
     /**
      * @param Result $result
+     *
      * @return Torrent
      */
     private function mapTorrent(Result $result)
@@ -187,6 +187,4 @@ class ElasticsearchRepository implements RepositoryInterface
             $serviceQuery->sortBy => ['order' => $serviceQuery->sortOrder],
         ];
     }
-
-
 }

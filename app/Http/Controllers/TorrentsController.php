@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Elastica\Exception\NotImplementedException;
 use Illuminate\Http\Request;
-use Lighthouse\Result;
 use Lighthouse\Common\ResultCodes;
 use Lighthouse\Core\ServiceInterface;
 use Lighthouse\Error;
 use Lighthouse\Query;
+use Lighthouse\Result;
 use Lighthouse\Torrent;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -3,12 +3,11 @@
 namespace Tests\Lighthouse;
 
 use Lighthouse\Core\RepositoryInterface;
-use Lighthouse\Query;
 use Lighthouse\Service;
 use Lighthouse\Validators\QueryValidator;
 use Lighthouse\Validators\TorrentValidator;
-use Tests\Support\EntitySampler;
 use Mockery;
+use Tests\Support\EntitySampler;
 
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {

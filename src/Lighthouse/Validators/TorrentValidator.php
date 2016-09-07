@@ -4,8 +4,8 @@ namespace Lighthouse\Validators;
 
 use Lighthouse\Common\ErrorMessages;
 use Lighthouse\Core\Entity;
-use Lighthouse\Utils\ValidationHelper;
 use Lighthouse\Core\ValidatorInterface;
+use Lighthouse\Utils\ValidationHelper;
 
 class TorrentValidator implements ValidatorInterface
 {

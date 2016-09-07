@@ -3,8 +3,8 @@
 namespace Tests\Lighthouse\Validators;
 
 use Lighthouse\Query;
-use Tests\Support\EntitySampler;
 use Lighthouse\Validators\QueryValidator;
+use Tests\Support\EntitySampler;
 
 class QueryValidatorTest extends \PHPUnit_Framework_TestCase
 {

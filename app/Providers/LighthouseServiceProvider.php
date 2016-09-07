@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Elastica;
-use Predis;
 use Illuminate\Support\ServiceProvider;
 
 class LighthouseServiceProvider extends ServiceProvider
@@ -15,7 +14,6 @@ class LighthouseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 
     /**
@@ -50,5 +48,4 @@ class LighthouseServiceProvider extends ServiceProvider
         $this->app->instance('Elastica\Index', $index);
         $this->app->instance('Elastica\Type', $type);
     }
-
 }

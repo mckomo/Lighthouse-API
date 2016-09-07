@@ -3,15 +3,14 @@
 namespace Lighthouse;
 
 use Lighthouse\Common\ErrorMessages;
-use Lighthouse\Result;
 use Lighthouse\Common\ResultCodes;
-use Lighthouse\Core\ValidatorInterface;
-use Lighthouse\Utils\ValidationHelper;
 use Lighthouse\Core\RepositoryInterface;
 use Lighthouse\Core\ServiceInterface;
+use Lighthouse\Core\ValidatorInterface;
 use Lighthouse\Exceptions\RepositoryException;
-use Lighthouse\Validators\TorrentValidator;
+use Lighthouse\Utils\ValidationHelper;
 use Lighthouse\Validators\QueryValidator;
+use Lighthouse\Validators\TorrentValidator;
 
 class Service implements ServiceInterface
 {
@@ -67,6 +66,7 @@ class Service implements ServiceInterface
 
     /**
      * @param Query $query
+     *
      * @return Result
      */
     public function search(Query $query)
@@ -110,6 +110,7 @@ class Service implements ServiceInterface
 
     /**
      * @param mixed|array $data
+     *
      * @return Result
      */
     private function successful($data = [])
@@ -117,9 +118,9 @@ class Service implements ServiceInterface
         return new Result(ResultCodes::Successful, $data);
     }
 
-
     /**
      * @param mixed|array $data
+     *
      * @return Result
      */
     private function resourceCreated($data = [])
@@ -129,6 +130,7 @@ class Service implements ServiceInterface
 
     /**
      * @param array $validationErrors
+     *
      * @return Result
      */
     private function invalidInput($validationErrors = [])
@@ -140,6 +142,7 @@ class Service implements ServiceInterface
 
     /**
      * @param RepositoryException $exception
+     *
      * @return Result
      */
     private function repositoryException(RepositoryException $exception)
@@ -148,7 +151,6 @@ class Service implements ServiceInterface
 
         return new Result(ResultCodes::InvalidInput, null, $error);
     }
-
 
     private function torrentNotFound()
     {

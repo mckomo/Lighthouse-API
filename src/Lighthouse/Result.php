@@ -12,9 +12,9 @@ class Result
     protected $code;
 
     /**
-     * @param string $code
+     * @param string            $code
      * @param Entity|array|null $data
-     * @param Error|null $error
+     * @param Error|null        $error
      */
     public function __construct($code, $data = null, $error = null)
     {

@@ -3,9 +3,9 @@
 namespace Lighthouse\Validators;
 
 use Lighthouse\Common\ErrorMessages;
-use Lighthouse\Utils\ValidationHelper;
 use Lighthouse\Core\Entity;
 use Lighthouse\Core\ValidatorInterface;
+use Lighthouse\Utils\ValidationHelper;
 
 class QueryValidator implements ValidatorInterface
 {

@@ -20,15 +20,15 @@ class TorrentEntityTest extends \PHPUnit_Framework_TestCase
     {
         $this->params = [
             'infoHash'          => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
-            'name'          => 'Solarix RELOADED',
-            'filename'      => 'solarix-reloaded.torrent',
-            'category'      => 'Games',
-            'size'          => 1430397537,
-            'url'           => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
-            'magnetLink'    => 'magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80',
-            'uploadedAt'    => '2015-06-27T16:50:58Z',
-            'seedCount'     => 75,
-            'peerCount'     => 173,
+            'name'              => 'Solarix RELOADED',
+            'filename'          => 'solarix-reloaded.torrent',
+            'category'          => 'Games',
+            'size'              => 1430397537,
+            'url'               => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
+            'magnetLink'        => 'magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80',
+            'uploadedAt'        => '2015-06-27T16:50:58Z',
+            'seedCount'         => 75,
+            'peerCount'         => 173,
         ];
 
         $this->torrent = new Torrent($this->params);
@@ -126,5 +126,4 @@ class TorrentEntityTest extends \PHPUnit_Framework_TestCase
             ['Solarix reloaded', 'solarix-reloaded.torrent'],
         ];
     }
-
 }
