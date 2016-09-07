@@ -16,9 +16,9 @@ before_install:
 
 # Commands to be run before your environment runs.
 before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
   - docker-compose up -d
+  - docker exec -t lighthouseservice_app_1 composer self-update
+  - docker exec -t lighthouseservice_app_1 composer install --prefer-source --no-interaction --dev
   - docker exec -t lighthouseservice_redis_1 redis-cli flushall
   - docker exec -t lighthouseservice_app_1 php artisan storage:setup --purge
   - docker exec -t lighthouseservice_app_1 php artisan torrents:import tests/Support/fixtures/exportdata.txt
