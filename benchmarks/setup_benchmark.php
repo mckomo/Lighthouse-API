@@ -7,5 +7,5 @@ require_once 'search_benchmark.php';
 $importTime = benchmarkImport();
 $searchTime = benchmarkSearch();
 
-echo "Import time: {$importTime}" . PHP_EOL;
+echo "Import time: {$importTime}".PHP_EOL;
 echo "Search time: $searchTime";
