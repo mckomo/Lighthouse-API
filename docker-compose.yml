@@ -1,22 +1,28 @@
-lighthouse:
-  build: .
-  ports:
-    - "80:80"
-    - "443:443"
-    - "9000:9000"
-  links:
-    - redis:redis
-    - elasticsearch:elasticsearch
-  volumes:
-    - ./:/var/www/App
-    - ./docker/sites:/etc/nginx/conf.d
-    - ./docker/log:/var/log
-redis:
-  image: redis
-  ports:
-    - "6379:6379"
-elasticsearch:
-  image: elasticsearch:2.3
-  ports:
-    - "9200:9200"
-    - "9300:9300"
+version: '2'
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/var/www/lighthouse
+  nginx:
+    image: nginx:alpine
+    links:
+      - fpm
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+  fpm:
+    image: php:7.0-fpm-alpine
+    volumes_from:
+      - app
+  elasticsearch:
+    image: elasticsearch:2.3
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
