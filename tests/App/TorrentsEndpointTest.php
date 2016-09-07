@@ -23,6 +23,7 @@ class TorrentsEndpointTest extends TestCase
         $this->seeJsonWithCount($limit);
     }
 
+
     /**
      * @dataProvider fieldProvider
      */
@@ -30,11 +31,14 @@ class TorrentsEndpointTest extends TestCase
     {
         $torrents = $this->json('GET', '/torrents', ['q' => 'windows', 'sort_by' => $field])->decodeResponseJson();
 
-        $sortedTorrents = collect($torrents)
-            ->sortByDesc($field)
-            ->toArray();
+        $fields = array_map(function($torrent) use($field) {
+            return $torrent[$field];
+        }, $torrents);
+        $sortedFields = $fields;
 
-        $this->seeJsonEquals($sortedTorrents)->seeJsonWithCountGreaterThan(3);
+        rsort($sortedFields);
+
+        $this->assertEquals($sortedFields, $fields);
     }
 
     /**
@@ -44,7 +48,7 @@ class TorrentsEndpointTest extends TestCase
     {
         $this->json('GET', '/torrents', ['q' => 'windows', 'category' => $category]);
 
-        $this->seeJsonElementsContain(['category' => $category])->seeJsonWithCountGreaterThan(3);
+        $this->seeJsonElementsContain(['category' => $category])->seeJsonWithCountGreaterThan(0, 'This test requires at least one matching torrent');
     }
 
     public function limitProvider()

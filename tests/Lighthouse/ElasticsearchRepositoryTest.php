@@ -22,11 +22,10 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->mapperMock = Mockery::mock('\Lighthouse\Mappers\ElasticSearchResult');
         $this->endpointMock = Mockery::mock('\Elastica\Type');
         $this->resultSetMock = Mockery::mock('\Elastica\ResultSet');
 
-        $this->repository = new ElasticsearchRepository($this->endpointMock, $this->mapperMock);
+        $this->repository = new ElasticsearchRepository($this->endpointMock);
     }
 
     public function tearDown()
