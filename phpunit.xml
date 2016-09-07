@@ -10,10 +10,10 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Torrents Service">
-            <directory>./tests/Services/Torrents</directory>
+        <testsuite name="Lighthouse Service test suite">
+            <directory>./tests/Lighthouse</directory>
         </testsuite>
-        <testsuite name="Application">
+        <testsuite name="Web service test suite">
             <directory>./tests/App</directory>
         </testsuite>
     </testsuites>
