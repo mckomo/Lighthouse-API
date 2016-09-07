@@ -6,8 +6,8 @@ use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
 use Lighthouse\Repositories\ElasticsearchRepository;
 use Lighthouse\Torrent;
-use Tests\Support\EntitySampler;
 use Mockery;
+use Tests\Support\EntitySampler;
 
 class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +36,9 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
     public function test_by_default_limits_query_to_twenty()
     {
         $query = EntitySampler::sampleQuery();
-        $validateSize = function ($query) { return $query->getParam('size') == 20; };
+        $validateSize = function ($query) {
+            return $query->getParam('size') == 20;
+        };
 
         $this->resultSetMock
             ->shouldReceive('getResults')
@@ -67,7 +69,9 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
         $query = EntitySampler::sampleQuery();
         $query->sortBy = 'uploadedAt';
 
-        $validateSort = function ($query) { return array_key_exists('uploadedAt', $query->getParam('sort')); };
+        $validateSort = function ($query) {
+            return array_key_exists('uploadedAt', $query->getParam('sort'));
+        };
 
         $this->resultSetMock
             ->shouldReceive('getResults')

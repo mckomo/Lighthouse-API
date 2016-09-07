@@ -41,14 +41,13 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($request->wantsJson()) {
-
             $code = method_exists($e, 'getStatusCode')
                 ? $e->getStatusCode()
                 : 500;
             $message = [
                 'error' => empty($e->getMessage())
                     ? $this->getClassName($e)
-                    : $e->getMessage()
+                    : $e->getMessage(),
             ];
 
             return response()->json($message, $code);
@@ -57,7 +56,8 @@ class Handler extends ExceptionHandler
         return parent::render($request, $e);
     }
 
-    private function getClassName($obj) {
+    private function getClassName($obj)
+    {
         $parts = explode('\\', get_class($obj));
 
         return array_pop($parts);

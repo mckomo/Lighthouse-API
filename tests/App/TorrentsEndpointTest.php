@@ -23,7 +23,6 @@ class TorrentsEndpointTest extends TestCase
         $this->seeJsonWithCount($limit);
     }
 
-
     /**
      * @dataProvider fieldProvider
      */
@@ -31,7 +30,7 @@ class TorrentsEndpointTest extends TestCase
     {
         $torrents = $this->json('GET', '/torrents', ['q' => 'windows', 'sort_by' => $field])->decodeResponseJson();
 
-        $fields = array_map(function($torrent) use($field) {
+        $fields = array_map(function ($torrent) use ($field) {
             return $torrent[$field];
         }, $torrents);
         $sortedFields = $fields;

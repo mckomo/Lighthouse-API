@@ -2,14 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Elastica\Index;
-use Elastica\Type;
-use Elastica\Type\Mapping;
 use Elastica\Client as ElasticClient;
+use Illuminate\Console\Command;
 use Lighthouse\Commands\SetupElasticsearchCommand;
 use Predis\Client as RedisClient;
-use Illuminate\Console\Command;
-
 
 class SetupStorageCommand extends Command
 {
@@ -29,7 +25,7 @@ class SetupStorageCommand extends Command
 
     /**
      * @param ElasticClient $elastic
-     * @param RedisClient $redis
+     * @param RedisClient   $redis
      */
     public function __construct(SetupElasticsearchCommand $command)
     {
@@ -50,7 +46,7 @@ class SetupStorageCommand extends Command
         $this->command->handle();
 
         if ($shouldPurgeIndex) {
-//            $this->clearCache();
+            //            $this->clearCache();
         }
     }
 }

@@ -51,8 +51,9 @@ class TestCase extends IlluminateTestCase
     /**
      * Assert that the response contains the given JSON.
      *
-     * @param  array  $data
-     * @param  bool  $negate
+     * @param array $data
+     * @param bool  $negate
+     *
      * @return $this
      */
     protected function seeJsonElementsContain(array $elementSubset, $negate = false)
@@ -62,16 +63,14 @@ class TestCase extends IlluminateTestCase
         $elements = Arr::sortRecursive((array) $this->decodeResponseJson());
 
         foreach ($elements as $element) {
-
             $actual = json_encode($element);
 
             foreach ($elementSubset as $key => $value) {
-
                 $expected = $this->formatToExpectedJson($key, $value);
 
                 $this->{$method}(
                     Str::contains($actual, $expected),
-                    ($negate ? 'Found unexpected' : 'Unable to find') . " JSON fragment [{$expected}] within [{$actual}]."
+                    ($negate ? 'Found unexpected' : 'Unable to find')." JSON fragment [{$expected}] within [{$actual}]."
                 );
             }
         }

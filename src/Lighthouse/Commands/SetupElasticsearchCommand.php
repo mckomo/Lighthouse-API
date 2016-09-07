@@ -2,8 +2,6 @@
 
 namespace Lighthouse\Commands;
 
-
-use Elastica\Client;
 use Elastica\Index;
 use Elastica\Type;
 use Elastica\Type\Mapping;

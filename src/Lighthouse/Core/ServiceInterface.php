@@ -2,8 +2,8 @@
 
 namespace Lighthouse\Core;
 
-use Lighthouse\Result;
 use Lighthouse\Query;
+use Lighthouse\Result;
 use Lighthouse\Torrent;
 
 interface ServiceInterface

@@ -2,8 +2,7 @@
 
 namespace Lighthouse\Core;
 
-
 interface CommandInterface
 {
-    function handle();
+    public function handle();
 }

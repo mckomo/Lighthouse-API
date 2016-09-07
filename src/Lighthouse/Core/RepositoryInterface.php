@@ -27,5 +27,4 @@ interface RepositoryInterface
      * @return bool
      */
     public function put(Torrent $torrent);
-
 }

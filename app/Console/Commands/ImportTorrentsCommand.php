@@ -2,15 +2,14 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Cache;
-use SplFileObject;
 use Illuminate\Console\Command;
-use Lighthouse\Result;
-use Lighthouse\Error;
-use Lighthouse\Torrent;
-use Lighthouse\Core\TorrentMapperInterface;
+use Illuminate\Support\Facades\Cache;
 use Lighthouse\Core\ServiceInterface;
-
+use Lighthouse\Core\TorrentMapperInterface;
+use Lighthouse\Error;
+use Lighthouse\Result;
+use Lighthouse\Torrent;
+use SplFileObject;
 
 class ImportTorrentsCommand extends Command
 {
@@ -94,7 +93,6 @@ class ImportTorrentsCommand extends Command
         $this->setupCounters();
 
         foreach ($this->openDataFile() as $line) {
-
             $torrent = $this->mapTorrent($line);
 
             if (is_null($torrent) || $this->isCached($torrent)) {
@@ -117,14 +115,14 @@ class ImportTorrentsCommand extends Command
 
     /**
      * @param string $line
+     *
      * @return Torrent
      */
     private function mapTorrent($line)
     {
         try {
             return $this->mapper->map($line);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->error(
                 "Mapper error on line: {$line}. Error message: {$exception->getMessage()}.");
         }
@@ -228,10 +226,10 @@ class ImportTorrentsCommand extends Command
             return;
         }
 
-        $message = implode(PHP_EOL,[
+        $message = implode(PHP_EOL, [
             "Error: {$error->message}",
             "Details: {implode('|', $error->attachments)}",
-            "Line:  {trim($this->currentLine)}"
+            "Line:  {trim($this->currentLine)}",
         ]);
 
         $this->error($message);

@@ -48,7 +48,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testFailsWithInvalidUtf8Name()
     {
-        $hexName = 'c4b4c3bcc5a174c3adc3b12042c3adc3a962c3ab7220eda0bdedb184eda0bdedb18ceda0bdedb293eda0bdedb298'; # Ĵüštíñ Bíébër ��������%
+        $hexName = 'c4b4c3bcc5a174c3adc3b12042c3adc3a962c3ab7220eda0bdedb184eda0bdedb18ceda0bdedb293eda0bdedb298'; // Ĵüštíñ Bíébër ��������%
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->name = $this->convertToString($hexName);
 

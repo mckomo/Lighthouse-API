@@ -6,11 +6,9 @@ use Lighthouse\Core\TorrentMapperInterface;
 use Lighthouse\Torrent;
 
 /**
- * Class KickassMapper
+ * Class KickassMapper.
  *
  * Mapper for KickassTorrents CSV torrent dump
- *
- * @package Lighthouse\TorrentMappers
  */
 final class KickassMapper implements TorrentMapperInterface
 {
@@ -26,7 +24,7 @@ final class KickassMapper implements TorrentMapperInterface
         $data = explode('|', $csv);
 
         if (count($data) < static::REQUIRED_FIELD_COUNT) {
-            return null;
+            return;
         }
 
         return new Torrent([

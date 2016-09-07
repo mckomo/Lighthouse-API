@@ -4,7 +4,7 @@ namespace Tests\Lighthouse;
 
 use Lighthouse\TorrentMappers\KickassMapper;
 
-class CsvTorrentMapperTest extends \PHPUnit_Framework_TestCase
+class KickassMapperTest extends \PHPUnit_Framework_TestCase
 {
     private $mapper;
     private $data = '96B38CAEED19A26EC338AE3B85AC43335750BFCA|Solarix-RELOADED|Games|https://kat.cr/solarix-reloaded-t10582161.html|http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent|2272891893|31|3|173|75|1430397537';
