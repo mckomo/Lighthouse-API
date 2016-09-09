@@ -59,7 +59,7 @@ class LighthouseServiceProvider extends ServiceProvider
     private function registerRedis()
     {
         // TODO Move settings to config file
-        $predis = new Predis(['host' => 'redis', 'prefix' => 'torrent:']);
+        $predis = new Predis(['host' => 'redis'], ['prefix' => 'torrent:']);
 
         $this->app->instance(
             'Predis\Client', $predis);
