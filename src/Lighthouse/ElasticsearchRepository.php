@@ -1,12 +1,12 @@
 <?php
 
-namespace Lighthouse\Repositories;
+namespace Lighthouse;
 
 use Elastica\Document;
 use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
 use Elastica\Query as ElasticaQuery;
-use Elastica\Result;
+use Elastica\Result as ElasticaResult;
 use Elastica\Type as TorrentType;
 use Lighthouse\Core\RepositoryInterface;
 use Lighthouse\Exceptions\RepositoryException;
@@ -103,11 +103,11 @@ class ElasticsearchRepository implements RepositoryInterface
     }
 
     /**
-     * @param Result $result
+     * @param ElasticaResult $result
      *
      * @return Torrent
      */
-    private function mapTorrent(Result $result)
+    private function mapTorrent(ElasticaResult $result)
     {
         $torrentData = $result->getData();
 
