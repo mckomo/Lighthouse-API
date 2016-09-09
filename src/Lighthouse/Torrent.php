@@ -2,10 +2,11 @@
 
 namespace Lighthouse;
 
+use Lighthouse\Core\CacheableInterface;
 use Lighthouse\Core\Entity;
 use Lighthouse\Utils\UnitHelper;
 
-class Torrent extends Entity
+class Torrent extends Entity implements CacheableInterface
 {
     /**
      * @var string
@@ -71,5 +72,15 @@ class Torrent extends Entity
         if (is_null($this->filename) && $this->name) {
             $this->filename = UnitHelper::formatFilename($this->name, 'torrent');
         }
+    }
+
+    public function cacheKey()
+    {
+        return $this->infoHash;
+    }
+
+    public function cacheValue()
+    {
+        return md5(json_encode($this->toArray()));
     }
 }

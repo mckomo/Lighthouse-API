@@ -4,7 +4,7 @@ namespace Tests\Lighthouse;
 
 use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
-use Lighthouse\Repositories\ElasticsearchRepository;
+use Lighthouse\ElasticsearchRepository;
 use Lighthouse\Torrent;
 use Mockery;
 use Tests\Support\EntitySampler;
