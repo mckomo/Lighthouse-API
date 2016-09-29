@@ -14,7 +14,7 @@ class SetupStorageCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'storage:setup {--purge}';
+    protected $signature = 'storage:setup';
 
     /**
      * The console command description.
@@ -24,12 +24,16 @@ class SetupStorageCommand extends Command
     protected $description = 'Setup storage for the Lighthouse Service';
 
     /**
+     * @var SetupElasticsearchCommand $setupCommand
+     */
+
+    /**
      * @param ElasticClient $elastic
      * @param RedisClient   $redis
      */
-    public function __construct(SetupElasticsearchCommand $command)
+    public function __construct(SetupElasticsearchCommand $setupCommand)
     {
-        $this->command = $command;
+        $this->setupCommand = $setupCommand;
 
         parent::__construct();
     }
@@ -41,12 +45,6 @@ class SetupStorageCommand extends Command
      */
     public function handle()
     {
-        $shouldPurgeIndex = $this->option('purge');
-
-        $this->command->handle();
-
-        if ($shouldPurgeIndex) {
-            //            $this->clearCache();
-        }
+        $this->setupCommand->handle();
     }
 }
