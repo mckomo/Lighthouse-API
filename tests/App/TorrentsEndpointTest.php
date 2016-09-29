@@ -52,7 +52,7 @@ class TorrentsEndpointTest extends TestCase
 
     public function limitProvider()
     {
-        return [[1], [5], [23]];
+        return [[1], [5], [20]];
     }
 
     public function fieldProvider()
