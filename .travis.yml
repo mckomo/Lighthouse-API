@@ -17,10 +17,10 @@ before_install:
 # Commands to be run before your environment runs.
 before_script:
   - docker-compose up -d
-  - docker-compose exec -T app composer install --prefer-source --no-interaction --dev
-  - docker-compose exec -T app php artisan storage:setup --purge
+  - docker-compose exec -T app composer install --no-interaction --dev
+  - docker-compose exec -T app php artisan storage:setup
   - docker-compose exec -T app php artisan torrents:import tests/Support/fixtures/exportdata.txt
-  - sleep 10 # Wait for Eleastic Search to index torrents
+  - sleep 5 # Wait for Eleastic Search to index torrents
 
 # Commands you want to run that will verify your build.
 script: docker-compose exec -T app vendor/bin/phpunit -c phpunit.xml
