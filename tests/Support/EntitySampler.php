@@ -1,9 +1,9 @@
 <?php
 
-namespace Lighthouse\tests\Support;
+namespace Tests\Support;
 
-use Lighthouse\Services\Torrents\Entities\ServiceQuery;
-use Lighthouse\Services\Torrents\Entities\Torrent;
+use Lighthouse\Query;
+use Lighthouse\Torrent;
 
 class EntitySampler
 {
@@ -13,7 +13,7 @@ class EntitySampler
     public static function sampleTorrent()
     {
         return new Torrent([
-            'hash'          => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
+            'infoHash'      => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
             'name'          => 'Solarix-RELOADED',
             'filename'      => 'solarix-reloaded.torrent',
             'category'      => 'Games',
@@ -26,11 +26,11 @@ class EntitySampler
     }
 
     /**
-     * @return ServiceQuery
+     * @return Query
      */
     public static function sampleQuery()
     {
-        return new ServiceQuery([
+        return new Query([
             'phrase'        => 'Solarix-RELOADED',
             'size'          => 20,
             'category'      => 'games',

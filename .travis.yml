@@ -1,18 +1,12 @@
 # Required to run your project under the correct environment.
 language: php
 
-# Versions of PHP you want your project run with.
-php:
-  - 5.6
-  - 7.0
-  - hhvm
-
 services:
   - docker
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.5.0
-  COMPOSE_PROJECT_NAME: lighthouse
+  DOCKER_COMPOSE_VERSION: 1.8.0
+  COMPOSE_PROJECT_NAME: lighthouseservice
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -22,23 +16,17 @@ before_install:
 
 # Commands to be run before your environment runs.
 before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
   - docker-compose up -d
-  - docker exec -t lighthouse_redis_1 redis-cli flushall
-  - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan elasticsearch:setup --purge
-  - docker exec -t lighthouse_lighthouse_1 php /var/www/lighthouse/artisan torrents:import /var/www/lighthouse/tests/Support/fixtures/exportdata.txt
-  - sleep 10 # Wait for Eleastic Search to index torrents
+  - docker-compose exec -T app composer install --no-interaction --dev
+  - docker-compose exec -T app php artisan storage:setup
+  - docker-compose exec -T app php artisan torrents:import tests/Support/fixtures/exportdata.txt
+  - sleep 5 # Wait for Eleastic Search to index torrents
 
 # Commands you want to run that will verify your build.
-script: docker exec -t lighthouse_lighthouse_1 /var/www/lighthouse/vendor/bin/phpunit -c /var/www/lighthouse/phpunit.xml
+script: docker-compose exec -T app vendor/bin/phpunit -c phpunit.xml
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
-matrix:
-  allow_failures:
-    - php: hhvm
-  fast_finish: true
 
 # Customize when the notification emails are sent.
 notifications:

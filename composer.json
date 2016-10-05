@@ -5,13 +5,13 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"laravel/framework": "5.0.*",
-		"ruflin/elastica": "~2.0",
+		"laravel/framework": "5.2.*",
+		"ruflin/elastica": "~3.2",
 		"mockery/mockery": "0.9.*",
-		"guzzlehttp/guzzle": "^6.0",
+		"guzzlehttp/guzzle": "~6.2",
 		"barryvdh/laravel-httpcache": "^0.2.2",
 		"barryvdh/laravel-cors": "^0.7.1",
-		"predis/predis": "^1.0"
+		"predis/predis": "~1.1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
@@ -22,12 +22,13 @@
 			"database"
 		],
 		"psr-4": {
-			"Lighthouse\\": "app/"
+			"App\\": "app/",
+			"Lighthouse\\": "src/Lighthouse"
 		}
 	},
 	"autoload-dev": {
 	  	"psr-4": {
-		  "Lighthouse\\Tests\\": "tests/"
+		  "Tests\\": "tests/"
 		}
 	},
 	"scripts": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lighthouse\tests\Support;
+namespace App\tests\Support;
 
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -12,7 +12,7 @@ class TestHelper
      */
     public static function purgeTorrents()
     {
-        self::runCommand('php artisan elasticsearch:setup --purge');
+        self::runCommand('php artisan storage:setup --purge');
     }
 
     /**
