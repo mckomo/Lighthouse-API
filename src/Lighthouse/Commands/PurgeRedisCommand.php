@@ -27,6 +27,6 @@ class PurgeRedisCommand
      */
     public function handle()
     {
-        echo 'PURGING !';
+        $this->redis->flushdb();
     }
 }

@@ -1,162 +1,66 @@
 <?php
 
-//
-//namespace Tests\Lighthouse\Commands;
-//
-//use App\Console\Commands\SetupStorageCommand;
-//use App\Tests\Support\TestCase;
-//use Mockery;
-//use Mockery\MockInterface;
-//
-//class SetupElasticsearchTest extends \PHPUnit_Framework_TestCase
-//{
-//    public function tearDown()
-//    {
-//        Mockery::close();
-//    }
-//
-////    public function testCreatesLighthouseIndex()
-////    {
-////        $indexMock = $this->setupSimpleIndexMock()
-////            ->shouldReceive('create')
-////            ->once()
-////            ->getMock();
-////        $setupCommand = new SetupStorageCommand($indexMock);
-////
-////        $setupCommand->handle();
-////    }
-//
-////    public function testPurgesAppIndexWithPurgeFlag()
-////    {
-////        $shouldPurgeIndex = true;
-////
-////        $indexMock = $this->setupSimpleIndexMock()
-////            ->shouldReceive('create')
-////            ->with(anything(), $shouldPurgeIndex)
-////            ->once()
-////            ->getMock();
-////        $clientMock = $this->setupClientMock($indexMock);
-////
-////        $setupCommand = new SetupElasticSearch($shouldPurgeIndex);
-////        $handler = new SetupElasticSearchHandler($clientMock);
-////
-////        $handler->handle($setupCommand);
-////    }
-////
-////    public function testCreatesTorrentType()
-////    {
-////        $typeMock = $this->setupSimpleTypeMock();
-////        $indexMock = $this
-////            ->setupIgnoringMissingMethodsMockInterface('\Elastica\Index')
-////            ->shouldReceive('getType')
-////            ->with('torrent')
-////            ->once()
-////            ->andReturn($typeMock)
-////            ->getMock();
-////        $clientMock = $this->setupClientMock($indexMock);
-////
-////        $setupCommand = new SetupElasticSearch();
-////        $handler = new SetupElasticSearchHandler($clientMock);
-////
-////        $handler->handle($setupCommand);
-////    }
-////
-////    public function testCreatesTorrentTypeMapping()
-////    {
-////        $typeMock = $this->setupSimpleTypeMock()
-////            ->shouldReceive('setMapping')
-////            ->with(any('\Elastica\Type\Mapping'))
-////            ->once()
-////            ->getMock();
-////        $indexMock = $this->setupSimpleIndexMock($typeMock);
-////        $clientMock = $this->setupClientMock($indexMock);
-////
-////        $setupCommand = new SetupElasticSearch();
-////        $handler = new SetupElasticSearchHandler($clientMock);
-////
-////        $handler->handle($setupCommand);
-////    }
-////
-//    /**
-//     * @return MockInterface
-//     */
-//    private function setupSimpleTypeMock()
-//    {
-//        return $this->setupIgnoringMissingMethodsMockInterface('\Elastica\Type');
-//    }
-//
-//    /**
-//     * @param MockInterface $typeMock
-//     *
-//     * @return MockInterface
-//     */
-//    private function setupSimpleIndexMock(MockInterface $typeMock = null)
-//    {
-//        if (is_null($typeMock)) {
-//            $typeMock = $this->setupSimpleTypeMock();
-//        }
-//
-//        return $this->setupIgnoringMissingMethodsMockInterface('\Elastica\Index')
-//            ->shouldReceive('getType')
-//            ->andReturn($typeMock)
-//            ->getMock();
-//    }
-//
-//    /**
-//     * @param MockInterface $indexMockInterface
-//     *
-//     * @return MockInterface
-//     */
-//    private function setupClientMock(MockInterface $indexMock = null)
-//    {
-//        if (is_null($indexMock)) {
-//            $indexMock = $this->setupSimpleIndexMock();
-//        }
-//
-//        return $this->setupIgnoringMissingMethodsMockInterface('\Elastica\Client')
-//            ->shouldReceive('getIndex')
-//            ->andReturn($indexMock)
-//            ->getMock();
-//    }
-//
-//    /**
-//     * @param string $className
-//     *
-//     * @return MockInterface
-//     */
-//    private function setupIgnoringMissingMethodsMockInterface($className)
-//    {
-//        return Mockery::mock($className)->shouldIgnoreMissing();
-//    }
-//
-//
-//
-//
-//    /// END
-//
-//
-////    public function testCreatesTorrentTypeWithMapping()
-////    {
-////        $setupCommand = new SetupElasticSearch();
-////        $handler = new SetupElasticSearchHandler($this->clientMock);
-////
-////        $this->clientMock
-////            ->shouldReceive('getIndex')
-////            ->with('App')
-////            ->once()
-////            ->andReturn($this->indexMock);
-////
-////        $this->indexMock
-////            ->shouldReceive('getType')
-////            ->with('torrent')
-////            ->once()
-////            ->andReturn($this->typeMock);
-////
-////        $this->typeMock
-////            ->shouldReceive('setMapping')
-////            ->with(anInstanceOf('Elastica\Type\Mapping'))
-////            ->once();
-////
-////        $handler->handle($setupCommand);
-////    }
-//}
+namespace Tests\Lighthouse\Commands;
+
+use Elastica\Index;
+use Elastica\Type;
+use Lighthouse\Commands\SetupElasticsearchCommand;
+use Mockery;
+use Mockery\Mock;
+use Mockery\MockInterface;
+
+class SetupElasticsearchTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var Mock
+     */
+    private $indexMock;
+
+    /**
+     * @var Mock
+     */
+    private $typeMock;
+
+    /**
+     * @var SetupElasticsearchCommand
+     */
+    private $setupCommand;
+
+    public function setUp()
+    {
+        $this->indexMock = Mockery::mock('\Elastica\Index');
+        $this->typeMock = Mockery::mock('\Elastica\Type');
+
+        $this->setupCommand = new SetupElasticsearchCommand($this->indexMock, $this->typeMock);
+    }
+
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
+    public function test_sets_properties_of_index()
+    {
+        $this->indexMock
+            ->shouldReceive('create')
+            ->with(hasEntry('analysis', typeOf('array')))
+            ->once();
+        $this->typeMock
+            ->shouldIgnoreMissing();
+
+        $this->setupCommand->handle();
+    }
+
+    public function test_sets_type_mapping()
+    {
+        $this->indexMock
+            ->shouldIgnoreMissing();
+        $this->typeMock
+            ->shouldReceive('setMapping')
+            ->with(anInstanceOf('Elastica\Type\Mapping'))
+            ->once();
+
+
+        $this->setupCommand->handle();
+    }
+}

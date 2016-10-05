@@ -31,6 +31,6 @@ class PurgeElasticsearchCommand
      */
     public function handle()
     {
-        echo 'PURGING !';
+        $this->index->delete();
     }
 }
