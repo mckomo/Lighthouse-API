@@ -5,15 +5,11 @@ namespace Tests\Lighthouse;
 use Lighthouse\CachedService;
 use Lighthouse\Common\ResultCodes;
 use Lighthouse\Core\RepositoryInterface;
-use Lighthouse\Query;
 use Lighthouse\Result;
-use Lighthouse\Service;
 use Lighthouse\Torrent;
-use Lighthouse\Validators\QueryValidator;
-use Lighthouse\Validators\TorrentValidator;
+use Mockery;
 use Mockery\Mock;
 use Tests\Support\EntitySampler;
-use Mockery;
 
 class CachedServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -59,7 +55,7 @@ class CachedServiceTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('has')
             ->once()
             ->with($torrent->cacheKey())
-            ->andReturn(false); # Torrent is not cached
+            ->andReturn(false); // Torrent is not cached
 
         $this->serviceMock
             ->shouldReceive('put')
@@ -86,12 +82,12 @@ class CachedServiceTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('has')
             ->once()
             ->with($torrent->cacheKey())
-            ->andReturn(true); # Torrent is already cached
+            ->andReturn(true); // Torrent is already cached
         $this->cacheMock
             ->shouldReceive('get')
             ->once()
             ->with($torrent->cacheKey())
-            ->andReturn('DIFFERENT CACHE VALUE'); # Cached torrent has changed
+            ->andReturn('DIFFERENT CACHE VALUE'); // Cached torrent has changed
 
         $this->serviceMock
             ->shouldReceive('put')
@@ -118,12 +114,12 @@ class CachedServiceTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('has')
             ->once()
             ->with($torrent->cacheKey())
-            ->andReturn(true); # Torrent is already cached
+            ->andReturn(true); // Torrent is already cached
         $this->cacheMock
             ->shouldReceive('get')
             ->once()
             ->with($torrent->cacheKey())
-            ->andReturn($torrent->cacheValue()); # Cached torrent is unchanged
+            ->andReturn($torrent->cacheValue()); // Cached torrent is unchanged
 
         $this->serviceMock->shouldNotReceive('put');
         $this->cacheMock->shouldNotReceive('put');
@@ -132,5 +128,4 @@ class CachedServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
-
 }

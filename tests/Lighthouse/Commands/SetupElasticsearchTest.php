@@ -2,12 +2,9 @@
 
 namespace Tests\Lighthouse\Commands;
 
-use Elastica\Index;
-use Elastica\Type;
 use Lighthouse\Commands\SetupElasticsearchCommand;
 use Mockery;
 use Mockery\Mock;
-use Mockery\MockInterface;
 
 class SetupElasticsearchTest extends \PHPUnit_Framework_TestCase
 {

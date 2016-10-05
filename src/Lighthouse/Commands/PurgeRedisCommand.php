@@ -2,9 +2,6 @@
 
 namespace Lighthouse\Commands;
 
-use Elastica\Index;
-use Elastica\Type;
-use Elastica\Type\Mapping;
 use Predis\Client;
 
 class PurgeRedisCommand

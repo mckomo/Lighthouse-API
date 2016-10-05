@@ -2,13 +2,9 @@
 
 namespace Tests\Lighthouse\Commands;
 
-use Elastica\Index;
-use Elastica\Type;
 use Lighthouse\Commands\PurgeElasticsearchCommand;
-use Lighthouse\Commands\SetupElasticsearchCommand;
 use Mockery;
 use Mockery\Mock;
-use Mockery\MockInterface;
 
 class PurgeElasticsearchTest extends \PHPUnit_Framework_TestCase
 {

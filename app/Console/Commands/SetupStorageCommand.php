@@ -24,7 +24,7 @@ class SetupStorageCommand extends Command
     protected $description = 'Setup storage for the Lighthouse Service';
 
     /**
-     * @var SetupElasticsearchCommand $setupCommand
+     * @var SetupElasticsearchCommand
      */
 
     /**

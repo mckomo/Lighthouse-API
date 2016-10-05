@@ -2,21 +2,11 @@
 
 namespace Lighthouse;
 
-use Lighthouse\Common\ErrorMessages;
-use Lighthouse\Core\CacheableInterface;
 use Lighthouse\Core\StorageInterface;
-use Lighthouse\Result;
-use Lighthouse\Common\ResultCodes;
-use Lighthouse\Core\ValidatorInterface;
-use Lighthouse\Utils\ValidationHelper;
-use Lighthouse\Core\RepositoryInterface;
-use Lighthouse\Core\ServiceInterface;
-use Lighthouse\Exceptions\RepositoryException;
 use Predis\Client;
 
 class RedisStorage implements StorageInterface
 {
-
     public function __construct(Client $redis)
     {
         $this->redis = $redis;
@@ -44,7 +34,7 @@ class RedisStorage implements StorageInterface
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return mixed
      */
