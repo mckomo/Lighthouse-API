@@ -3,8 +3,6 @@
 namespace Lighthouse\Commands;
 
 use Elastica\Index;
-use Elastica\Type;
-use Elastica\Type\Mapping;
 
 class PurgeElasticsearchCommand
 {

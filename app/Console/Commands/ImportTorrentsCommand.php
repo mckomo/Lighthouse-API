@@ -93,7 +93,6 @@ class ImportTorrentsCommand extends Command
         $this->setupCounters();
 
         foreach ($this->openDataFile() as $line) {
-
             $torrent = $this->mapTorrent($line);
 
             if (is_null($torrent)) {

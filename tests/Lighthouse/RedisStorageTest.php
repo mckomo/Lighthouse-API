@@ -2,19 +2,10 @@
 
 namespace Tests\Lighthouse;
 
-use Lighthouse\CachedService;
-use Lighthouse\Common\ResultCodes;
-use Lighthouse\Core\RepositoryInterface;
-use Lighthouse\Query;
 use Lighthouse\RedisStorage;
-use Lighthouse\Result;
-use Lighthouse\Service;
 use Lighthouse\Torrent;
-use Lighthouse\Validators\QueryValidator;
-use Lighthouse\Validators\TorrentValidator;
-use Mockery\Mock;
-use Tests\Support\EntitySampler;
 use Mockery;
+use Mockery\Mock;
 
 class RedisStorageTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,7 +40,7 @@ class RedisStorageTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('exists')
             ->once()
             ->with($storageKey)
-            ->andReturn($expectedResult); # Torrent is not cached
+            ->andReturn($expectedResult); // Torrent is not cached
 
         $result = $this->redisStorage->has($storageKey);
 
@@ -65,7 +56,7 @@ class RedisStorageTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('get')
             ->once()
             ->with($storageKey)
-            ->andReturn($expectedValue); # Torrent is not cached
+            ->andReturn($expectedValue); // Torrent is not cached
 
         $result = $this->redisStorage->get($storageKey);
 

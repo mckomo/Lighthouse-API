@@ -10,8 +10,6 @@ use Elastica\Result as ElasticaResult;
 use Elastica\Type as TorrentType;
 use Lighthouse\Core\RepositoryInterface;
 use Lighthouse\Exceptions\RepositoryException;
-use Lighthouse\Query;
-use Lighthouse\Torrent;
 
 class ElasticsearchRepository implements RepositoryInterface
 {

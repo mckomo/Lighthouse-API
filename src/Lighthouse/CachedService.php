@@ -2,16 +2,11 @@
 
 namespace Lighthouse;
 
-use Lighthouse\Common\ErrorMessages;
-use Lighthouse\Core\CacheableInterface;
-use Lighthouse\Core\StorageInterface;
-use Lighthouse\Result;
 use Lighthouse\Common\ResultCodes;
-use Lighthouse\Core\ValidatorInterface;
-use Lighthouse\Utils\ValidationHelper;
-use Lighthouse\Core\RepositoryInterface;
+use Lighthouse\Core\CacheableInterface;
 use Lighthouse\Core\ServiceInterface;
-use Lighthouse\Exceptions\RepositoryException;
+use Lighthouse\Core\StorageInterface;
+use Lighthouse\Core\ValidatorInterface;
 
 class CachedService implements ServiceInterface
 {
@@ -48,6 +43,7 @@ class CachedService implements ServiceInterface
 
     /**
      * @param Query $query
+     *
      * @return Result
      */
     public function search(Query $query)
@@ -88,7 +84,7 @@ class CachedService implements ServiceInterface
     /**
      * @param CacheableInterface $torrent
      *
-     * @return boolean
+     * @return bool
      */
     private function isTorrentUnchanged(CacheableInterface $torrent)
     {
@@ -101,7 +97,7 @@ class CachedService implements ServiceInterface
     /**
      * @param CacheableInterface $torrent
      *
-     * @return boolean
+     * @return bool
      */
     private function hasCache(CacheableInterface $torrent)
     {

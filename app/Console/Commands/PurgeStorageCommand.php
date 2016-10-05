@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Elastica\Client as ElasticClient;
 use Illuminate\Console\Command;
 use Lighthouse\Commands\PurgeElasticsearchCommand;
 use Lighthouse\Commands\PurgeRedisCommand;
-use Predis\Client as RedisClient;
 
-class SetupStorageCommand extends Command
+class PurgeStorageCommand extends Command
 {
     /**
      * The console command name.
@@ -25,19 +23,19 @@ class SetupStorageCommand extends Command
     protected $description = 'Setup storage for the Lighthouse Service';
 
     /**
-     * @var PurgeElasticsearchCommand $setupCommand
+     * @var PurgeElasticsearchCommand
      */
     private $purgeElasticCommand;
 
 
     /**
-     * @var PurgeRedisCommand $setupCommand
+     * @var PurgeRedisCommand
      */
     private $purgeRedisCommand;
 
     /**
      * @param PurgeElasticsearchCommand $purgeElasticCommand
-     * @param PurgeRedisCommand   $purgeRedisCommand
+     * @param PurgeRedisCommand         $purgeRedisCommand
      */
     public function __construct(PurgeElasticsearchCommand $purgeElasticCommand, PurgeRedisCommand $purgeRedisCommand)
     {
