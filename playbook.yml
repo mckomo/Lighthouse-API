@@ -1,0 +1,32 @@
+---
+- hosts: all
+  remote_user: lighthouse
+  become: yes
+  become_user: root
+  vars:
+    apt_php_packages:
+      - php7.0
+      - php7.0-cgi
+      - php7.0-cli
+      - php7.0-common
+      - php7.0-curl
+      - php7.0-fpm
+      - php7.0-gd
+      - php7.0-intl
+      - php7.0-json
+      - php7.0-mysql
+      - php7.0-mbstring
+      - php7.0-xml
+      - php7.0-zip
+  pre_tasks:
+    - name: Creating user nginx
+      user: name=nginx system=yes createhome=no shell=/usr/sbin/nologin
+  roles:
+    - { role: geerlingguy.nginx, nginx_user: nginx }
+    - { role: chusiang.php7, php_timezone: Europe/Warsaw }
+    - { role: geerlingguy.composer, composer_keep_updated: true }
+    - { role: geerlingguy.redis }
+    - { role: geerlingguy.elasticsearch }
+  tasks:
+    - name: Copy Lighthouse-Service repository
+      git: repo=https://github.com/mckomo/Lighthouse-Service dest=/var/www/lighthouse-api
