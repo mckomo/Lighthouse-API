@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ImportTorrentsCommand::class,
         Commands\SetupStorageCommand::class,
+        Commands\PurgeStorageCommand::class,
     ];
 
     /**

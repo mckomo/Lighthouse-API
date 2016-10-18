@@ -18,6 +18,7 @@ before_install:
 before_script:
   - docker-compose up -d
   - docker-compose exec -T app composer install --no-interaction --dev
+  - docker-compose exec -T app php artisan storage:purge
   - docker-compose exec -T app php artisan storage:setup
   - docker-compose exec -T app php artisan torrents:import tests/Support/fixtures/exportdata.txt
   - sleep 5 # Wait for Eleastic Search to index torrents

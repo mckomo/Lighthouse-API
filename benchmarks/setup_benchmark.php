@@ -8,4 +8,4 @@ $importTime = benchmarkImport();
 $searchTime = benchmarkSearch();
 
 echo "Import time: {$importTime}".PHP_EOL;
-echo "Search time: $searchTime";
+echo "Search time: {$searchTime}".PHP_EOL;
