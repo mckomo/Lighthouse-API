@@ -35,8 +35,13 @@ class PurgeElasticsearchTest extends \PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-    public function test_deletes_index()
+    public function test_deletes_index_if_index_exists()
     {
+        $this->indexMock
+            ->shouldReceive('exists')
+            ->once()
+            ->andReturn(true);
+
         $this->indexMock
             ->shouldReceive('delete')
             ->once();

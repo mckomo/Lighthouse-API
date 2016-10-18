@@ -29,6 +29,8 @@ class PurgeElasticsearchCommand
      */
     public function handle()
     {
-        $this->index->delete();
+        if ($this->index->exists()) {
+            $this->index->delete();
+        }
     }
 }
