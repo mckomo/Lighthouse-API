@@ -1,0 +1,51 @@
+---
+- hosts: all
+  remote_user: '{{ remote_user }}'
+  become: yes
+  become_user: root
+  vars:
+    remote_user: lighthouse
+    projects:
+      - { repo: 'https://github.com/mckomo/Lighthouse-API', dest: '/var/www/lighthouse-api' }
+    nginx_sites:
+      - default
+      - api.lighthouse.pm
+    apt_php_packages:
+      - php7.0
+      - php7.0-cgi
+      - php7.0-cli
+      - php7.0-common
+      - php7.0-curl
+      - php7.0-fpm
+      - php7.0-gd
+      - php7.0-intl
+      - php7.0-json
+      - php7.0-mysql
+      - php7.0-mbstring
+      - php7.0-xml
+      - php7.0-zip
+  pre_tasks:
+    - name: Creating user nginx
+      user: name=nginx system=yes createhome=no shell=/usr/sbin/nologin
+  roles:
+    - { role: geerlingguy.nginx, nginx_user: nginx }
+    - { role: chusiang.php7, php_timezone: Europe/Warsaw }
+    - { role: geerlingguy.composer, composer_keep_updated: true }
+    - { role: geerlingguy.redis }
+    - { role: geerlingguy.elasticsearch }
+    - { role: geerlingguy.certbot }
+  tasks:
+    - name: Copy projects repositories
+      git: repo={{ item.repo }} dest={{ item.dest }}
+      with_items: '{{ projects }}'
+    - name: Set user and group for repositories
+      file: dest={{ item.dest }} owner={{ remote_user }} group={{ remote_user }} recurse=true
+      with_items: '{{ projects }}'
+    - name: Copy Nginx sites
+      copy: src='../deploy/nginx/sites/{{ item }}' dest='/etc/nginx/sites-available/{{ item }}'
+      with_items: '{{ nginx_sites }}'
+    - name: Register sites with Nginx
+      file: src='/etc/nginx/sites-available/{{ item }}' dest='/etc/nginx/sites-enabled/{{ item }}' state=link
+      with_items: '{{ nginx_sites }}'
+    - name: Restart Nginx
+      service: name=nginx state=restarted
