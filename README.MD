@@ -1,6 +1,7 @@
 # Lighthouse Service 
 
-[![Build Status](https://travis-ci.org/mckomo/Lighthouse-Service.svg)](https://travis-ci.org/mckomo/Lighthouse-Service)
+[![Build Status](https://travis-ci.org/mckomo/Lighthouse-API.svg?branch=master)](https://travis-ci.org/mckomo/Lighthouse-API)
+[![Code Climate](https://codeclimate.com/github/mckomo/Lighthouse-Service/badges/gpa.svg)](https://codeclimate.com/github/mckomo/Lighthouse-Service)
 
 Lighthouse Service is the webservice that helps you find quickly right torrent. Main purpose of this project is to create backend for [Lighthouse](http://mckomo.github.io/Lighthouse/) – torrent browser.
 
@@ -100,7 +101,7 @@ For all statuses 4xx and 5xx you should expect error message with folowing struc
 }
 ```
 
-## Usage examples
+## Projects using Lighthouse-API
 
-- [https://github.com/mckomo/Lighthouse](Lighthouse)
-- [https://github.com/mckomo/Lighthouse-Workflow](Lighthouse-Workflow)
+- [https://github.com/mckomo/Lighthouse-Web](https://github.com/mckomo/Lighthouse-Web)
+- [https://github.com/mckomo/Lighthouse-Alfred](https://github.com/mckomo/Lighthouse-Alfred)
