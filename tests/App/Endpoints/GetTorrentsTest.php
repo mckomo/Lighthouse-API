@@ -4,8 +4,15 @@ namespace Tests\App\Api\V1;
 
 use Tests\Support\TestCase;
 
-class TorrentsEndpointTest extends TestCase
+class GetTorrentsTest extends TestCase
 {
+    public function test_responds_with_200()
+    {
+        $this->json('GET', 'torrents', ['q' => 'windows']);
+
+        $this->assertResponseOk();
+    }
+
     public function test_returned_torrents_have_magnet_links()
     {
         $this->json('GET', 'torrents', ['q' => 'windows']);
