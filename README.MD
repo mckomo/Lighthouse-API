@@ -9,7 +9,7 @@ Lighthouse Service is the webservice that helps you find quickly right torrent. 
 
 Access to this endpoints is public, thus an authentication is not required. All endpoints respond in JSON format. Current API address is [http://light-tower.cloudapp.net/api/v1](http://light-tower.cloudapp.net/api/v1).
 
-### GET /api/v1/torrents
+### GET /torrents
 
 Search torrents with given query.
 
@@ -26,7 +26,7 @@ Search torrents with given query.
 
 
 ```
-GET light-tower.cloudapp.net/api/v1/torrents?q=ubuntu&category=applications
+GET api.lighthouse.pm/torrents?q=ubuntu&category=applications
 
 [
    {
@@ -57,7 +57,7 @@ GET light-tower.cloudapp.net/api/v1/torrents?q=ubuntu&category=applications
 ]
 ```
 
-### GET /api/v1/torrents/:hash
+### GET /torrents/:hash
 
 Get torrent info.
 
@@ -70,7 +70,7 @@ Get torrent info.
 ##### Example response
 
 ```
-GET light-tower.cloudapp.net/api/v1/torrents/B415C913643E5FF49FE37D304BBB5E6E11AD5101
+GET api.lighthouse.pm/torrents/B415C913643E5FF49FE37D304BBB5E6E11AD5101
 
 {
   "hash":"B415C913643E5FF49FE37D304BBB5E6E11AD5101",
