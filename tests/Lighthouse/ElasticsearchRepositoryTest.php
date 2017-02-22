@@ -11,9 +11,9 @@ use Tests\Support\EntitySampler;
 
 class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    private $mapperMock;
     private $endpointMock;
     private $resultSetMock;
+    private $documentMock;
 
     /**
      * @var ElasticsearchRepository
@@ -24,6 +24,7 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->endpointMock = Mockery::mock('\Elastica\Type');
         $this->resultSetMock = Mockery::mock('\Elastica\ResultSet');
+        $this->documentMock = Mockery::mock('\Elastica\Document');
 
         $this->repository = new ElasticsearchRepository($this->endpointMock);
     }
@@ -31,6 +32,22 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         Mockery::close();
+    }
+
+    public function test_gets_torrent()
+    {
+        $this->endpointMock
+            ->shouldReceive('getDocument')
+            ->with('torrentHash')
+            ->once()
+            ->andReturn($this->documentMock);
+        $this->documentMock->shouldReceive('getData')
+            ->once()
+            ->andReturn([]);
+
+        $torrent = $this->repository->get('torrentHash');
+
+        $this->assertInstanceOf(Torrent::class, $torrent);
     }
 
     public function test_by_default_limits_query_to_twenty()
@@ -64,7 +81,7 @@ class ElasticsearchRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
-    public function testSortsByGivenField()
+    public function test_sorts_by_given_field()
     {
         $query = EntitySampler::sampleQuery();
         $query->sortBy = 'uploadedAt';

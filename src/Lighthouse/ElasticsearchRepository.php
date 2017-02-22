@@ -53,9 +53,7 @@ class ElasticsearchRepository implements RepositoryInterface
             return;
         }
 
-        $torrent = $this->mapTorrent($result);
-
-        return $torrent;
+        return new Torrent($result->getData());
     }
 
     /**
@@ -76,7 +74,7 @@ class ElasticsearchRepository implements RepositoryInterface
         }
 
         $torrents = array_map(function ($result) {
-            return $this->mapTorrent($result);
+            return new Torrent($result->getData());
         }, $results);
 
         return $torrents;
@@ -98,18 +96,6 @@ class ElasticsearchRepository implements RepositoryInterface
         }
 
         return in_array($response->getStatus(), [200, 201]);
-    }
-
-    /**
-     * @param ElasticaResult $result
-     *
-     * @return Torrent
-     */
-    private function mapTorrent(ElasticaResult $result)
-    {
-        $torrentData = $result->getData();
-
-        return new Torrent($torrentData);
     }
 
     /**
