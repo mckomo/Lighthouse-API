@@ -6,11 +6,14 @@ use Lighthouse\Core\TorrentMapperInterface;
 use Lighthouse\Torrent;
 
 /**
- * Class KickassMapper.
+ * Class CSVMapper
  *
- * Mapper for KickassTorrents CSV torrent dump
+ * Mapper for torrents stored as CSV string
+ * Mapper is compatible with KickassTorrents CSV database dump
+ * Supported CSV format:
+ * INFO_HASH|NAME|CATEGORY|X|TORRENT_FILE_URL|SIZE_IN_BYTES|X|X|SEED_COUNT|PEER_COUNT|UPLOAD_TIMESTAMP
  */
-final class KickassMapper implements TorrentMapperInterface
+final class CSVMapper implements TorrentMapperInterface
 {
     const REQUIRED_FIELD_COUNT = 11;
 

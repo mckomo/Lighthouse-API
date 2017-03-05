@@ -2,16 +2,16 @@
 
 namespace Tests\Lighthouse;
 
-use Lighthouse\TorrentMappers\KickassMapper;
+use Lighthouse\TorrentMappers\CSVMapper;
 
-class KickassMapperTest extends \PHPUnit_Framework_TestCase
+class CSVMapperTest extends \PHPUnit_Framework_TestCase
 {
     private $mapper;
     private $data = '96B38CAEED19A26EC338AE3B85AC43335750BFCA|Solarix-RELOADED|Games|https://kat.cr/solarix-reloaded-t10582161.html|http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent|2272891893|31|3|173|75|1430397537';
 
     public function setUp()
     {
-        $this->mapper = new KickassMapper();
+        $this->mapper = new CSVMapper();
     }
 
     public function test_maps_to_torrent_object()
@@ -28,7 +28,7 @@ class KickassMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('96B38CAEED19A26EC338AE3B85AC43335750BFCA', $torrent->infoHash);
     }
 
-    public function test_maps_Name()
+    public function test_maps_name()
     {
         $torrent = $this->mapper->map($this->data);
 
