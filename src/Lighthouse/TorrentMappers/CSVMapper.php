@@ -33,7 +33,7 @@ final class CSVMapper implements TorrentMapperInterface
         return new Torrent([
             'infoHash'      => $data[0],
             'name'          => $data[1],
-            'category'      => $data[2],
+            'category'      => strtolower($data[2]),
             'size'          => intval($data[5]),
             'url'           => $data[4],
             'uploadedAt'    => gmdate('Y-m-d\TH:i:s\Z', intval($data[10])),

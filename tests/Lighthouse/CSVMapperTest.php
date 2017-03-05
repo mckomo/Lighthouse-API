@@ -35,11 +35,11 @@ class CSVMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Solarix-RELOADED', $torrent->name);
     }
 
-    public function test_maps_category()
+    public function test_maps_category_to_lowercase()
     {
         $torrent = $this->mapper->map($this->data);
 
-        $this->assertSame('Games', $torrent->category);
+        $this->assertSame('games', $torrent->category);
     }
 
     public function test_maps_url()

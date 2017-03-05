@@ -16,7 +16,7 @@ class EntitySampler
             'infoHash'      => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
             'name'          => 'Solarix RELOADED',
             'filename'      => 'solarix-reloaded.torrent',
-            'category'      => 'Games',
+            'category'      => 'games',
             'size'          => 1430397537,
             'url'           => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
             'magnetLink'    => 'magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80',
