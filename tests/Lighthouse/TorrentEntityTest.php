@@ -39,7 +39,7 @@ class TorrentEntityTest extends \PHPUnit_Framework_TestCase
 
     public function test_has_category()
     {
-        $this->assertEquals('Games', $this->torrent->category);
+        $this->assertEquals('games', $this->torrent->category);
     }
 
     public function test_has_size()

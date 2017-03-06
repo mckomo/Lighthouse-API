@@ -36,7 +36,7 @@ class LighthouseServiceProvider extends ServiceProvider
         $this->app->singleton(
             'Lighthouse\Core\StorageInterface', 'Lighthouse\RedisStorage');
         $this->app->singleton(
-            'Lighthouse\Core\TorrentMapperInterface', 'Lighthouse\TorrentMappers\KickassMapper');
+            'Lighthouse\Core\TorrentMapperInterface', 'Lighthouse\TorrentMappers\CSVMapper');
 
         $this->registerElasticsearch();
         $this->registerRedis();

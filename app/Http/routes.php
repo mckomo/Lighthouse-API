@@ -13,4 +13,5 @@
 
 
 Route::get('torrents', 'TorrentsController@search');
+Route::put('torrents', 'TorrentsController@put');
 Route::get('torrents/{hash}', 'TorrentsController@get');

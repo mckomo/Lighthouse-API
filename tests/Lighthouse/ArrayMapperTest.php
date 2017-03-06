@@ -2,16 +2,30 @@
 
 namespace Tests\Lighthouse;
 
-use Lighthouse\TorrentMappers\KickassMapper;
+use Lighthouse\TorrentMappers\ArrayMapper;
 
-class KickassMapperTest extends \PHPUnit_Framework_TestCase
+class ArrayMapperTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ArrayMapper
+     */
     private $mapper;
-    private $data = '96B38CAEED19A26EC338AE3B85AC43335750BFCA|Solarix-RELOADED|Games|https://kat.cr/solarix-reloaded-t10582161.html|http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent|2272891893|31|3|173|75|1430397537';
+
+    private $data = [
+        'infoHash' => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
+        'name' => 'Solarix-RELOADED',
+        'category' => 'Games',
+        'url' => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
+        'magnetLink' => 'magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn',
+        'size' => 2272891893,
+        'seedCount' => 173,
+        'peerCount' => 75,
+        'uploadedAt' => '2015-04-30T12:38:57Z',
+    ];
 
     public function setUp()
     {
-        $this->mapper = new KickassMapper();
+        $this->mapper = new ArrayMapper();
     }
 
     public function test_maps_to_torrent_object()
@@ -28,18 +42,18 @@ class KickassMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('96B38CAEED19A26EC338AE3B85AC43335750BFCA', $torrent->infoHash);
     }
 
-    public function test_maps_Name()
+    public function test_maps_name()
     {
         $torrent = $this->mapper->map($this->data);
 
         $this->assertEquals('Solarix-RELOADED', $torrent->name);
     }
 
-    public function test_maps_category()
+    public function test_maps_category_with_lowercase()
     {
         $torrent = $this->mapper->map($this->data);
 
-        $this->assertSame('Games', $torrent->category);
+        $this->assertSame('games', $torrent->category);
     }
 
     public function test_maps_url()
@@ -47,6 +61,13 @@ class KickassMapperTest extends \PHPUnit_Framework_TestCase
         $torrent = $this->mapper->map($this->data);
 
         $this->assertSame('http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent', $torrent->url);
+    }
+
+    public function test_maps_magnet_link()
+    {
+        $torrent = $this->mapper->map($this->data);
+
+        $this->assertSame('magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn', $torrent->magnetLink);
     }
 
     public function test_maps_size()
@@ -84,5 +105,13 @@ class KickassMapperTest extends \PHPUnit_Framework_TestCase
         $result = $this->mapper->map($invalidLine);
 
         $this->assertNull($result);
+    }
+
+    public function test_does_not_throw_exception_with_incomplete_data() {
+        $incompleteData = $this->data;
+
+        unset($incompleteData['category']);
+
+        $this->mapper->map($incompleteData);
     }
 }
