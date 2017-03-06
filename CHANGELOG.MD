@@ -1,8 +1,12 @@
 # Changelog - App Service
 
+### 1.3.0 - 2017/03
+
+* Add `PUT /torrents` endpoint
+
 ### 1.2.0 - 2016/10/18
 
-* Moved project to https://lighthouse.pm
+* Moved project to [https://lighthouse.pm](https://lighthouse.pm)
 * Automated deploy
 * New artisan commands (storage:setup and storage:purge)
 
