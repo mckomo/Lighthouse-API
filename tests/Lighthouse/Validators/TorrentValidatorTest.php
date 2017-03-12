@@ -17,7 +17,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator = new TorrentValidator();
     }
 
-    public function testSucceedsWithValidEntity()
+    public function test_succeeds_with_valid_entity()
     {
         $validEntity = $this->getValidTorrent();
 
@@ -26,7 +26,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
-    public function testFailsWithNull()
+    public function test_fails_with_null()
     {
         $result = $this->validator->isValid(null);
 
@@ -36,7 +36,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getNullAndEmptyString
      */
-    public function testFailsWithEmptyName($invalidName)
+    public function test_fails_with_empty_name($invalidName)
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->name = $invalidName;
@@ -46,7 +46,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testFailsWithInvalidUtf8Name()
+    public function test_fails_with_invalid_UTF8_name()
     {
         $hexName = 'c4b4c3bcc5a174c3adc3b12042c3adc3a962c3ab7220eda0bdedb184eda0bdedb18ceda0bdedb293eda0bdedb298'; // Ĵüštíñ Bíébër ��������%
         $brokenEntity = $this->getValidTorrent();
@@ -60,7 +60,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getNullAndEmptyString
      */
-    public function testFailsWithEmptyCategory($invalidCategory)
+    public function test_fails_with_empty_category($invalidCategory)
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->category = $invalidCategory;
@@ -73,7 +73,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getNullAndNegativeNumber
      */
-    public function testFailsWithNegativeSize($invalidSize)
+    public function test_fails_with_negative_size($invalidSize)
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->size = $invalidSize;
@@ -83,37 +83,17 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testFailsWithInvalidUrl()
+    public function test_fails_with_invalid_magnet_link()
     {
         $brokenEntity = $this->getValidTorrent();
-        $brokenEntity->url = 'htp:/example.com';
+        $brokenEntity->magnetLink = 'magnet:?xt=urn:btih:BAD_HASH&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80';
 
         $result = $this->validator->isValid($brokenEntity);
 
         $this->assertFalse($result);
     }
 
-    public function testFailsWithInvalidMagnetLink()
-    {
-        $brokenEntity = $this->getValidTorrent();
-        $brokenEntity->filename = 'magnet:?xt=urn:btih:BAD_HASH&dn=&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80';
-
-        $result = $this->validator->isValid($brokenEntity);
-
-        $this->assertFalse($result);
-    }
-
-    public function testFailsWithInvalidFilename()
-    {
-        $brokenEntity = $this->getValidTorrent();
-        $brokenEntity->filename = 'Filename with space.torrent';
-
-        $result = $this->validator->isValid($brokenEntity);
-
-        $this->assertFalse($result);
-    }
-
-    public function testFailsWithUploadTimeFormatOtherThanISO8601()
+    public function test_fails_with_upload_time_format_other_than_ISO8601()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->uploadedAt = 'Sat, 27 Jun 2015 18:50:58 +00:00';
@@ -123,7 +103,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testFailsWithUploadTimeTimezoneOtherThanUTC()
+    public function test_fails_with_upload_at_timezone_other_than_UTC()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->uploadedAt = '2015-06-27T18:50:58+02:00';
@@ -133,7 +113,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testFailsWithNegativeSeedCount()
+    public function test_fails_with_negative_seed_count()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->seedCount = -10;
@@ -143,7 +123,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testFailsWithNegativePeerCount()
+    public function test_fails_with_negative_peer_count()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->peerCount = -10;
@@ -153,7 +133,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
-    public function testReturnsValidationError()
+    public function test_returns_validation_error()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->peerCount = -10;
@@ -164,7 +144,7 @@ class TorrentValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $errorCount);
     }
 
-    public function testAppendsValidationErrors()
+    public function test_appends_validation_errors()
     {
         $brokenEntity = $this->getValidTorrent();
         $brokenEntity->uploadedAt = '2015-05-27 15:00:00';

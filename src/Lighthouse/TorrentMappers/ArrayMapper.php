@@ -34,10 +34,8 @@ final class ArrayMapper implements TorrentMapperInterface
 
         $setProperty('infoHash');
         $setProperty('name');
-        $setProperty('filename');
         $setProperty('category', function ($value) { return strtolower($value); } );
         $setProperty('size', function($value) { return intval($value); });
-        $setProperty('url');
         $setProperty('magnetLink');
         $setProperty('uploadedAt');
         $setProperty('seedCount');

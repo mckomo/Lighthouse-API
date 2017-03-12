@@ -42,13 +42,6 @@ class CSVMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('games', $torrent->category);
     }
 
-    public function test_maps_url()
-    {
-        $torrent = $this->mapper->map($this->data);
-
-        $this->assertSame('http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent', $torrent->url);
-    }
-
     public function test_maps_size()
     {
         $torrent = $this->mapper->map($this->data);

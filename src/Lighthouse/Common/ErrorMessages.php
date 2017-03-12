@@ -14,6 +14,7 @@ final class ErrorMessages
     const EmptyCategory = 'Category cannot be empty';
     const NonpositiveSize = 'Size must be a positive number';
     const InvalidUrl = 'Url is invalid';
+    const InvalidMagnetLink = 'Magnet link is invalid';
     const UploadTimeFormat = 'Upload time must have the ISO 8601 with the UTC timezone format';
     const NegativePeerCount = 'Peer count must be a nonnegative number';
     const NegativeSeedCount = 'Seed count must be a nonnegative number';
