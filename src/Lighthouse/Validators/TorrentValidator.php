@@ -25,10 +25,6 @@ class TorrentValidator implements ValidatorInterface
             $errorMessages[] = ErrorMessages::EmptyName;
         }
 
-        if (!ValidationHelper::isValidFilename($entity->filename)) {
-            $errorMessages[] = ErrorMessages::InvalidFilename;
-        }
-
         if (!ValidationHelper::isValidUtf8($entity->name)) {
             $errorMessages[] = ErrorMessages::InvalidEncodedName;
         }
@@ -41,12 +37,8 @@ class TorrentValidator implements ValidatorInterface
             $errorMessages[] = ErrorMessages::NonpositiveSize;
         }
 
-        if (!ValidationHelper::isUrl($entity->url)) {
-            $errorMessages[] = ErrorMessages::InvalidUrl;
-        }
-
         if (!ValidationHelper::isMagnetLink($entity->magnetLink)) {
-            $errorMessages[] = ErrorMessages::InvalidUrl;
+            $errorMessages[] = ErrorMessages::InvalidMagnetLink;
         }
 
         if (!ValidationHelper::isIso8601Utc($entity->uploadedAt)) {

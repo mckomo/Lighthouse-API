@@ -21,22 +21,12 @@ class Torrent extends Entity implements CacheableInterface
     /**
      * @var string
      */
-    public $filename;
-
-    /**
-     * @var string
-     */
     public $category;
 
     /**
      * @var int
      */
     public $size;
-
-    /**
-     * @var string
-     */
-    public $url;
 
     /**
      * @var string
@@ -67,10 +57,6 @@ class Torrent extends Entity implements CacheableInterface
 
         if (is_null($this->magnetLink) && $this->infoHash) {
             $this->magnetLink = UnitHelper::buildMagnetLink($this->infoHash);
-        }
-
-        if (is_null($this->filename) && $this->name) {
-            $this->filename = UnitHelper::formatFilename($this->name, 'torrent');
         }
     }
 
