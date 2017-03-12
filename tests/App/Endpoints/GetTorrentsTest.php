@@ -69,6 +69,6 @@ class GetTorrentsTest extends TestCase
 
     public function categoryProvider()
     {
-        return [['Applications'], ['Other'], ['Books']];
+        return [['applications'], ['other'], ['books']];
     }
 }

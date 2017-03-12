@@ -9,15 +9,18 @@ use Lighthouse\Error;
 use Lighthouse\Query;
 use Lighthouse\Result;
 use Lighthouse\Torrent;
+use Lighthouse\TorrentMappers\ArrayMapper;
 use Symfony\Component\HttpFoundation\Response;
 
-class TorrentsController extends Controller
+final class TorrentsController extends Controller
 {
-    protected $service;
+    private $service;
+    private $mapper;
 
-    public function __construct(ServiceInterface $service)
+    public function __construct(ServiceInterface $service, ArrayMapper $mapper)
     {
         $this->service = $service;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -41,6 +44,19 @@ class TorrentsController extends Controller
     {
         $query = $this->buildQuery($request->input());
         $result = $this->service->search($query);
+
+        return $this->prepareResponse($result);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function put(Request $request) {
+        $torrent = $this->mapper->map($request->input());
+
+        $result = $this->service->put($torrent);
 
         return $this->prepareResponse($result);
     }
@@ -91,6 +107,8 @@ class TorrentsController extends Controller
                 return 200;
             case ResultCodes::ResourceCreated:
                 return 201;
+            case ResultCodes::ResourceUnchanged:
+                return 202;
             case ResultCodes::InvalidInput:
                 return 400;
             case ResultCodes::ResourceNotFound:

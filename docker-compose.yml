@@ -16,7 +16,7 @@ services:
     volumes_from:
       - app
   fpm:
-    image: php:7.0-fpm-alpine
+    image: php:7.1-fpm-alpine
     volumes_from:
       - app
   elasticsearch:

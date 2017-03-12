@@ -32,24 +32,14 @@ class TorrentEntityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Solarix RELOADED', $this->torrent->name);
     }
 
-    public function test_has_filename()
-    {
-        $this->assertEquals('solarix-reloaded.torrent', $this->torrent->filename);
-    }
-
     public function test_has_category()
     {
-        $this->assertEquals('Games', $this->torrent->category);
+        $this->assertEquals('games', $this->torrent->category);
     }
 
     public function test_has_size()
     {
         $this->assertEquals(1430397537, $this->torrent->size);
-    }
-
-    public function test_has_url()
-    {
-        $this->assertEquals('http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent', $this->torrent->url);
     }
 
     public function test_torrent_has_upload_time()
@@ -83,19 +73,6 @@ class TorrentEntityTest extends \PHPUnit_Framework_TestCase
         $torrent = new Torrent($this->params);
 
         $this->assertEquals($expectedMagnetLink, $torrent->magnetLink);
-    }
-
-    /**
-     * @dataProvider getNameAndExpectedFilenameTuple
-     */
-    public function test_fills_filename_using_name($name, $expectedFilename)
-    {
-        $this->params['name'] = $name;
-        $this->params['filename'] = null;
-
-        $torrent = new Torrent($this->params);
-
-        $this->assertEquals($expectedFilename, $torrent->filename);
     }
 
     public function getHashAndExpectedMagnetLinkTuple()
