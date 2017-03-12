@@ -16,6 +16,7 @@ before_install:
 
 # Commands to be run before your environment runs.
 before_script:
+  - cp .env.example .env
   - docker-compose up -d
   - docker-compose exec -T app composer install --no-interaction --dev
   - docker-compose exec -T app php artisan storage:purge

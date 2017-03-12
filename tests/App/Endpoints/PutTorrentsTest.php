@@ -2,11 +2,14 @@
 
 namespace Tests\App\Api\V1;
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\Support\EntitySampler;
 use Tests\Support\TestCase;
 
 class PutTorrentsTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * @var array
      */
