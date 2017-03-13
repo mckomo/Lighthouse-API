@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -17,7 +16,6 @@ class Kernel extends HttpKernel
         \Barryvdh\Cors\HandleCors::class,
         \App\Http\Middleware\AuthMiddleware::class,
     ];
-
 
     /**
      * The application's route middleware groups.

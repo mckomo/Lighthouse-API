@@ -6,7 +6,7 @@ use Lighthouse\Core\TorrentMapperInterface;
 use Lighthouse\Torrent;
 
 /**
- * Class CSVMapper
+ * Class CSVMapper.
  *
  * Mapper for torrents stored as CSV string
  * Mapper is compatible with KickassTorrents CSV database dump
@@ -34,8 +34,12 @@ final class ArrayMapper implements TorrentMapperInterface
 
         $setProperty('infoHash');
         $setProperty('name');
-        $setProperty('category', function ($value) { return strtolower($value); } );
-        $setProperty('size', function($value) { return intval($value); });
+        $setProperty('category', function ($value) {
+            return strtolower($value);
+        });
+        $setProperty('size', function ($value) {
+            return intval($value);
+        });
         $setProperty('magnetLink');
         $setProperty('uploadedAt');
         $setProperty('seedCount');
@@ -44,10 +48,9 @@ final class ArrayMapper implements TorrentMapperInterface
         return $torrent;
     }
 
-    private function propertySetterFor(Torrent $torrent, $data = []) {
-
-        return new class($torrent)
-        {
+    private function propertySetterFor(Torrent $torrent, $data = [])
+    {
+        return new class($torrent) {
             private $torrent;
 
             public function __construct(Torrent $torrent)
@@ -59,10 +62,9 @@ final class ArrayMapper implements TorrentMapperInterface
             {
                 $torrent = $this->torrent;
 
-                return function($propertyName, $transform = null) use($torrent, $data)
-                {
+                return function ($propertyName, $transform = null) use ($torrent, $data) {
                     if (!array_key_exists($propertyName, $data)) {
-                        return null;
+                        return;
                     }
 
                     $value = $data[$propertyName];

@@ -12,14 +12,14 @@ class ArrayMapperTest extends \PHPUnit_Framework_TestCase
     private $mapper;
 
     private $data = [
-        'infoHash' => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
-        'name' => 'Solarix-RELOADED',
-        'category' => 'Games',
-        'url' => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
+        'infoHash'   => '96B38CAEED19A26EC338AE3B85AC43335750BFCA',
+        'name'       => 'Solarix-RELOADED',
+        'category'   => 'Games',
+        'url'        => 'http://torcache.net/torrent/96B38CAEED19A26EC338AE3B85AC43335750BFCA.torrent',
         'magnetLink' => 'magnet:?xt=urn:btih:96B38CAEED19A26EC338AE3B85AC43335750BFCA&dn',
-        'size' => 2272891893,
-        'seedCount' => 173,
-        'peerCount' => 75,
+        'size'       => 2272891893,
+        'seedCount'  => 173,
+        'peerCount'  => 75,
         'uploadedAt' => '2015-04-30T12:38:57Z',
     ];
 
@@ -100,7 +100,8 @@ class ArrayMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
-    public function test_does_not_throw_exception_with_incomplete_data() {
+    public function test_does_not_throw_exception_with_incomplete_data()
+    {
         $incompleteData = $this->data;
 
         unset($incompleteData['category']);

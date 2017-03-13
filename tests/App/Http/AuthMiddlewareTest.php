@@ -23,7 +23,9 @@ class AuthMiddlewareTest extends TestCase
         parent::setUp();
 
         $this->middleware = new AuthMiddleware();
-        $this->next = function() { return response('Response from next', 200); };
+        $this->next = function () {
+            return response('Response from next', 200);
+        };
     }
 
     /**

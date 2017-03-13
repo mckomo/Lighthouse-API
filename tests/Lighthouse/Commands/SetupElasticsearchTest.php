@@ -57,7 +57,6 @@ class SetupElasticsearchTest extends \PHPUnit_Framework_TestCase
             ->with(anInstanceOf('Elastica\Type\Mapping'))
             ->once();
 
-
         $this->setupCommand->handle();
     }
 }

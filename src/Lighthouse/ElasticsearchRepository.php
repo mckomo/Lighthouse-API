@@ -6,7 +6,6 @@ use Elastica\Document;
 use Elastica\Exception\ConnectionException;
 use Elastica\Exception\NotFoundException;
 use Elastica\Query as ElasticaQuery;
-use Elastica\Result as ElasticaResult;
 use Elastica\Type as TorrentType;
 use Lighthouse\Core\RepositoryInterface;
 use Lighthouse\Exceptions\RepositoryException;
