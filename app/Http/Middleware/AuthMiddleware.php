@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 final class AuthMiddleware
 {
-    const UnauthorizedErrorMessage =  ['error' => ['message' => 'Unauthorized']];
+    const UnauthorizedErrorMessage = ['error' => ['message' => 'Unauthorized']];
 
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
+     * @param Request $request
+     * @param Closure $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)

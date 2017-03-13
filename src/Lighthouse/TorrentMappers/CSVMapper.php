@@ -6,7 +6,7 @@ use Lighthouse\Core\TorrentMapperInterface;
 use Lighthouse\Torrent;
 
 /**
- * Class CSVMapper
+ * Class CSVMapper.
  *
  * Mapper for torrents stored as CSV string
  * Mapper is compatible with KickassTorrents CSV database dump

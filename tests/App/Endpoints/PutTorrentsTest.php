@@ -36,7 +36,8 @@ class PutTorrentsTest extends TestCase
         $this->assertResponseStatus(202);
     }
 
-    public function test_returns_passed_torrent_when_successful() {
+    public function test_returns_passed_torrent_when_successful()
+    {
         $this->json('PUT', 'torrents', $this->torrentParams);
 
         $this->seeJson($this->torrentParams);

@@ -53,7 +53,8 @@ final class TorrentsController extends Controller
      *
      * @return Response
      */
-    public function put(Request $request) {
+    public function put(Request $request)
+    {
         $torrent = $this->mapper->map($request->input());
 
         $result = $this->service->put($torrent);
